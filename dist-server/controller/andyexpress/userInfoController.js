@@ -50,6 +50,9 @@ userInfoController.avatarUpload = function (req, res) {
   var base64Data = avatar.replace(/^data:image\/\w+;base64,/, "");
   var dataBuffer = Buffer.from(base64Data, "base64");
   var time = Date.now();
+
+  _fs["default"].mkdir("./public/images/andyexpress/avatar", function () {});
+
   var imagePath = "images/andyexpress/avatar/".concat(req.user.id, "_").concat(time, ".png");
 
   _fs["default"].writeFileSync(_path["default"].resolve("./public/".concat(imagePath)), dataBuffer);
