@@ -41,7 +41,7 @@ ordersController.createOrderForm = function (req, res) {
   })["catch"](function (err) {
     return res.status(400).json("Error: " + err);
   });
-}; // 客服上传商品详情
+}; // 客服上传订单详情
 
 
 ordersController.updateOrderForm = function (req, res) {
@@ -49,7 +49,7 @@ ordersController.updateOrderForm = function (req, res) {
   var base64Data = order_Img.replace(/^data:image\/\w+;base64,/, "");
   var dataBuffer = Buffer.from(base64Data, "base64");
   var time = Date.now();
-  var imagePath = "images/andyexpress/goods/".concat(req.user.id, "-").concat(time, ".png");
+  var imagePath = "images/andyexpress/orders/".concat(req.user.id, "-").concat(time, ".png");
 
   _fs["default"].writeFile("./public/".concat(imagePath), dataBuffer, function (err) {
     if (err) return;

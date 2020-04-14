@@ -27,13 +27,13 @@ ordersController.createOrderForm = (req, res) => {
     .catch((err) => res.status(400).json("Error: " + err));
 };
 
-// 客服上传商品详情
+// 客服上传订单详情
 ordersController.updateOrderForm = (req, res) => {
   let order_Img = req.body.orderImg;
   var base64Data = order_Img.replace(/^data:image\/\w+;base64,/, "");
   var dataBuffer = Buffer.from(base64Data, "base64");
   let time = Date.now();
-  let imagePath = `images/andyexpress/goods/${req.user.id}-${time}.png`;
+  let imagePath = `images/andyexpress/orders/${req.user.id}-${time}.png`;
   fs.writeFile(`./public/${imagePath}`, dataBuffer, function (err) {
     if (err) return;
   });
