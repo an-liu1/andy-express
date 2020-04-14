@@ -49,13 +49,13 @@ userInfoController.avatarUpload = function (req, res) {
   var dataBuffer = Buffer.from(base64Data, "base64");
   var time = Date.now();
 
-  _fs["default"].mkdir("./public/images/andyexpress/avatar", function (e) {
-    return e;
-  });
+  _fs["default"].mkdir("./public/images/andyexpress/avatar", function () {});
 
   var imagePath = "images/andyexpress/avatar/".concat(req.user.id, "_").concat(time, ".png");
 
-  _fs["default"].writeFile("./public/".concat(imagePath), dataBuffer);
+  _fs["default"].writeFile("./public/".concat(imagePath), dataBuffer, function (err) {
+    if (err) return;
+  });
 
   _userInfo["default"].updateOne({
     user_id: req.user.id
