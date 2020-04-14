@@ -23,6 +23,7 @@ var aftersaleSchema = new Schema({
     type: String,
     trim: true
   },
+  //客户提交售后
   aftersale_title: {
     type: String,
     trim: true
@@ -34,9 +35,7 @@ var aftersaleSchema = new Schema({
   aftersale_image: {
     type: Array
   },
-  is_solve: {
-    type: Boolean
-  },
+  // 客服给出解决方案及金额赔偿
   compensation: {
     type: String,
     trim: true
@@ -44,6 +43,10 @@ var aftersaleSchema = new Schema({
   solution: {
     type: String,
     trim: true
+  },
+  // 客户关闭售后
+  is_solve: {
+    type: Boolean
   }
 }, {
   timestamps: true

@@ -69,7 +69,7 @@ var goodsSchema = new Schema({
   packageTime: {
     type: Date
   },
-  //用户填写退货地址
+  //用户填写退货地址（退货中）
   returnShippingCountry: {
     type: String
   },

@@ -29,7 +29,7 @@ const goodsSchema = new Schema(
     isPackage: { type: Boolean },
     packageTime: { type: Date },
 
-    //用户填写退货地址
+    //用户填写退货地址（退货中）
     returnShippingCountry: { type: String },
     returnShippingProvince: { type: String },
     returnShippingCity: { type: String },

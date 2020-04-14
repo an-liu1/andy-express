@@ -7,6 +7,8 @@ const advicesSchema = new Schema(
     username: { type: String, trim: true },
     user_id: { type: String, trim: true },
     email: { type: String, trim: true },
+
+    //客户提交投书
     advice_title: { type: String, trim: true },
     advice_content: { type: String, trim: true },
     evident_image: { type: Array },

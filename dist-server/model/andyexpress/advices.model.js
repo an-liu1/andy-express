@@ -23,6 +23,7 @@ var advicesSchema = new Schema({
     type: String,
     trim: true
   },
+  //客户提交投书
   advice_title: {
     type: String,
     trim: true
