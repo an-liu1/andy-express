@@ -38,7 +38,7 @@ userInfoController.avatarUpload = (req, res) => {
   var dataBuffer = Buffer.from(base64Data, "base64");
   let time = Date.now();
   let imagePath = `images/andyexpress/avatar/${req.user.id}_${time}.png`;
-  fs.write(`./public/${imagePath}`, dataBuffer, function (err) {
+  fs.writeFile(`./public/${imagePath}`, dataBuffer, function (err) {
     if (err) return;
   });
   UserInfo.updateOne({ user_id: req.user.id }, { avatar: imagePath }).then(
