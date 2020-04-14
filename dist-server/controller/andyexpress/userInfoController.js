@@ -49,7 +49,9 @@ userInfoController.avatarUpload = function (req, res) {
   var dataBuffer = Buffer.from(base64Data, "base64");
   var time = Date.now();
 
-  _fs["default"].mkdir("./public/images/andyexpress/avatar", function () {});
+  _fs["default"].mkdir("./public/images/andyexpress/avatar", function (e) {
+    return e;
+  });
 
   var imagePath = "images/andyexpress/avatar/".concat(req.user.id, "_").concat(time, ".png");
 
