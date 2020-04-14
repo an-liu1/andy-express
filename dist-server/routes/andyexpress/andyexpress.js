@@ -43,7 +43,7 @@ router.get("/getOrderForm", _ordersController["default"].getOrderForm); //获取
 
 router.put("/orderDelivery/:id", _ordersController["default"].orderDelivery); // 客户填写订单邮寄地址
 
-router.put("/isDeliveryAndRank/:id", _ordersController["default"].isDeliveryAndRank); //客户确定收货及评分
+router.put("/isDeliveryAndRank", _ordersController["default"].isDeliveryAndRank); //客户确定收货及评分
 //售后
 
 router.post("/createAfterSale", _aftersaleController["default"].createAfterSale); //客户提交售后

@@ -88,17 +88,19 @@ ordersController.orderDelivering = (req, res) => {
 
 // 客户确认完成订单并评价
 ordersController.isDeliveryAndRank = (req, res) => {
-  req.body.isDelivery = 1;
-  req.body.orderStatus = "已签收";
-  OrderForm.updateOne({ _id: req.params.id }, { $set: req.body })
-    .then((order) => {
-      return res.json({
-        success: true,
-        code: 0,
-        data: order,
-      });
-    })
-    .catch((err) => res.status(400).json("Error: " + err));
+  req.body.map((i) => {
+    i.isDelivery = 1;
+    i.orderStatus = "已签收";
+    OrderForm.updateOne({ _id: i.id }, { $set: i })
+      .then((order) => {
+        return res.json({
+          success: true,
+          code: 0,
+          data: order,
+        });
+      })
+      .catch((err) => res.status(400).json("Error: " + err));
+  });
 };
 
 // 后台获取所有订单信息

@@ -127,21 +127,23 @@ ordersController.orderDelivering = function (req, res) {
 
 
 ordersController.isDeliveryAndRank = function (req, res) {
-  req.body.isDelivery = 1;
-  req.body.orderStatus = "已签收";
+  req.body.map(function (i) {
+    i.isDelivery = 1;
+    i.orderStatus = "已签收";
 
-  _orderForm["default"].updateOne({
-    _id: req.params.id
-  }, {
-    $set: req.body
-  }).then(function (order) {
-    return res.json({
-      success: true,
-      code: 0,
-      data: order
+    _orderForm["default"].updateOne({
+      _id: i.id
+    }, {
+      $set: i
+    }).then(function (order) {
+      return res.json({
+        success: true,
+        code: 0,
+        data: order
+      });
+    })["catch"](function (err) {
+      return res.status(400).json("Error: " + err);
     });
-  })["catch"](function (err) {
-    return res.status(400).json("Error: " + err);
   });
 }; // 后台获取所有订单信息
 

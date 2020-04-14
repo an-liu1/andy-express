@@ -22,7 +22,7 @@ router.post("/returnGoods", goodsController.returnGoods); // 用户提交退货�
 router.post("/createOrderForm", ordersController.createOrderForm); //用户打包创建订单
 router.get("/getOrderForm", ordersController.getOrderForm); //获取客户所有订单
 router.put("/orderDelivery/:id", ordersController.orderDelivery); // 客户填写订单邮寄地址
-router.put("/isDeliveryAndRank/:id", ordersController.isDeliveryAndRank); //客户确定收货及评分
+router.put("/isDeliveryAndRank", ordersController.isDeliveryAndRank); //客户确定收货及评分
 
 //售后
 router.post("/createAfterSale", aftersaleController.createAfterSale); //客户提交售后
