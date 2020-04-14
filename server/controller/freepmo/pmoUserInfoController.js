@@ -49,7 +49,7 @@ pmoUserInfoController.avatarUpload = (req, res) => {
   var base64Data = avatar.replace(/^data:image\/\w+;base64,/, "");
   var dataBuffer = Buffer.from(base64Data, "base64");
   let time = Date.now();
-  let imagePath = `images/freepmo/avatar/${req.user.id}-${time}.png`;
+  let imagePath = `images/freepmo/avatar/${req.user.id}_${time}.png`;
   fs.writeFile(`./public/${imagePath}`, dataBuffer, function (err) {
     if (err) return;
   });

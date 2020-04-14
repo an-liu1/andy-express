@@ -48,9 +48,12 @@ userInfoController.avatarUpload = function (req, res) {
   var base64Data = avatar.replace(/^data:image\/\w+;base64,/, "");
   var dataBuffer = Buffer.from(base64Data, "base64");
   var time = Date.now();
-  var imagePath = "images/andyexpress/avatar/".concat(req.user.id, "-").concat(time, ".png");
+  var imagePath = "images/andyexpress/avatar/".concat(req.user.id, "_").concat(time, ".png");
 
-  _fs["default"].writeFile("./public/".concat(imagePath), dataBuffer, function (err) {
+  _fs["default"].writeFile("public/".concat(imagePath), dataBuffer, function (err, written, buffer) {
+    console.log(err);
+    console.log(written);
+    console.log(buffer);
     if (err) return;
   });
 

@@ -18,7 +18,7 @@ advicesController.createAdvice = function (req, res) {
     var base64Data = i.replace(/^data:image\/\w+;base64,/, "");
     var dataBuffer = Buffer.from(base64Data, "base64");
     var time = Date.now();
-    var image = "images/andyexpress/advices/".concat(req.user.id, "-").concat(time, ".png");
+    var image = "images/andyexpress/advices/".concat(req.user.id, "_").concat(time, ".png");
 
     _fs["default"].writeFile("./public/".concat(image), dataBuffer, function (err) {
       if (err) return;

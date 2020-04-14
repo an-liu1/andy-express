@@ -9,7 +9,7 @@ advicesController.createAdvice = (req, res) => {
     var base64Data = i.replace(/^data:image\/\w+;base64,/, "");
     var dataBuffer = Buffer.from(base64Data, "base64");
     let time = Date.now();
-    let image = `images/andyexpress/advices/${req.user.id}-${time}.png`;
+    let image = `images/andyexpress/advices/${req.user.id}_${time}.png`;
     fs.writeFile(`./public/${image}`, dataBuffer, function (err) {
       if (err) return;
     });
