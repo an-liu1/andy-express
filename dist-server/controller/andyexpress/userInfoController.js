@@ -60,19 +60,19 @@ userInfoController.avatarUpload = function (req, res) {
       console.log(err);
     } else {
       console.log("创建成功");
-
-      _userInfo["default"].updateOne({
-        user_id: req.user.id
-      }, {
-        avatar: imagePath
-      }).then(function (user) {
-        return res.json({
-          success: true,
-          code: 0,
-          data: user
-        });
-      });
     }
+  });
+
+  _userInfo["default"].updateOne({
+    user_id: req.user.id
+  }, {
+    avatar: imagePath
+  }).then(function (user) {
+    return res.json({
+      success: true,
+      code: 0,
+      data: user
+    });
   });
 }; // 后台获取所有用户
 

@@ -40,23 +40,21 @@ userInfoController.avatarUpload = (req, res) => {
   let time = Date.now();
   fs.mkdir("./public/images/andyexpress/avatar", function () {});
   let imagePath = `images/andyexpress/avatar/${req.user.id}_${time}.png`;
-  fs.writeFile(path.resolve(`./public/${imagePath}`), dataBuffer, function (
-    err
-  ) {
+  fs.writeFile(path.resolve(`./public/${imagePath}`), dataBuffer, function (err) {
     if (err) {
       console.log(err);
-    } else {
-      console.log("创建成功");
-      UserInfo.updateOne({ user_id: req.user.id }, { avatar: imagePath }).then(
-        (user) =>
-          res.json({
-            success: true,
-            code: 0,
-            data: user,
-          })
-      );
+    }else{
+      console.log("创建成功")
     }
   });
+  UserInfo.updateOne({ user_id: req.user.id }, { avatar: imagePath }).then(
+    (user) =>
+      res.json({
+        success: true,
+        code: 0,
+        data: user,
+      })
+  );
 };
 
 // 后台获取所有用户
