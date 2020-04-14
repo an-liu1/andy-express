@@ -47,16 +47,16 @@ userInfoController.avatarUpload = (req, res) => {
       console.log(err);
     } else {
       console.log("创建成功");
+      UserInfo.updateOne({ user_id: req.user.id }, { avatar: imagePath }).then(
+        (user) =>
+          res.json({
+            success: true,
+            code: 0,
+            data: user,
+          })
+      );
     }
   });
-  UserInfo.updateOne({ user_id: req.user.id }, { avatar: imagePath }).then(
-    (user) =>
-      res.json({
-        success: true,
-        code: 0,
-        data: user,
-      })
-  );
 };
 
 // 后台获取所有用户
