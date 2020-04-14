@@ -51,6 +51,7 @@ userInfoController.avatarUpload = function (req, res) {
   var imagePath = "images/andyexpress/avatar/".concat(req.user.id, "_").concat(time, ".png");
 
   _fs["default"].writeFile("./public/".concat(imagePath), dataBuffer, function (err) {
+    console.log(err);
     if (err) return;
   });
 
