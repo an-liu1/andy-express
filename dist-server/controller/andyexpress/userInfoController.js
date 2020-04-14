@@ -56,7 +56,11 @@ userInfoController.avatarUpload = function (req, res) {
   var imagePath = "images/andyexpress/avatar/".concat(req.user.id, "_").concat(time, ".png");
 
   _fs["default"].writeFile(_path["default"].resolve("./public/".concat(imagePath)), dataBuffer, function (err) {
-    if (err) return;
+    if (err) {
+      console.log(err);
+    } else {
+      console.log("创建成功");
+    }
   });
 
   _userInfo["default"].updateOne({
