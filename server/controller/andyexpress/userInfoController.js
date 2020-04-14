@@ -1,5 +1,6 @@
 import UserInfo from "../../model/andyexpress/userInfo.model";
 import fs from "fs";
+import path from "path";
 
 const userInfoController = {};
 
@@ -38,7 +39,7 @@ userInfoController.avatarUpload = (req, res) => {
   var dataBuffer = Buffer.from(base64Data, "base64");
   let time = Date.now();
   let imagePath = `images/andyexpress/avatar/${req.user.id}_${time}.png`;
-  fs.writeFileSync(`./public/${imagePath}`, dataBuffer);
+  fs.writeFileSync(path.resolve(`./public/${imagePath}`), dataBuffer);
   UserInfo.updateOne({ user_id: req.user.id }, { avatar: imagePath }).then(
     (user) =>
       res.json({

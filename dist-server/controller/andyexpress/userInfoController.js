@@ -9,6 +9,8 @@ var _userInfo = _interopRequireDefault(require("../../model/andyexpress/userInfo
 
 var _fs = _interopRequireDefault(require("fs"));
 
+var _path = _interopRequireDefault(require("path"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 var userInfoController = {}; // 获取用户信息
@@ -50,7 +52,7 @@ userInfoController.avatarUpload = function (req, res) {
   var time = Date.now();
   var imagePath = "images/andyexpress/avatar/".concat(req.user.id, "_").concat(time, ".png");
 
-  _fs["default"].writeFileSync("./public/".concat(imagePath), dataBuffer);
+  _fs["default"].writeFileSync(_path["default"].resolve("./public/".concat(imagePath)), dataBuffer);
 
   _userInfo["default"].updateOne({
     user_id: req.user.id
