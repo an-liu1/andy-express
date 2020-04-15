@@ -31,7 +31,6 @@ goodsController.submitGoods = (req, res) => {
 goodsController.getGoods = (req, res) => {
   Goods.find({ user_id: req.user.id })
     .then((good) => {
-      console.log(req.user);
       res.json({
         success: true,
         code: 0,

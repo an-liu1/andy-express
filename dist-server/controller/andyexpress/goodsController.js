@@ -43,7 +43,6 @@ goodsController.getGoods = function (req, res) {
   _goods["default"].find({
     user_id: req.user.id
   }).then(function (good) {
-    console.log(req.user);
     res.json({
       success: true,
       code: 0,

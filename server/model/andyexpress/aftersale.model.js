@@ -9,6 +9,7 @@ const aftersaleSchema = new Schema(
     email: { type: String, trim: true },
 
     //客户提交售后
+    order_id: { type: String },
     aftersale_title: { type: String, trim: true },
     aftersale_content: { type: String, trim: true },
     aftersale_image: { type: Array },
