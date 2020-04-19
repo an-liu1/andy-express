@@ -38,7 +38,7 @@ aftersaleController.createAfterSale = (req, res) => {
 
 // 客服反馈售后
 aftersaleController.solveAfterSale = (req, res) => {
-  req.body, (is_solve = 1);
+  req.body.is_solve = 1;
   AfterSale.updateOne({ _id: req.params.id }, { $set: req.body })
     .then((after) => {
       //加邮件反馈给客户

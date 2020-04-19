@@ -78,6 +78,9 @@ var orderFormSchema = new Schema({
       time: Number
     }
   },
+  packageTime: {
+    type: Date
+  },
   // 客户填写订单邮寄地址 （订单状态：待发货）
   shippingProvince: {
     type: String

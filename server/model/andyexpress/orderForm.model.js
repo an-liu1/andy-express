@@ -34,6 +34,7 @@ const orderFormSchema = new Schema(
       EMS: { price: Number, time: Number },
       Special: { price: Number, time: Number },
     },
+    packageTime: { type: Date },
 
     // 客户填写订单邮寄地址 （订单状态：待发货）
     shippingProvince: { type: String },

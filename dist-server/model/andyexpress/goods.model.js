@@ -84,6 +84,13 @@ var goodsSchema = new Schema({
   },
   returnShippingPostcode: {
     type: String
+  },
+  //客服填写退货快递信息
+  returnExpressNumber: {
+    type: String
+  },
+  returnExpressCompany: {
+    type: String
   }
 }, {
   timestamps: true

@@ -27,7 +27,7 @@ ordersController.createOrderForm = function (req, res) {
         _id: i.goodId
       }, {
         $set: {
-          orderStatus: "待打包"
+          goodStatus: "待打包"
         }
       })["catch"](function (err) {
         return res.status(400).json("Error: " + err);
@@ -57,6 +57,7 @@ ordersController.updateOrderForm = function (req, res) {
 
   req.body.orderImg = imagePath;
   req.body.orderStatus = "已打包";
+  req.body.packageTime = time;
 
   _orderForm["default"].updateOne({
     _id: req.params.id
@@ -69,7 +70,7 @@ ordersController.updateOrderForm = function (req, res) {
         _id: i.goodId
       }, {
         $set: {
-          orderStatus: "已打包",
+          goodStatus: "已打包",
           isPackage: 1,
           packageTime: time
         }
@@ -90,19 +91,20 @@ ordersController.updateOrderForm = function (req, res) {
 
 ordersController.orderDelivery = function (req, res) {
   req.body.orderStatus = "待发货";
-
-  _orderForm["default"].updateOne({
-    _id: req.params.id
-  }, {
-    $set: req.body
-  }).then(function (order) {
-    return res.json({
-      success: true,
-      code: 0,
-      data: order
+  req.body.orders.map(function (i) {
+    _orderForm["default"].updateOne({
+      _id: i
+    }, {
+      $set: req.body
+    }).then(function (order) {
+      return res.json({
+        success: true,
+        code: 0,
+        data: order
+      });
+    })["catch"](function (err) {
+      return res.status(400).json("Error: " + err);
     });
-  })["catch"](function (err) {
-    return res.status(400).json("Error: " + err);
   });
 }; // 客服填写订单物流信息详情
 

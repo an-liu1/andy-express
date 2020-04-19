@@ -48,7 +48,7 @@ aftersaleController.createAfterSale = function (req, res) {
 
 
 aftersaleController.solveAfterSale = function (req, res) {
-  req.body, is_solve = 1;
+  req.body.is_solve = 1;
 
   _aftersale["default"].updateOne({
     _id: req.params.id

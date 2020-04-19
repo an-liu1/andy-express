@@ -15,7 +15,7 @@ ordersController.createOrderForm = (req, res) => {
       req.body.orderGoodsList.map((i) => {
         Goods.updateOne(
           { _id: i.goodId },
-          { $set: { orderStatus: "待打包" } }
+          { $set: { goodStatus: "待打包" } }
         ).catch((err) => res.status(400).json("Error: " + err));
       });
       return res.json({
@@ -39,6 +39,7 @@ ordersController.updateOrderForm = (req, res) => {
   });
   req.body.orderImg = imagePath;
   req.body.orderStatus = "已打包";
+  req.body.packageTime = time;
 
   OrderForm.updateOne({ _id: req.params.id }, { $set: req.body })
     .then((order) => {
@@ -46,7 +47,7 @@ ordersController.updateOrderForm = (req, res) => {
       order.orderGoodsList.map((i) => {
         Goods.updateOne(
           { _id: i.goodId },
-          { $set: { orderStatus: "已打包", isPackage: 1, packageTime: time } }
+          { $set: { goodStatus: "已打包", isPackage: 1, packageTime: time } }
         ).catch((err) => res.status(400).json("Error: " + err));
       });
       return res.json({
@@ -61,15 +62,17 @@ ordersController.updateOrderForm = (req, res) => {
 // 客户填写邮寄地址等待发货
 ordersController.orderDelivery = (req, res) => {
   req.body.orderStatus = "待发货";
-  OrderForm.updateOne({ _id: req.params.id }, { $set: req.body })
-    .then((order) => {
-      return res.json({
-        success: true,
-        code: 0,
-        data: order,
-      });
-    })
-    .catch((err) => res.status(400).json("Error: " + err));
+  req.body.orders.map((i) => {
+    OrderForm.updateOne({ _id: i}, { $set: req.body })
+      .then((order) => {
+        return res.json({
+          success: true,
+          code: 0,
+          data: order,
+        });
+      })
+      .catch((err) => res.status(400).json("Error: " + err));
+  });
 };
 
 // 客服填写订单物流信息详情

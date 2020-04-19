@@ -15,7 +15,7 @@ const userInfoSchema = new Schema(
     last_login_time: {
       type: Date,
     },
-    level: { type: String }
+    level: { type: String },
   },
   {
     timestamps: true,

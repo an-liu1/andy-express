@@ -1,0 +1,44 @@
+import Announcement from "../../model/andyexpress/announcement.model";
+
+const announcementController = {};
+
+// 创建公告
+announcementController.createAnnouncement = (req, res) => {
+  Announcement.create(req.body)
+    .then((announcement) =>
+      res.json({
+        success: true,
+        code: 0,
+        data: announcement,
+      })
+    )
+    .catch((err) => res.status(400).json("Error: " + err));
+};
+
+//公告修改
+announcementController.updateAnnouncement = (req, res) => {
+  Announcement.updateOne({ _id: req.params.id }, { $set: req.body })
+    .then((announcement) => {
+      return res.json({
+        success: true,
+        code: 0,
+        data: announcement,
+      });
+    })
+    .catch((err) => res.status(400).json("Error: " + err));
+};
+
+// 后台所有投诉
+announcementController.getAdminAnnouncement = (req, res) => {
+  Announcement.find()
+    .then((announcement) =>
+      res.json({
+        success: true,
+        code: 0,
+        data: announcement,
+      })
+    )
+    .catch((err) => res.status(400).json("Error: " + err));
+};
+
+export default announcementController;
