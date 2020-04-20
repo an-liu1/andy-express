@@ -16,6 +16,20 @@ const userInfoSchema = new Schema(
       type: Date,
     },
     level: { type: String },
+    address: [
+      {
+        ShippingCountry: { type: String },
+        ShippingProvince: { type: String },
+        ShippingCity: { type: String },
+        ShippingAddress: { type: String },
+        ShippingPostcode: { type: String },
+        shippingPhone: { type: String },
+        shippingRecevier: { type: String },
+      },
+    ],
+    birthday: { type: String },
+    phoneNumber: { type: String },
+    gender: { type: String },
   },
   {
     timestamps: true,

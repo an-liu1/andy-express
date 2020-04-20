@@ -156,5 +156,23 @@ goodsController.submitReturnGoods = function (req, res) {
   });
 };
 
+goodsController.searchGoods = function (req, res) {
+  _goods["default"].find({
+    $or: [{
+      localExpressNumber: eval("/".concat(req.body.searchString, "/i"))
+    }, {
+      goodName: eval("/".concat(req.body.searchString, "/i"))
+    }]
+  }).then(function (goods) {
+    return res.json({
+      success: true,
+      code: 0,
+      data: goods
+    });
+  })["catch"](function (err) {
+    return res.status(400).json("Error: " + err);
+  });
+};
+
 var _default = goodsController;
 exports["default"] = _default;

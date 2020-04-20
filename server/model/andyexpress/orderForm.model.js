@@ -41,6 +41,8 @@ const orderFormSchema = new Schema(
     shippingCity: { type: String },
     shippingAddress: { type: String },
     shippingPostcode: { type: String },
+    shippingPhone: { type: String },
+    shippingRecevier: { type: String },
 
     //客服返回订单号及成本初步统计（订单状态：已发货）
     orderShippingNumber: { type: String },

@@ -177,5 +177,25 @@ ordersController.getOrderForm = function (req, res) {
   });
 };
 
+ordersController.searchOrders = function (req, res) {
+  _orderForm["default"].find({
+    $or: [{
+      _id: eval("/".concat(req.body.searchString, "/i"))
+    }, {
+      orderShippingNumber: eval("/".concat(req.body.searchString, "/i"))
+    }, {
+      username: eval("/".concat(req.body.searchString, "/i"))
+    }]
+  }).then(function (goods) {
+    return res.json({
+      success: true,
+      code: 0,
+      data: goods
+    });
+  })["catch"](function (err) {
+    return res.status(400).json("Error: " + err);
+  });
+};
+
 var _default = ordersController;
 exports["default"] = _default;

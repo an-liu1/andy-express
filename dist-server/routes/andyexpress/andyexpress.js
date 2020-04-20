@@ -17,6 +17,8 @@ var _ordersController = _interopRequireDefault(require("../../controller/andyexp
 
 var _aftersaleController = _interopRequireDefault(require("../../controller/andyexpress/aftersaleController"));
 
+var _announcementController = _interopRequireDefault(require("../../controller/andyexpress/announcementController"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 var router = _express["default"].Router();
@@ -70,6 +72,8 @@ router.put("/goodUpdate/:id", _goodsController["default"].updateGoods); // 入�
 router.get("/getAllGoods", _goodsController["default"].getAllGoods); // 获取所有商品
 
 router.post("/submitReturnGoods", _goodsController["default"].submitReturnGoods); //客户发出快递填写退货商品单号及快递商，确认退货
+
+router.post("/searchGoods", _goodsController["default"].searchGoods); //搜索
 //订单
 
 router.put("/updateOrderForm/:id", _ordersController["default"].updateOrderForm); // 客服返回已打包订单详情
@@ -77,6 +81,8 @@ router.put("/updateOrderForm/:id", _ordersController["default"].updateOrderForm)
 router.get("/getAllOrderForm", _ordersController["default"].getAllOrderForm); //获取所有订单
 
 router.put("/orderDelivering/:id", _ordersController["default"].orderDelivering); //客服返回订单号及成本初步统计
+
+router.post("/searchOrders", _ordersController["default"].searchOrders); //搜索
 //售后
 
 router.put("/solveAfterSale/:id", _aftersaleController["default"].solveAfterSale); // 客服反馈售后
@@ -85,6 +91,13 @@ router.get("/getAdminAfterSale", _aftersaleController["default"].getAdminAfterSa
 //advice
 
 router.get("/getAdminAdvice", _advicesController["default"].getAdminAdvice); //获取所有投诉
+//公告与邮件
+
+router.get("/getAdminAnnouncement", _announcementController["default"].getAdminAnnouncement); //获取所有公告
+
+router.post("/createAnnouncement", _announcementController["default"].createAnnouncement); //创建公告
+
+router.put("/updateAnnouncement/:id", _announcementController["default"].updateAnnouncement); //修改公告
 
 var _default = router;
 exports["default"] = _default;

@@ -132,4 +132,22 @@ ordersController.getOrderForm = (req, res) => {
     .catch((err) => res.status(400).json("Error: " + err));
 };
 
+ordersController.searchOrders = (req, res) => {
+  OrderForm.find({
+    $or: [
+      { _id: eval(`/${req.body.searchString}/i`) },
+      { orderShippingNumber: eval(`/${req.body.searchString}/i`) },
+      { username: eval(`/${req.body.searchString}/i`) },
+    ],
+  })
+    .then((goods) =>
+      res.json({
+        success: true,
+        code: 0,
+        data: goods,
+      })
+    )
+    .catch((err) => res.status(400).json("Error: " + err));
+};
+
 export default ordersController;

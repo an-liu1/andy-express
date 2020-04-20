@@ -12,16 +12,19 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "d
 var Schema = _mongoose["default"].Schema;
 var announcementSchema = new Schema({
   title: {
-    type: String,
-    trim: true
+    type: String
   },
-  author: {
-    type: String,
-    trim: true
+  type: {
+    type: String
   },
   content: {
-    type: String,
-    trim: true
+    type: String
+  },
+  importance: {
+    type: Number
+  },
+  summary: {
+    type: String
   }
 }, {
   timestamps: true

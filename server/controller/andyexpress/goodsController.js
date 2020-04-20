@@ -128,4 +128,21 @@ goodsController.submitReturnGoods = (req, res) => {
   });
 };
 
+goodsController.searchGoods = (req, res) => {
+  Goods.find({
+    $or: [
+      { localExpressNumber: eval(`/${req.body.searchString}/i`) },
+      { goodName: eval(`/${req.body.searchString}/i`) },
+    ],
+  })
+    .then((goods) =>
+      res.json({
+        success: true,
+        code: 0,
+        data: goods,
+      })
+    )
+    .catch((err) => res.status(400).json("Error: " + err));
+};
+
 export default goodsController;

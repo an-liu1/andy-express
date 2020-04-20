@@ -28,7 +28,7 @@ announcementController.updateAnnouncement = (req, res) => {
     .catch((err) => res.status(400).json("Error: " + err));
 };
 
-// 后台所有投诉
+// 后台所有公告
 announcementController.getAdminAnnouncement = (req, res) => {
   Announcement.find()
     .then((announcement) =>

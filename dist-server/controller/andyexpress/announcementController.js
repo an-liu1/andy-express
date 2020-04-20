@@ -38,7 +38,7 @@ announcementController.updateAnnouncement = function (req, res) {
   })["catch"](function (err) {
     return res.status(400).json("Error: " + err);
   });
-}; // 后台所有投诉
+}; // 后台所有公告
 
 
 announcementController.getAdminAnnouncement = function (req, res) {

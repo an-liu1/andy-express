@@ -5,6 +5,7 @@ import userInfoController from "../../controller/andyexpress/userInfoController"
 import advicesController from "../../controller/andyexpress/advicesController";
 import ordersController from "../../controller/andyexpress/ordersController";
 import aftersaleController from "../../controller/andyexpress/aftersaleController";
+import announcementController from "../../controller/andyexpress/announcementController";
 
 // USER INTERFACE
 
@@ -44,11 +45,13 @@ router.delete("/goodDelete/:id", goodsController.deleteGoods);
 router.put("/goodUpdate/:id", goodsController.updateGoods); // 入库商品信息填写
 router.get("/getAllGoods", goodsController.getAllGoods); // 获取所有商品
 router.post("/submitReturnGoods", goodsController.submitReturnGoods); //客户发出快递填写退货商品单号及快递商，确认退货
+router.post("/searchGoods", goodsController.searchGoods); //搜索
 
 //订单
 router.put("/updateOrderForm/:id", ordersController.updateOrderForm); // 客服返回已打包订单详情
 router.get("/getAllOrderForm", ordersController.getAllOrderForm); //获取所有订单
 router.put("/orderDelivering/:id", ordersController.orderDelivering); //客服返回订单号及成本初步统计
+router.post("/searchOrders", ordersController.searchOrders); //搜索
 
 //售后
 router.put("/solveAfterSale/:id", aftersaleController.solveAfterSale); // 客服反馈售后
@@ -56,5 +59,16 @@ router.get("/getAdminAfterSale", aftersaleController.getAdminAfterSale); //获�
 
 //advice
 router.get("/getAdminAdvice", advicesController.getAdminAdvice); //获取所有投诉
+
+//公告与邮件
+router.get(
+  "/getAdminAnnouncement",
+  announcementController.getAdminAnnouncement
+); //获取所有公告
+router.post("/createAnnouncement", announcementController.createAnnouncement); //创建公告
+router.put(
+  "/updateAnnouncement/:id",
+  announcementController.updateAnnouncement
+); //修改公告
 
 export default router;

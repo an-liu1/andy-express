@@ -4,9 +4,11 @@ const Schema = mongoose.Schema;
 
 const announcementSchema = new Schema(
   {
-    title: { type: String, trim: true },
-    author: { type: String, trim: true },
-    content: { type: String, trim: true },
+    title: { type: String },
+    type: { type: String },
+    content: { type: String },
+    importance: { type: Number },
+    summary: { type: String },
   },
   {
     timestamps: true,

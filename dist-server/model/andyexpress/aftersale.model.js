@@ -27,6 +27,9 @@ var aftersaleSchema = new Schema({
   order_id: {
     type: String
   },
+  aftersale_type: {
+    type: String
+  },
   aftersale_title: {
     type: String,
     trim: true
