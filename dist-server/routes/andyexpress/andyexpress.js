@@ -43,7 +43,7 @@ router.post("/createOrderForm", _ordersController["default"].createOrderForm); /
 
 router.get("/getOrderForm", _ordersController["default"].getOrderForm); //获取客户所有订单
 
-router.put("/orderDelivery/:id", _ordersController["default"].orderDelivery); // 客户填写订单邮寄地址
+router.put("/orderDelivery", _ordersController["default"].orderDelivery); // 客户填写订单邮寄地址
 
 router.put("/isDeliveryAndRank", _ordersController["default"].isDeliveryAndRank); //客户确定收货及评分
 //售后
@@ -94,6 +94,8 @@ router.get("/getAdminAdvice", _advicesController["default"].getAdminAdvice); //�
 //公告与邮件
 
 router.get("/getAdminAnnouncement", _announcementController["default"].getAdminAnnouncement); //获取所有公告
+
+router.get("/getAAnnouncement/:id", _announcementController["default"].getAAnnouncement); //获取后台具体某条公告
 
 router.post("/createAnnouncement", _announcementController["default"].createAnnouncement); //创建公告
 

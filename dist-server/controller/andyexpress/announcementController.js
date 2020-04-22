@@ -51,6 +51,21 @@ announcementController.getAdminAnnouncement = function (req, res) {
   })["catch"](function (err) {
     return res.status(400).json("Error: " + err);
   });
+}; // 后台具体某条公告
+
+
+announcementController.getAAnnouncement = function (req, res) {
+  _announcement["default"].find({
+    _id: req.params.id
+  }).then(function (announcement) {
+    return res.json({
+      success: true,
+      code: 0,
+      data: announcement
+    });
+  })["catch"](function (err) {
+    return res.status(400).json("Error: " + err);
+  });
 };
 
 var _default = announcementController;

@@ -22,7 +22,7 @@ router.post("/returnGoods", goodsController.returnGoods); // 用户提交退货�
 //订单
 router.post("/createOrderForm", ordersController.createOrderForm); //用户打包创建订单
 router.get("/getOrderForm", ordersController.getOrderForm); //获取客户所有订单
-router.put("/orderDelivery/:id", ordersController.orderDelivery); // 客户填写订单邮寄地址
+router.put("/orderDelivery", ordersController.orderDelivery); // 客户填写订单邮寄地址
 router.put("/isDeliveryAndRank", ordersController.isDeliveryAndRank); //客户确定收货及评分
 
 //售后
@@ -65,6 +65,7 @@ router.get(
   "/getAdminAnnouncement",
   announcementController.getAdminAnnouncement
 ); //获取所有公告
+router.get("/getAAnnouncement/:id", announcementController.getAAnnouncement); //获取后台具体某条公告
 router.post("/createAnnouncement", announcementController.createAnnouncement); //创建公告
 router.put(
   "/updateAnnouncement/:id",
