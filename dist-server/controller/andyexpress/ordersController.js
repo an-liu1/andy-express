@@ -197,5 +197,27 @@ ordersController.searchOrders = function (req, res) {
   });
 };
 
+ordersController.searchOrdersForUser = function (req, res) {
+  _orderForm["default"].find({
+    $or: [{
+      _id: eval("/".concat(req.body.searchString, "/i"))
+    }, {
+      orderShippingNumber: eval("/".concat(req.body.searchString, "/i"))
+    }, {
+      username: eval("/".concat(req.body.searchString, "/i"))
+    }]
+  }, {
+    user_id: req.user.id
+  }).then(function (goods) {
+    return res.json({
+      success: true,
+      code: 0,
+      data: goods
+    });
+  })["catch"](function (err) {
+    return res.status(400).json("Error: " + err);
+  });
+};
+
 var _default = ordersController;
 exports["default"] = _default;

@@ -174,5 +174,25 @@ goodsController.searchGoods = function (req, res) {
   });
 };
 
+goodsController.searchGoodsForUser = function (req, res) {
+  _goods["default"].find({
+    $or: [{
+      localExpressNumber: eval("/".concat(req.body.searchString, "/i"))
+    }, {
+      goodName: eval("/".concat(req.body.searchString, "/i"))
+    }]
+  }, {
+    user_id: req.user.id
+  }).then(function (goods) {
+    return res.json({
+      success: true,
+      code: 0,
+      data: goods
+    });
+  })["catch"](function (err) {
+    return res.status(400).json("Error: " + err);
+  });
+};
+
 var _default = goodsController;
 exports["default"] = _default;

@@ -18,12 +18,14 @@ router.post("/avatarUpload", userInfoController.avatarUpload); //头像上传
 router.post("/goodSubmit", goodsController.submitGoods); //提交国内物流信息（未入库商品）
 router.get("/goodGet", goodsController.getGoods); // 获取用户所有未入库商品
 router.post("/returnGoods", goodsController.returnGoods); // 用户提交退货地址
+router.post("/searchGoodsForUser", goodsController.searchGoodsForUser);
 
 //订单
 router.post("/createOrderForm", ordersController.createOrderForm); //用户打包创建订单
 router.get("/getOrderForm", ordersController.getOrderForm); //获取客户所有订单
 router.put("/orderDelivery", ordersController.orderDelivery); // 客户填写订单邮寄地址
 router.put("/isDeliveryAndRank", ordersController.isDeliveryAndRank); //客户确定收货及评分
+router.post("/searchOrdersForUser", ordersController.searchOrdersForUser);
 
 //售后
 router.post("/createAfterSale", aftersaleController.createAfterSale); //客户提交售后

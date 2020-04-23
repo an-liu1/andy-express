@@ -37,7 +37,8 @@ router.post("/goodSubmit", _goodsController["default"].submitGoods); //提交国
 router.get("/goodGet", _goodsController["default"].getGoods); // 获取用户所有未入库商品
 
 router.post("/returnGoods", _goodsController["default"].returnGoods); // 用户提交退货地址
-//订单
+
+router.post("/searchGoodsForUser", _goodsController["default"].searchGoodsForUser); //订单
 
 router.post("/createOrderForm", _ordersController["default"].createOrderForm); //用户打包创建订单
 
@@ -46,7 +47,8 @@ router.get("/getOrderForm", _ordersController["default"].getOrderForm); //获取
 router.put("/orderDelivery", _ordersController["default"].orderDelivery); // 客户填写订单邮寄地址
 
 router.put("/isDeliveryAndRank", _ordersController["default"].isDeliveryAndRank); //客户确定收货及评分
-//售后
+
+router.post("/searchOrdersForUser", _ordersController["default"].searchOrdersForUser); //售后
 
 router.post("/createAfterSale", _aftersaleController["default"].createAfterSale); //客户提交售后
 

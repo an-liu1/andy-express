@@ -145,4 +145,24 @@ goodsController.searchGoods = (req, res) => {
     .catch((err) => res.status(400).json("Error: " + err));
 };
 
+goodsController.searchGoodsForUser = (req, res) => {
+  Goods.find(
+    {
+      $or: [
+        { localExpressNumber: eval(`/${req.body.searchString}/i`) },
+        { goodName: eval(`/${req.body.searchString}/i`) },
+      ],
+    },
+    { user_id: req.user.id }
+  )
+    .then((goods) =>
+      res.json({
+        success: true,
+        code: 0,
+        data: goods,
+      })
+    )
+    .catch((err) => res.status(400).json("Error: " + err));
+};
+
 export default goodsController;
