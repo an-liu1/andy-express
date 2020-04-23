@@ -65,7 +65,7 @@ ordersController.updateOrderForm = function (req, res) {
     $set: req.body
   }).then(function (order) {
     //加发送邮件提醒订单已生成
-    req.body.orderGoodsList.map(function (i) {
+    req.body.goodsLists.map(function (i) {
       _goods["default"].updateOne({
         _id: i
       }, {

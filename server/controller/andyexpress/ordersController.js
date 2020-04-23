@@ -44,7 +44,7 @@ ordersController.updateOrderForm = (req, res) => {
   OrderForm.updateOne({ _id: req.params.id }, { $set: req.body })
     .then((order) => {
       //加发送邮件提醒订单已生成
-      req.body.orderGoodsList.map((i) => {
+      req.body.goodsLists.map((i) => {
         Goods.updateOne(
           { _id: i },
           { $set: { goodStatus: "已打包", isPackage: 1, packageTime: time } }
