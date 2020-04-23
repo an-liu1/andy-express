@@ -65,7 +65,7 @@ ordersController.updateOrderForm = function (req, res) {
     $set: req.body
   }).then(function (order) {
     //加发送邮件提醒订单已生成
-    order.orderGoodsList.map(function (i) {
+    req.body.orderGoodsList.map(function (i) {
       _goods["default"].updateOne({
         _id: i
       }, {
@@ -90,12 +90,13 @@ ordersController.updateOrderForm = function (req, res) {
 
 
 ordersController.orderDelivery = function (req, res) {
-  req.body.orderStatus = "待发货";
-  req.body.orders.map(function (i) {
+  req.body.map(function (i) {
+    i.orderStatus = "待发货";
+
     _orderForm["default"].updateOne({
-      _id: i
+      _id: i.orderId
     }, {
-      $set: req.body
+      $set: i
     }).then(function (order) {
       return res.json({
         success: true,
