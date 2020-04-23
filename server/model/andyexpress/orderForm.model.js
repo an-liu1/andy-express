@@ -37,6 +37,8 @@ const orderFormSchema = new Schema(
     packageTime: { type: Date },
 
     // 客户填写订单邮寄地址 （订单状态：待发货）
+    orderExpressRetail: { type: String },
+    incomePrice: { type: Number },
     shippingProvince: { type: String },
     shippingCity: { type: String },
     shippingAddress: { type: String },
@@ -46,8 +48,6 @@ const orderFormSchema = new Schema(
 
     //客服返回订单号及成本初步统计（订单状态：已发货）
     orderShippingNumber: { type: String },
-    orderExpressRetail: { type: String },
-    incomePrice: { type: Number },
     costPrice: { type: Number },
 
     // 客户确定收货及评分（订单状态：已签收）

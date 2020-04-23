@@ -24,6 +24,9 @@ var advicesSchema = new Schema({
     trim: true
   },
   //客户提交投书
+  advice_type: {
+    type: String
+  },
   advice_title: {
     type: String,
     trim: true

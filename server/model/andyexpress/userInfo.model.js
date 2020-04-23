@@ -27,7 +27,7 @@ const userInfoSchema = new Schema(
         shippingRecevier: { type: String },
       },
     ],
-    birthday: { type: String },
+    birthday: { type: Date },
     phoneNumber: { type: String },
     gender: { type: String },
   },

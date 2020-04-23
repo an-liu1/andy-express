@@ -55,7 +55,7 @@ var userInfoSchema = new Schema({
     }
   }],
   birthday: {
-    type: String
+    type: Date
   },
   phoneNumber: {
     type: String

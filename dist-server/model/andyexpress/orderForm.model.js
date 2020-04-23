@@ -82,6 +82,12 @@ var orderFormSchema = new Schema({
     type: Date
   },
   // 客户填写订单邮寄地址 （订单状态：待发货）
+  orderExpressRetail: {
+    type: String
+  },
+  incomePrice: {
+    type: Number
+  },
   shippingProvince: {
     type: String
   },
@@ -103,12 +109,6 @@ var orderFormSchema = new Schema({
   //客服返回订单号及成本初步统计（订单状态：已发货）
   orderShippingNumber: {
     type: String
-  },
-  orderExpressRetail: {
-    type: String
-  },
-  incomePrice: {
-    type: Number
   },
   costPrice: {
     type: Number

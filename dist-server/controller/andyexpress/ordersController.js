@@ -67,7 +67,7 @@ ordersController.updateOrderForm = function (req, res) {
     //加发送邮件提醒订单已生成
     order.orderGoodsList.map(function (i) {
       _goods["default"].updateOne({
-        _id: i.goodId
+        _id: i
       }, {
         $set: {
           goodStatus: "已打包",

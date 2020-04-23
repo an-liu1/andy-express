@@ -9,6 +9,7 @@ const advicesSchema = new Schema(
     email: { type: String, trim: true },
 
     //客户提交投书
+    advice_type: { type: String },
     advice_title: { type: String, trim: true },
     advice_content: { type: String, trim: true },
     evident_image: { type: Array },
