@@ -187,11 +187,11 @@ ordersController.searchOrders = function (req, res) {
     }, {
       username: eval("/".concat(req.body.searchString, "/i"))
     }]
-  }).then(function (goods) {
+  }).then(function (orders) {
     return res.json({
       success: true,
       code: 0,
-      data: goods
+      data: orders
     });
   })["catch"](function (err) {
     return res.status(400).json("Error: " + err);
@@ -208,11 +208,11 @@ ordersController.searchOrdersForUser = function (req, res) {
       username: eval("/".concat(req.body.searchString, "/i"))
     }],
     user_id: req.user.id
-  }).then(function (goods) {
+  }).then(function (orders) {
     return res.json({
       success: true,
       code: 0,
-      data: goods
+      data: orders
     });
   })["catch"](function (err) {
     return res.status(400).json("Error: " + err);

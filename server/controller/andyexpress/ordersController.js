@@ -140,30 +140,32 @@ ordersController.searchOrders = (req, res) => {
       { username: eval(`/${req.body.searchString}/i`) },
     ],
   })
-    .then((goods) =>
+    .then((orders) =>
       res.json({
         success: true,
         code: 0,
-        data: goods,
+        data: orders,
       })
     )
     .catch((err) => res.status(400).json("Error: " + err));
 };
 
 ordersController.searchOrdersForUser = (req, res) => {
-  OrderForm.find({
-    $or: [
-      { _id: eval(`/${req.body.searchString}/i`) },
-      { orderShippingNumber: eval(`/${req.body.searchString}/i`) },
-      { username: eval(`/${req.body.searchString}/i`) },
-    ],
-    user_id: req.user.id,
-  })
-    .then((goods) =>
+  OrderForm.find(
+    {
+      $or: [
+        { _id: eval(`/${req.body.searchString}/i`) },
+        { orderShippingNumber: eval(`/${req.body.searchString}/i`) },
+        { username: eval(`/${req.body.searchString}/i`) },
+      ],
+      user_id: req.user.id
+    }
+  )
+    .then((orders) =>
       res.json({
         success: true,
         code: 0,
-        data: goods,
+        data: orders,
       })
     )
     .catch((err) => res.status(400).json("Error: " + err));
