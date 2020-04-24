@@ -162,6 +162,12 @@ goodsController.searchGoods = function (req, res) {
       localExpressNumber: eval("/".concat(req.body.searchString, "/i"))
     }, {
       goodName: eval("/".concat(req.body.searchString, "/i"))
+    }, {
+      username: eval("/".concat(req.body.searchString, "/i"))
+    }, {
+      note: eval("/".concat(req.body.searchString, "/i"))
+    }, {
+      returnExpressNumber: eval("/".concat(req.body.searchString, "/i"))
     }]
   }).then(function (goods) {
     return res.json({
@@ -180,6 +186,12 @@ goodsController.searchGoodsForUser = function (req, res) {
       localExpressNumber: eval("/".concat(req.body.searchString, "/i"))
     }, {
       goodName: eval("/".concat(req.body.searchString, "/i"))
+    }, {
+      username: eval("/".concat(req.body.searchString, "/i"))
+    }, {
+      note: eval("/".concat(req.body.searchString, "/i"))
+    }, {
+      returnExpressNumber: eval("/".concat(req.body.searchString, "/i"))
     }],
     user_id: req.user.id
   }).then(function (goods) {

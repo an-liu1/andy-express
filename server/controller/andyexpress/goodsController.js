@@ -133,6 +133,9 @@ goodsController.searchGoods = (req, res) => {
     $or: [
       { localExpressNumber: eval(`/${req.body.searchString}/i`) },
       { goodName: eval(`/${req.body.searchString}/i`) },
+      { username: eval(`/${req.body.searchString}/i`) },
+      { note: eval(`/${req.body.searchString}/i`) },
+      { returnExpressNumber: eval(`/${req.body.searchString}/i`) },
     ],
   })
     .then((goods) =>
@@ -150,6 +153,9 @@ goodsController.searchGoodsForUser = (req, res) => {
     $or: [
       { localExpressNumber: eval(`/${req.body.searchString}/i`) },
       { goodName: eval(`/${req.body.searchString}/i`) },
+      { username: eval(`/${req.body.searchString}/i`) },
+      { note: eval(`/${req.body.searchString}/i`) },
+      { returnExpressNumber: eval(`/${req.body.searchString}/i`) },
     ],
     user_id: req.user.id,
   })
