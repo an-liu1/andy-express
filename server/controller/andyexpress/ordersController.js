@@ -135,7 +135,6 @@ ordersController.getOrderForm = (req, res) => {
 ordersController.searchOrders = (req, res) => {
   OrderForm.find({
     $or: [
-      { _id: eval(`ObjectId(/${req.body.searchString}/i)`) },
       { orderShippingNumber: eval(`/${req.body.searchString}/i`) },
       { username: eval(`/${req.body.searchString}/i`) },
     ],
@@ -154,7 +153,6 @@ ordersController.searchOrdersForUser = (req, res) => {
   OrderForm.find(
     {
       $or: [
-        { _id: eval(`/ObjectId(${req.body.searchString})/i`) },
         { orderShippingNumber: eval(`/${req.body.searchString}/i`) },
         { username: eval(`/${req.body.searchString}/i`) },
       ],
