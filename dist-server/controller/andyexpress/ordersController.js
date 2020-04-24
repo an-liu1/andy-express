@@ -206,8 +206,7 @@ ordersController.searchOrdersForUser = function (req, res) {
       orderShippingNumber: eval("/".concat(req.body.searchString, "/i"))
     }, {
       username: eval("/".concat(req.body.searchString, "/i"))
-    }]
-  }, {
+    }],
     user_id: req.user.id
   }).then(function (goods) {
     return res.json({
