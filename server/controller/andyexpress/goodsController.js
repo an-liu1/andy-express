@@ -146,15 +146,13 @@ goodsController.searchGoods = (req, res) => {
 };
 
 goodsController.searchGoodsForUser = (req, res) => {
-  Goods.find(
-    {
-      $or: [
-        { localExpressNumber: eval(`/${req.body.searchString}/i`) },
-        { goodName: eval(`/${req.body.searchString}/i`) },
-      ],
-    },
-    { user_id: req.user.id }
-  )
+  Goods.find({
+    $or: [
+      { localExpressNumber: eval(`/${req.body.searchString}/i`) },
+      { goodName: eval(`/${req.body.searchString}/i`) },
+    ],
+    user_id: req.user.id,
+  })
     .then((goods) =>
       res.json({
         success: true,

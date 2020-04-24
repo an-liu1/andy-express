@@ -180,8 +180,7 @@ goodsController.searchGoodsForUser = function (req, res) {
       localExpressNumber: eval("/".concat(req.body.searchString, "/i"))
     }, {
       goodName: eval("/".concat(req.body.searchString, "/i"))
-    }]
-  }, {
+    }],
     user_id: req.user.id
   }).then(function (goods) {
     return res.json({
