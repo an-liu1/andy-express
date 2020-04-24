@@ -180,9 +180,8 @@ ordersController.getOrderForm = function (req, res) {
 
 ordersController.searchOrders = function (req, res) {
   _orderForm["default"].find({
-    $or: [{
-      _id: eval("/".concat(req.body.searchString, "/i"))
-    }, {
+    $or: [// { _id: eval(`/${req.body.searchString}/i`) },
+    {
       orderShippingNumber: eval("/".concat(req.body.searchString, "/i"))
     }, {
       username: eval("/".concat(req.body.searchString, "/i"))
@@ -200,9 +199,8 @@ ordersController.searchOrders = function (req, res) {
 
 ordersController.searchOrdersForUser = function (req, res) {
   _orderForm["default"].find({
-    $or: [{
-      _id: eval("/".concat(req.body.searchString, "/i"))
-    }, {
+    $or: [// { _id: eval(`/${req.body.searchString}/i`) },
+    {
       orderShippingNumber: eval("/".concat(req.body.searchString, "/i"))
     }, {
       username: eval("/".concat(req.body.searchString, "/i"))
