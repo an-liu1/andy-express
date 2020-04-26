@@ -123,7 +123,7 @@ authController.userLogin = function (req, res) {
                   username: user.username,
                   email: user.email,
                   last_login_time: new Date(),
-                  level: "normal"
+                  level: "Normal/普通会员"
                 });
               }
 

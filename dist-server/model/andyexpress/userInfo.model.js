@@ -20,7 +20,7 @@ var userInfoSchema = new Schema({
   },
   avatar: {
     type: String,
-    "default": "https://www.seekpng.com/png/full/428-4287240_no-avatar-user-circle-icon-png.png"
+    "default": "images/andyexpress/avatar/default_avatar.png"
   },
   email: {
     type: String

@@ -13,6 +13,9 @@ const advicesSchema = new Schema(
     advice_title: { type: String, trim: true },
     advice_content: { type: String, trim: true },
     evident_image: { type: Array },
+
+    //反馈与提高
+    advice_improvement: { type: String },
   },
   {
     timestamps: true,

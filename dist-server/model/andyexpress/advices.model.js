@@ -37,6 +37,10 @@ var advicesSchema = new Schema({
   },
   evident_image: {
     type: Array
+  },
+  //反馈与提高
+  advice_improvement: {
+    type: String
   }
 }, {
   timestamps: true
