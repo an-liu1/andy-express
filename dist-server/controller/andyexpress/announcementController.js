@@ -68,5 +68,17 @@ announcementController.getAAnnouncement = function (req, res) {
   });
 };
 
+announcementController.deleteAnnouncement = function (req, res) {
+  _announcement["default"].findByIdAndDelete(req.params.id).then(function (announcement) {
+    return res.json({
+      success: true,
+      code: 0,
+      data: announcement
+    });
+  })["catch"](function (err) {
+    return res.status(400).json("Error: " + err);
+  });
+};
+
 var _default = announcementController;
 exports["default"] = _default;

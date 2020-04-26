@@ -43,7 +43,19 @@ announcementController.getAdminAnnouncement = (req, res) => {
 
 // 后台具体某条公告
 announcementController.getAAnnouncement = (req, res) => {
-  Announcement.find({ _id: req.params.id})
+  Announcement.find({ _id: req.params.id })
+    .then((announcement) =>
+      res.json({
+        success: true,
+        code: 0,
+        data: announcement,
+      })
+    )
+    .catch((err) => res.status(400).json("Error: " + err));
+};
+
+announcementController.deleteAnnouncement = (req, res) => {
+  Announcement.findByIdAndDelete(req.params.id)
     .then((announcement) =>
       res.json({
         success: true,

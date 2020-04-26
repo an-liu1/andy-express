@@ -73,5 +73,9 @@ router.put(
   "/updateAnnouncement/:id",
   announcementController.updateAnnouncement
 ); //修改公告
+router.delete(
+  "/deleteAnnouncement/:id",
+  announcementController.deleteAnnouncement
+); // 删除公告
 
 export default router;

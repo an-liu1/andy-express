@@ -103,5 +103,7 @@ router.post("/createAnnouncement", _announcementController["default"].createAnno
 
 router.put("/updateAnnouncement/:id", _announcementController["default"].updateAnnouncement); //修改公告
 
+router["delete"]("/deleteAnnouncement/:id", _announcementController["default"].deleteAnnouncement); // 删除公告
+
 var _default = router;
 exports["default"] = _default;
