@@ -53,6 +53,9 @@ const orderFormSchema = new Schema(
     // 客户确定收货及评分（订单状态：已签收）
     is_delivery: { type: Boolean, default: 0 },
     orderEvaluate: { type: String },
+
+    //赔付
+    compensation: { type: String },
   },
   {
     timestamps: true,

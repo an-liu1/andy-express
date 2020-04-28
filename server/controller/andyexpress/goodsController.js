@@ -27,19 +27,6 @@ goodsController.submitGoods = (req, res) => {
     .catch((err) => res.status(400).json("Error: " + err));
 };
 
-// 用户获取自己所有物品
-goodsController.getGoods = (req, res) => {
-  Goods.find({ user_id: req.user.id })
-    .then((good) => {
-      res.json({
-        success: true,
-        code: 0,
-        data: good,
-      });
-    })
-    .catch((err) => res.status(400).json("Error: " + err));
-};
-
 // 后台更新进仓库物品信息
 goodsController.updateGoods = (req, res) => {
   let good_image = req.body.goodImg;
@@ -83,19 +70,6 @@ goodsController.deleteGoods = (req, res) => {
     .catch((err) => res.status(400).json("Error: " + err));
 };
 
-// 后台获取全部物品信息
-goodsController.getAllGoods = (req, res) => {
-  Goods.find()
-    .then((good) =>
-      res.json({
-        success: true,
-        code: 0,
-        data: good,
-      })
-    )
-    .catch((err) => res.status(400).json("Error: " + err));
-};
-
 // 提交退货
 goodsController.returnGoods = (req, res) => {
   req.body.goodStatus = "退货中";
@@ -128,7 +102,49 @@ goodsController.submitReturnGoods = (req, res) => {
   });
 };
 
+// 用户获取自己所有物品
+goodsController.getGoods = (req, res) => {
+  const pageOptions = {
+    page: parseInt(req.params.page) || 0,
+    size: parseInt(req.params.size) || 10,
+  };
+  Goods.find({ user_id: req.user.id, goodStatus: req.params.status })
+    .skip(pageOptions.page * pageOptions.size)
+    .limit(pageOptions.size)
+    .then((good) => {
+      res.json({
+        success: true,
+        code: 0,
+        data: good,
+      });
+    })
+    .catch((err) => res.status(400).json("Error: " + err));
+};
+
+// 后台获取全部物品信息
+goodsController.getAllGoods = (req, res) => {
+  const pageOptions = {
+    page: parseInt(req.params.page) || 0,
+    size: parseInt(req.params.size) || 10,
+  };
+  Goods.find({ goodStatus: req.params.status })
+    .skip(pageOptions.page * pageOptions.size)
+    .limit(pageOptions.size)
+    .then((good) =>
+      res.json({
+        success: true,
+        code: 0,
+        data: good,
+      })
+    )
+    .catch((err) => res.status(400).json("Error: " + err));
+};
+
 goodsController.searchGoods = (req, res) => {
+  const pageOptions = {
+    page: parseInt(req.params.page) || 0,
+    size: parseInt(req.params.size) || 10,
+  };
   Goods.find({
     $or: [
       { localExpressNumber: eval(`/${req.body.searchString}/i`) },
@@ -137,7 +153,10 @@ goodsController.searchGoods = (req, res) => {
       { note: eval(`/${req.body.searchString}/i`) },
       { returnExpressNumber: eval(`/${req.body.searchString}/i`) },
     ],
+    goodStatus: req.params.status,
   })
+    .skip(pageOptions.page * pageOptions.size)
+    .limit(pageOptions.size)
     .then((goods) =>
       res.json({
         success: true,
@@ -149,6 +168,10 @@ goodsController.searchGoods = (req, res) => {
 };
 
 goodsController.searchGoodsForUser = (req, res) => {
+  const pageOptions = {
+    page: parseInt(req.params.page) || 0,
+    size: parseInt(req.params.size) || 10,
+  };
   Goods.find({
     $or: [
       { localExpressNumber: eval(`/${req.body.searchString}/i`) },
@@ -158,7 +181,10 @@ goodsController.searchGoodsForUser = (req, res) => {
       { returnExpressNumber: eval(`/${req.body.searchString}/i`) },
     ],
     user_id: req.user.id,
+    goodStatus: req.params.status,
   })
+    .skip(pageOptions.page * pageOptions.size)
+    .limit(pageOptions.size)
     .then((goods) =>
       res.json({
         success: true,
@@ -167,6 +193,14 @@ goodsController.searchGoodsForUser = (req, res) => {
       })
     )
     .catch((err) => res.status(400).json("Error: " + err));
+};
+
+goodsController.getWords = (req, res) => {
+  res.json({
+    success: true,
+    code: 0,
+    data: "setting",
+  });
 };
 
 export default goodsController;

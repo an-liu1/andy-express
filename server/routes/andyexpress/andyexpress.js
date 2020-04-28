@@ -16,9 +16,12 @@ router.post("/avatarUpload", userInfoController.avatarUpload); //头像上传
 
 //good
 router.post("/goodSubmit", goodsController.submitGoods); //提交国内物流信息（未入库商品）
-router.get("/goodGet", goodsController.getGoods); // 获取用户所有未入库商品
+router.get("/goodGet/:status/:page/:size", goodsController.getGoods); // 获取用户所有未入库商品
 router.post("/returnGoods", goodsController.returnGoods); // 用户提交退货地址
-router.post("/searchGoodsForUser", goodsController.searchGoodsForUser);
+router.post(
+  "/searchGoodsForUser/:status/:page/:size",
+  goodsController.searchGoodsForUser
+);
 
 //订单
 router.post("/createOrderForm", ordersController.createOrderForm); //用户打包创建订单
@@ -45,9 +48,9 @@ router.get("/getAllUser", userInfoController.getAllUser); // 后台获取所有�
 //good
 router.delete("/goodDelete/:id", goodsController.deleteGoods);
 router.put("/goodUpdate/:id", goodsController.updateGoods); // 入库商品信息填写
-router.get("/getAllGoods", goodsController.getAllGoods); // 获取所有商品
+router.get("/getAllGoods/:status/:page/:size", goodsController.getAllGoods); // 获取所有商品
 router.post("/submitReturnGoods", goodsController.submitReturnGoods); //客户发出快递填写退货商品单号及快递商，确认退货
-router.post("/searchGoods", goodsController.searchGoods); //搜索
+router.post("/searchGoods/:status/:page/:size", goodsController.searchGoods); //搜索
 
 //订单
 router.put("/updateOrderForm/:id", ordersController.updateOrderForm); // 客服返回已打包订单详情
@@ -61,6 +64,7 @@ router.get("/getAdminAfterSale", aftersaleController.getAdminAfterSale); //获�
 
 //advice
 router.get("/getAdminAdvice", advicesController.getAdminAdvice); //获取所有投诉
+router.get("/updateAdvice/:id", advicesController.updateAdvice); //客服反馈建议
 
 //公告与邮件
 router.get(
@@ -77,5 +81,7 @@ router.delete(
   "/deleteAnnouncement/:id",
   announcementController.deleteAnnouncement
 ); // 删除公告
+
+router.get("/getWords", goodsController.getWords); //获取后台具体某条公告
 
 export default router;

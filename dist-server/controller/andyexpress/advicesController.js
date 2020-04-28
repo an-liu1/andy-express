@@ -31,6 +31,7 @@ advicesController.createAdvice = function (req, res) {
     user_id: req.user.id,
     email: req.user.email,
     advice_title: req.body.advice_title,
+    advice_type: req.body.advice_type,
     advice_content: req.body.advice_content,
     evident_image: imagePath
   };
@@ -79,6 +80,24 @@ advicesController.getUserAdvice = function (req, res) {
 
 advicesController.getAdminAdvice = function (req, res) {
   _advices["default"].find().then(function (advice) {
+    return res.json({
+      success: true,
+      code: 0,
+      data: advice
+    });
+  })["catch"](function (err) {
+    return res.status(400).json("Error: " + err);
+  });
+}; // 客服反馈建议
+
+
+advicesController.updateAdvice = function (req, res) {
+  _advices["default"].updateOne({
+    _id: req.params.id
+  }, {
+    $set: req.body
+  }).then(function (advice) {
+    //加邮件反馈给客户
     return res.json({
       success: true,
       code: 0,

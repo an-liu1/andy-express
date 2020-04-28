@@ -21,6 +21,7 @@ advicesController.createAdvice = (req, res) => {
     user_id: req.user.id,
     email: req.user.email,
     advice_title: req.body.advice_title,
+    advice_type: req.body.advice_type,
     advice_content: req.body.advice_content,
     evident_image: imagePath,
   };
@@ -74,5 +75,20 @@ advicesController.getAdminAdvice = (req, res) => {
     )
     .catch((err) => res.status(400).json("Error: " + err));
 };
+
+// 客服反馈建议
+advicesController.updateAdvice = (req, res) => {
+  Advices.updateOne({ _id: req.params.id }, { $set: req.body })
+    .then((advice) => {
+      //加邮件反馈给客户
+      return res.json({
+        success: true,
+        code: 0,
+        data: advice,
+      });
+    })
+    .catch((err) => res.status(400).json("Error: " + err));
+};
+
 
 export default advicesController;

@@ -7,6 +7,8 @@ exports["default"] = void 0;
 
 var _aftersale = _interopRequireDefault(require("../../model/andyexpress/aftersale.model"));
 
+var _orderForm = _interopRequireDefault(require("../../model/andyexpress/orderForm.model"));
+
 var _fs = _interopRequireDefault(require("fs"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
@@ -55,7 +57,15 @@ aftersaleController.solveAfterSale = function (req, res) {
   }, {
     $set: req.body
   }).then(function (after) {
-    //加邮件反馈给客户
+    _orderForm["default"].updateOne({
+      _id: req.body.order_id
+    }, {
+      $set: {
+        compensation: req.body.compensation
+      }
+    }); //加邮件反馈给客户
+
+
     return res.json({
       success: true,
       code: 0,

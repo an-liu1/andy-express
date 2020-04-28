@@ -120,6 +120,10 @@ var orderFormSchema = new Schema({
   },
   orderEvaluate: {
     type: String
+  },
+  //赔付
+  compensation: {
+    type: String
   }
 }, {
   timestamps: true

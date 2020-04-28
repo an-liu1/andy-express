@@ -36,21 +36,6 @@ goodsController.submitGoods = function (req, res) {
   })["catch"](function (err) {
     return res.status(400).json("Error: " + err);
   });
-}; // 用户获取自己所有物品
-
-
-goodsController.getGoods = function (req, res) {
-  _goods["default"].find({
-    user_id: req.user.id
-  }).then(function (good) {
-    res.json({
-      success: true,
-      code: 0,
-      data: good
-    });
-  })["catch"](function (err) {
-    return res.status(400).json("Error: " + err);
-  });
 }; // 后台更新进仓库物品信息
 
 
@@ -101,19 +86,6 @@ goodsController.deleteGoods = function (req, res) {
   })["catch"](function (err) {
     return res.status(400).json("Error: " + err);
   });
-}; // 后台获取全部物品信息
-
-
-goodsController.getAllGoods = function (req, res) {
-  _goods["default"].find().then(function (good) {
-    return res.json({
-      success: true,
-      code: 0,
-      data: good
-    });
-  })["catch"](function (err) {
-    return res.status(400).json("Error: " + err);
-  });
 }; // 提交退货
 
 
@@ -154,33 +126,55 @@ goodsController.submitReturnGoods = function (req, res) {
       return res.status(400).json("Error: " + err);
     });
   });
-};
+}; // 用户获取自己所有物品
 
-goodsController.searchGoods = function (req, res) {
+
+goodsController.getGoods = function (req, res) {
+  var pageOptions = {
+    page: parseInt(req.params.page) || 0,
+    size: parseInt(req.params.size) || 10
+  };
+
   _goods["default"].find({
-    $or: [{
-      localExpressNumber: eval("/".concat(req.body.searchString, "/i"))
-    }, {
-      goodName: eval("/".concat(req.body.searchString, "/i"))
-    }, {
-      username: eval("/".concat(req.body.searchString, "/i"))
-    }, {
-      note: eval("/".concat(req.body.searchString, "/i"))
-    }, {
-      returnExpressNumber: eval("/".concat(req.body.searchString, "/i"))
-    }]
-  }).then(function (goods) {
+    user_id: req.user.id,
+    goodStatus: req.params.status
+  }).skip(pageOptions.page * pageOptions.size).limit(pageOptions.size).then(function (good) {
+    res.json({
+      success: true,
+      code: 0,
+      data: good
+    });
+  })["catch"](function (err) {
+    return res.status(400).json("Error: " + err);
+  });
+}; // 后台获取全部物品信息
+
+
+goodsController.getAllGoods = function (req, res) {
+  var pageOptions = {
+    page: parseInt(req.params.page) || 0,
+    size: parseInt(req.params.size) || 10
+  };
+
+  _goods["default"].find({
+    goodStatus: req.params.status
+  }).skip(pageOptions.page * pageOptions.size).limit(pageOptions.size).then(function (good) {
     return res.json({
       success: true,
       code: 0,
-      data: goods
+      data: good
     });
   })["catch"](function (err) {
     return res.status(400).json("Error: " + err);
   });
 };
 
-goodsController.searchGoodsForUser = function (req, res) {
+goodsController.searchGoods = function (req, res) {
+  var pageOptions = {
+    page: parseInt(req.params.page) || 0,
+    size: parseInt(req.params.size) || 10
+  };
+
   _goods["default"].find({
     $or: [{
       localExpressNumber: eval("/".concat(req.body.searchString, "/i"))
@@ -193,8 +187,8 @@ goodsController.searchGoodsForUser = function (req, res) {
     }, {
       returnExpressNumber: eval("/".concat(req.body.searchString, "/i"))
     }],
-    user_id: req.user.id
-  }).then(function (goods) {
+    goodStatus: req.params.status
+  }).skip(pageOptions.page * pageOptions.size).limit(pageOptions.size).then(function (goods) {
     return res.json({
       success: true,
       code: 0,
@@ -202,6 +196,45 @@ goodsController.searchGoodsForUser = function (req, res) {
     });
   })["catch"](function (err) {
     return res.status(400).json("Error: " + err);
+  });
+};
+
+goodsController.searchGoodsForUser = function (req, res) {
+  var pageOptions = {
+    page: parseInt(req.params.page) || 0,
+    size: parseInt(req.params.size) || 10
+  };
+
+  _goods["default"].find({
+    $or: [{
+      localExpressNumber: eval("/".concat(req.body.searchString, "/i"))
+    }, {
+      goodName: eval("/".concat(req.body.searchString, "/i"))
+    }, {
+      username: eval("/".concat(req.body.searchString, "/i"))
+    }, {
+      note: eval("/".concat(req.body.searchString, "/i"))
+    }, {
+      returnExpressNumber: eval("/".concat(req.body.searchString, "/i"))
+    }],
+    user_id: req.user.id,
+    goodStatus: req.params.status
+  }).skip(pageOptions.page * pageOptions.size).limit(pageOptions.size).then(function (goods) {
+    return res.json({
+      success: true,
+      code: 0,
+      data: goods
+    });
+  })["catch"](function (err) {
+    return res.status(400).json("Error: " + err);
+  });
+};
+
+goodsController.getWords = function (req, res) {
+  res.json({
+    success: true,
+    code: 0,
+    data: "setting"
   });
 };
 

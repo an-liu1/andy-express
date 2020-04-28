@@ -1,4 +1,5 @@
 import AfterSale from "../../model/andyexpress/aftersale.model";
+import OrderForm from "../../model/andyexpress/orderForm.model";
 import fs from "fs";
 
 const aftersaleController = {};
@@ -41,6 +42,10 @@ aftersaleController.solveAfterSale = (req, res) => {
   req.body.is_solve = 1;
   AfterSale.updateOne({ _id: req.params.id }, { $set: req.body })
     .then((after) => {
+      OrderForm.updateOne(
+        { _id: req.body.order_id },
+        { $set: { compensation: req.body.compensation } }
+      );
       //加邮件反馈给客户
       return res.json({
         success: true,
