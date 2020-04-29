@@ -228,9 +228,12 @@ goodsController.searchGoodsForUser = function (req, res) {
       returnExpressNumber: eval("/".concat(req.body.searchString, "/i"))
     }],
     user_id: req.user.id,
-    goodStatus: req.params.status || req.params.status1
+    goodStatus: req.params.status
   }).skip(pageOptions.page * pageOptions.size).limit(pageOptions.size).then(function (goods) {
-    return res.json({
+    req.params.status1 ? goods = goods.filter(function (i) {
+      return i.goodStatus === req.params.status1;
+    }) : goods;
+    res.json({
       success: true,
       code: 0,
       data: goods
