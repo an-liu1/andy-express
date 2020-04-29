@@ -165,7 +165,9 @@ goodsController.searchGoods = (req, res) => {
       { note: eval(`/${req.body.searchString}/i`) },
       { returnExpressNumber: eval(`/${req.body.searchString}/i`) },
     ],
-    goodStatus: req.params.status || req.params.status1 || req.params.status2,
+    goodStatus: {
+      $in: [req.params.status, req.params.status1, req.params.status2],
+    },
   })
     .skip(pageOptions.page * pageOptions.size)
     .limit(pageOptions.size)
@@ -193,7 +195,7 @@ goodsController.searchGoodsForUser = (req, res) => {
       { returnExpressNumber: eval(`/${req.body.searchString}/i`) },
     ],
     user_id: req.user.id,
-    goodStatus: { $all: [req.params.status, req.params.status1] },
+    goodStatus: { $in: [req.params.status, req.params.status1] },
   })
     .skip(pageOptions.page * pageOptions.size)
     .limit(pageOptions.size)
