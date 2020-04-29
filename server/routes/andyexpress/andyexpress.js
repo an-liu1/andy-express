@@ -19,7 +19,7 @@ router.post("/goodSubmit", goodsController.submitGoods); //提交国内物流信
 router.get("/goodGet/:status/:page/:size/:status1", goodsController.getGoods); // 获取用户所有未入库商品
 router.post("/returnGoods", goodsController.returnGoods); // 用户提交退货地址
 router.post(
-  "/searchGoodsForUser/:status/:page/:size",
+  "/searchGoodsForUser/:status/:page/:size/:status1",
   goodsController.searchGoodsForUser
 );
 

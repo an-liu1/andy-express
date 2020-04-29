@@ -38,7 +38,7 @@ router.get("/goodGet/:status/:page/:size/:status1", _goodsController["default"].
 
 router.post("/returnGoods", _goodsController["default"].returnGoods); // 用户提交退货地址
 
-router.post("/searchGoodsForUser/:status/:page/:size", _goodsController["default"].searchGoodsForUser); //订单
+router.post("/searchGoodsForUser/:status/:page/:size/:status1", _goodsController["default"].searchGoodsForUser); //订单
 
 router.post("/createOrderForm", _ordersController["default"].createOrderForm); //用户打包创建订单
 
