@@ -191,22 +191,20 @@ goodsController.searchGoodsForUser = (req, res) => {
       { username: eval(`/${req.body.searchString}/i`) },
       { note: eval(`/${req.body.searchString}/i`) },
       { returnExpressNumber: eval(`/${req.body.searchString}/i`) },
+      { goodStatus: req.params.status },
+      { goodStatus: req.params.status1 },
     ],
     user_id: req.user.id,
-    goodStatus: req.params.status,
   })
     .skip(pageOptions.page * pageOptions.size)
     .limit(pageOptions.size)
-    .then((goods) => {
-      req.params.status1
-        ? (goods = goods.filter((i) => i.goodStatus === req.params.status1))
-        : goods;
+    .then((goods) =>
       res.json({
         success: true,
         code: 0,
         data: goods,
-      });
-    })
+      })
+    )
     .catch((err) => res.status(400).json("Error: " + err));
 };
 
