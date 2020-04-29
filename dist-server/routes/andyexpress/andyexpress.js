@@ -55,6 +55,8 @@ router.post("/createAfterSale", _aftersaleController["default"].createAfterSale)
 router.get("/getUserAfterSale", _aftersaleController["default"].getUserAfterSale); //获取客户所有售后
 
 router.get("/getAfterSale/:id", _aftersaleController["default"].getAfterSale); //具体某个客户售后
+
+router.put("/conformAfterSale/:id", _aftersaleController["default"].conformAfterSale); //客户确认同意售后方案
 //advice
 
 router.post("/createAdvice", _advicesController["default"].createAdvice); // 客户提交投诉
@@ -94,7 +96,7 @@ router.get("/getAdminAfterSale", _aftersaleController["default"].getAdminAfterSa
 
 router.get("/getAdminAdvice", _advicesController["default"].getAdminAdvice); //获取所有投诉
 
-router.get("/updateAdvice/:id", _advicesController["default"].updateAdvice); //客服反馈建议
+router.put("/updateAdvice/:id", _advicesController["default"].updateAdvice); //客服反馈建议
 //公告与邮件
 
 router.get("/getAdminAnnouncement", _announcementController["default"].getAdminAnnouncement); //获取所有公告
@@ -106,8 +108,6 @@ router.post("/createAnnouncement", _announcementController["default"].createAnno
 router.put("/updateAnnouncement/:id", _announcementController["default"].updateAnnouncement); //修改公告
 
 router["delete"]("/deleteAnnouncement/:id", _announcementController["default"].deleteAnnouncement); // 删除公告
-
-router.get("/getWords", _goodsController["default"].getWords); //获取后台具体某条公告
 
 var _default = router;
 exports["default"] = _default;

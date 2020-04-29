@@ -50,8 +50,6 @@ aftersaleController.createAfterSale = function (req, res) {
 
 
 aftersaleController.solveAfterSale = function (req, res) {
-  req.body.is_solve = 1;
-
   _aftersale["default"].updateOne({
     _id: req.params.id
   }, {
@@ -66,6 +64,25 @@ aftersaleController.solveAfterSale = function (req, res) {
     }); //加邮件反馈给客户
 
 
+    return res.json({
+      success: true,
+      code: 0,
+      data: after
+    });
+  })["catch"](function (err) {
+    return res.status(400).json("Error: " + err);
+  });
+}; //客户确认同意售后方案
+
+
+aftersaleController.conformAfterSale = function (req, res) {
+  req.body.is_solve = 1;
+
+  _aftersale["default"].updateOne({
+    _id: req.params.id
+  }, {
+    $set: req.body
+  }).then(function (after) {
     return res.json({
       success: true,
       code: 0,

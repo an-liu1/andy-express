@@ -39,14 +39,31 @@ aftersaleController.createAfterSale = (req, res) => {
 
 // 客服反馈售后
 aftersaleController.solveAfterSale = (req, res) => {
-  req.body.is_solve = 1;
   AfterSale.updateOne({ _id: req.params.id }, { $set: req.body })
     .then((after) => {
       OrderForm.updateOne(
         { _id: req.body.order_id },
-        { $set: { compensation: req.body.compensation } }
+        {
+          $set: {
+            compensation: req.body.compensation,
+          },
+        }
       );
       //加邮件反馈给客户
+      return res.json({
+        success: true,
+        code: 0,
+        data: after,
+      });
+    })
+    .catch((err) => res.status(400).json("Error: " + err));
+};
+
+//客户确认同意售后方案
+aftersaleController.conformAfterSale = (req, res) => {
+  req.body.is_solve = 1;
+  AfterSale.updateOne({ _id: req.params.id }, { $set: req.body })
+    .then((after) => {
       return res.json({
         success: true,
         code: 0,

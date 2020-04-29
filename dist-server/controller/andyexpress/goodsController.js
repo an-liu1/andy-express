@@ -230,13 +230,5 @@ goodsController.searchGoodsForUser = function (req, res) {
   });
 };
 
-goodsController.getWords = function (req, res) {
-  res.json({
-    success: true,
-    code: 0,
-    data: "setting"
-  });
-};
-
 var _default = goodsController;
 exports["default"] = _default;

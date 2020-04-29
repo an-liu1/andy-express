@@ -195,12 +195,4 @@ goodsController.searchGoodsForUser = (req, res) => {
     .catch((err) => res.status(400).json("Error: " + err));
 };
 
-goodsController.getWords = (req, res) => {
-  res.json({
-    success: true,
-    code: 0,
-    data: "setting",
-  });
-};
-
 export default goodsController;

@@ -34,6 +34,7 @@ router.post("/searchOrdersForUser", ordersController.searchOrdersForUser);
 router.post("/createAfterSale", aftersaleController.createAfterSale); //客户提交售后
 router.get("/getUserAfterSale", aftersaleController.getUserAfterSale); //获取客户所有售后
 router.get("/getAfterSale/:id", aftersaleController.getAfterSale); //具体某个客户售后
+router.put("/conformAfterSale/:id", aftersaleController.conformAfterSale);//客户确认同意售后方案
 
 //advice
 router.post("/createAdvice", advicesController.createAdvice); // 客户提交投诉
@@ -64,7 +65,7 @@ router.get("/getAdminAfterSale", aftersaleController.getAdminAfterSale); //获�
 
 //advice
 router.get("/getAdminAdvice", advicesController.getAdminAdvice); //获取所有投诉
-router.get("/updateAdvice/:id", advicesController.updateAdvice); //客服反馈建议
+router.put("/updateAdvice/:id", advicesController.updateAdvice); //客服反馈建议
 
 //公告与邮件
 router.get(
@@ -81,7 +82,5 @@ router.delete(
   "/deleteAnnouncement/:id",
   announcementController.deleteAnnouncement
 ); // 删除公告
-
-router.get("/getWords", goodsController.getWords); //获取后台具体某条公告
 
 export default router;
