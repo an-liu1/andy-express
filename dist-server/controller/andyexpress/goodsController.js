@@ -226,12 +226,11 @@ goodsController.searchGoodsForUser = function (req, res) {
       note: eval("/".concat(req.body.searchString, "/i"))
     }, {
       returnExpressNumber: eval("/".concat(req.body.searchString, "/i"))
-    }, {
-      goodStatus: req.params.status
-    }, {
-      goodStatus: req.params.status1
     }],
-    user_id: req.user.id
+    user_id: req.user.id,
+    goodStatus: {
+      $all: [req.params.status, req.params.status1]
+    }
   }).skip(pageOptions.page * pageOptions.size).limit(pageOptions.size).then(function (goods) {
     return res.json({
       success: true,
