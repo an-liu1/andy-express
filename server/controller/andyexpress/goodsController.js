@@ -133,7 +133,13 @@ goodsController.getAllGoods = (req, res) => {
     page: parseInt(req.params.page) || 0,
     size: parseInt(req.params.size) || 10,
   };
-  Goods.find({ goodStatus: req.params.status })
+  Goods.find({
+    $or: [
+      { goodStatus: req.params.status },
+      { goodStatus: req.params.status1 },
+      { goodStatus: req.params.status2 },
+    ],
+  })
     .skip(pageOptions.page * pageOptions.size)
     .limit(pageOptions.size)
     .then((good) =>
@@ -159,7 +165,7 @@ goodsController.searchGoods = (req, res) => {
       { note: eval(`/${req.body.searchString}/i`) },
       { returnExpressNumber: eval(`/${req.body.searchString}/i`) },
     ],
-    goodStatus: req.params.status,
+    goodStatus: req.params.status || req.params.status1 || req.params.status2,
   })
     .skip(pageOptions.page * pageOptions.size)
     .limit(pageOptions.size)
@@ -185,10 +191,9 @@ goodsController.searchGoodsForUser = (req, res) => {
       { username: eval(`/${req.body.searchString}/i`) },
       { note: eval(`/${req.body.searchString}/i`) },
       { returnExpressNumber: eval(`/${req.body.searchString}/i`) },
-      { goodStatus: req.params.status },
-      { goodStatus: req.params.status1 },
     ],
     user_id: req.user.id,
+    goodStatus: req.params.status1 || req.params.status2,
   })
     .skip(pageOptions.page * pageOptions.size)
     .limit(pageOptions.size)

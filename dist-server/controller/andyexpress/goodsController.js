@@ -161,7 +161,13 @@ goodsController.getAllGoods = function (req, res) {
   };
 
   _goods["default"].find({
-    goodStatus: req.params.status
+    $or: [{
+      goodStatus: req.params.status
+    }, {
+      goodStatus: req.params.status1
+    }, {
+      goodStatus: req.params.status2
+    }]
   }).skip(pageOptions.page * pageOptions.size).limit(pageOptions.size).then(function (good) {
     return res.json({
       success: true,
@@ -191,7 +197,7 @@ goodsController.searchGoods = function (req, res) {
     }, {
       returnExpressNumber: eval("/".concat(req.body.searchString, "/i"))
     }],
-    goodStatus: req.params.status
+    goodStatus: req.params.status || req.params.status1 || req.params.status2
   }).skip(pageOptions.page * pageOptions.size).limit(pageOptions.size).then(function (goods) {
     return res.json({
       success: true,
@@ -220,12 +226,9 @@ goodsController.searchGoodsForUser = function (req, res) {
       note: eval("/".concat(req.body.searchString, "/i"))
     }, {
       returnExpressNumber: eval("/".concat(req.body.searchString, "/i"))
-    }, {
-      goodStatus: req.params.status
-    }, {
-      goodStatus: req.params.status1
     }],
-    user_id: req.user.id
+    user_id: req.user.id,
+    goodStatus: req.params.status1 || req.params.status2
   }).skip(pageOptions.page * pageOptions.size).limit(pageOptions.size).then(function (goods) {
     return res.json({
       success: true,

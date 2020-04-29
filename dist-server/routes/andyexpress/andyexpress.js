@@ -73,11 +73,11 @@ router.get("/getAllUser", _userInfoController["default"].getAllUser); // 后台�
 router["delete"]("/goodDelete/:id", _goodsController["default"].deleteGoods);
 router.put("/goodUpdate/:id", _goodsController["default"].updateGoods); // 入库商品信息填写
 
-router.get("/getAllGoods/:status/:page/:size", _goodsController["default"].getAllGoods); // 获取所有商品
+router.get("/getAllGoods/:status/:page/:size/:status1/:status2", _goodsController["default"].getAllGoods); // 获取所有商品
 
 router.post("/submitReturnGoods", _goodsController["default"].submitReturnGoods); //客户发出快递填写退货商品单号及快递商，确认退货
 
-router.post("/searchGoods/:status/:page/:size", _goodsController["default"].searchGoods); //搜索
+router.post("/searchGoods/:status/:page/:size/:status1/:status2", _goodsController["default"].searchGoods); //搜索
 //订单
 
 router.put("/updateOrderForm/:id", _ordersController["default"].updateOrderForm); // 客服返回已打包订单详情
