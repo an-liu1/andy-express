@@ -16,7 +16,7 @@ router.post("/avatarUpload", userInfoController.avatarUpload); //头像上传
 
 //good
 router.post("/goodSubmit", goodsController.submitGoods); //提交国内物流信息（未入库商品）
-router.get("/goodGet/:status/:page/:size", goodsController.getGoods); // 获取用户所有未入库商品
+router.get("/goodGet/:status/:page/:size/:status1", goodsController.getGoods); // 获取用户所有未入库商品
 router.post("/returnGoods", goodsController.returnGoods); // 用户提交退货地址
 router.post(
   "/searchGoodsForUser/:status/:page/:size",

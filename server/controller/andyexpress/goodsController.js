@@ -108,7 +108,13 @@ goodsController.getGoods = (req, res) => {
     page: parseInt(req.params.page) || 0,
     size: parseInt(req.params.size) || 10,
   };
-  Goods.find({ user_id: req.user.id, goodStatus: req.params.status })
+  Goods.find({
+    $or: [
+      { goodStatus: req.params.status },
+      { goodStatus: req.params.status1 },
+    ],
+    user_id: req.user.id,
+  })
     .skip(pageOptions.page * pageOptions.size)
     .limit(pageOptions.size)
     .then((good) => {

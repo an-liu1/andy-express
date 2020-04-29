@@ -136,8 +136,12 @@ goodsController.getGoods = function (req, res) {
   };
 
   _goods["default"].find({
-    user_id: req.user.id,
-    goodStatus: req.params.status
+    $or: [{
+      goodStatus: req.params.status
+    }, {
+      goodStatus: req.params.status1
+    }],
+    user_id: req.user.id
   }).skip(pageOptions.page * pageOptions.size).limit(pageOptions.size).then(function (good) {
     res.json({
       success: true,
