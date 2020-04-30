@@ -165,8 +165,6 @@ goodsController.getAllGoods = function (req, res) {
       goodStatus: req.params.status
     }, {
       goodStatus: req.params.status1
-    }, {
-      goodStatus: req.params.status2
     }]
   }).skip(pageOptions.page * pageOptions.size).limit(pageOptions.size).then(function (good) {
     return res.json({
@@ -198,7 +196,7 @@ goodsController.searchGoods = function (req, res) {
       returnExpressNumber: eval("/".concat(req.body.searchString, "/i"))
     }],
     goodStatus: {
-      $in: [req.params.status, req.params.status1, req.params.status2]
+      $in: [req.params.status, req.params.status1]
     }
   }).skip(pageOptions.page * pageOptions.size).limit(pageOptions.size).then(function (goods) {
     return res.json({

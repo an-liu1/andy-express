@@ -117,7 +117,6 @@ ordersController.getAllOrderForm = (req, res) => {
       { goodStatus: req.params.status },
       { goodStatus: req.params.status1 },
       { goodStatus: req.params.status2 },
-      { goodStatus: req.params.status3 },
     ],
   })
     .skip(pageOptions.page * pageOptions.size)
@@ -143,7 +142,6 @@ ordersController.getOrderForm = (req, res) => {
       { goodStatus: req.params.status },
       { goodStatus: req.params.status1 },
       { goodStatus: req.params.status2 },
-      { goodStatus: req.params.status3 },
     ],
     user_id: req.user.id,
   })
@@ -170,12 +168,7 @@ ordersController.searchOrders = (req, res) => {
       { username: eval(`/${req.body.searchString}/i`) },
     ],
     goodStatus: {
-      $in: [
-        req.params.status,
-        req.params.status1,
-        req.params.status2,
-        req.params.status3,
-      ],
+      $in: [req.params.status, req.params.status1, req.params.status2],
     },
   })
     .skip(pageOptions.page * pageOptions.size)
@@ -202,12 +195,7 @@ ordersController.searchOrdersForUser = (req, res) => {
     ],
     user_id: req.user.id,
     goodStatus: {
-      $in: [
-        req.params.status,
-        req.params.status1,
-        req.params.status2,
-        req.params.status3,
-      ],
+      $in: [req.params.status, req.params.status1, req.params.status2],
     },
   })
     .skip(pageOptions.page * pageOptions.size)

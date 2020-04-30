@@ -164,8 +164,6 @@ ordersController.getAllOrderForm = function (req, res) {
       goodStatus: req.params.status1
     }, {
       goodStatus: req.params.status2
-    }, {
-      goodStatus: req.params.status3
     }]
   }).skip(pageOptions.page * pageOptions.size).limit(pageOptions.size).then(function (order) {
     return res.json({
@@ -192,8 +190,6 @@ ordersController.getOrderForm = function (req, res) {
       goodStatus: req.params.status1
     }, {
       goodStatus: req.params.status2
-    }, {
-      goodStatus: req.params.status3
     }],
     user_id: req.user.id
   }).skip(pageOptions.page * pageOptions.size).limit(pageOptions.size).then(function (order) {
@@ -220,7 +216,7 @@ ordersController.searchOrders = function (req, res) {
       username: eval("/".concat(req.body.searchString, "/i"))
     }],
     goodStatus: {
-      $in: [req.params.status, req.params.status1, req.params.status2, req.params.status3]
+      $in: [req.params.status, req.params.status1, req.params.status2]
     }
   }).skip(pageOptions.page * pageOptions.size).limit(pageOptions.size).then(function (orders) {
     return res.json({
@@ -247,7 +243,7 @@ ordersController.searchOrdersForUser = function (req, res) {
     }],
     user_id: req.user.id,
     goodStatus: {
-      $in: [req.params.status, req.params.status1, req.params.status2, req.params.status3]
+      $in: [req.params.status, req.params.status1, req.params.status2]
     }
   }).skip(pageOptions.page * pageOptions.size).limit(pageOptions.size).then(function (orders) {
     return res.json({

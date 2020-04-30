@@ -137,7 +137,6 @@ goodsController.getAllGoods = (req, res) => {
     $or: [
       { goodStatus: req.params.status },
       { goodStatus: req.params.status1 },
-      { goodStatus: req.params.status2 },
     ],
   })
     .skip(pageOptions.page * pageOptions.size)
@@ -166,7 +165,7 @@ goodsController.searchGoods = (req, res) => {
       { returnExpressNumber: eval(`/${req.body.searchString}/i`) },
     ],
     goodStatus: {
-      $in: [req.params.status, req.params.status1, req.params.status2],
+      $in: [req.params.status, req.params.status1],
     },
   })
     .skip(pageOptions.page * pageOptions.size)

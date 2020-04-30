@@ -26,13 +26,13 @@ router.post(
 //订单
 router.post("/createOrderForm", ordersController.createOrderForm); //用户打包创建订单
 router.get(
-  "/getOrderForm/:status/:page/:size/:status1/:status2/:status3",
+  "/getOrderForm/:status/:page/:size/:status1/:status2",
   ordersController.getOrderForm
 ); //获取客户所有订单
 router.put("/orderDelivery", ordersController.orderDelivery); // 客户填写订单邮寄地址
 router.put("/isDeliveryAndRank", ordersController.isDeliveryAndRank); //客户确定收货及评分
 router.post(
-  "/searchOrdersForUser/:status/:page/:size/:status1/:status2/:status3",
+  "/searchOrdersForUser/:status/:page/:size/:status1/:status2",
   ordersController.searchOrdersForUser
 );
 
@@ -59,24 +59,24 @@ router.get("/getAllUser/:page/:size", userInfoController.getAllUser); // 后台�
 router.delete("/goodDelete/:id", goodsController.deleteGoods);
 router.put("/goodUpdate/:id", goodsController.updateGoods); // 入库商品信息填写
 router.get(
-  "/getAllGoods/:status/:page/:size/:status1/:status2",
+  "/getAllGoods/:status/:page/:size/:status1",
   goodsController.getAllGoods
 ); // 获取所有商品
 router.post("/submitReturnGoods", goodsController.submitReturnGoods); //客户发出快递填写退货商品单号及快递商，确认退货
 router.post(
-  "/searchGoods/:status/:page/:size/:status1/:status2",
+  "/searchGoods/:status/:page/:size/:status1",
   goodsController.searchGoods
 ); //搜索
 
 //订单
 router.put("/updateOrderForm/:id", ordersController.updateOrderForm); // 客服返回已打包订单详情
 router.get(
-  "/getAllOrderForm/:status/:page/:size/:status1/:status2/:status3",
+  "/getAllOrderForm/:status/:page/:size/:status1/:status2",
   ordersController.getAllOrderForm
 ); //获取所有订单
 router.put("/orderDelivering/:id", ordersController.orderDelivering); //客服返回订单号及成本初步统计
 router.post(
-  "/searchOrders/:status/:page/:size/:status1/:status2/:status3",
+  "/searchOrders/:status/:page/:size/:status1/:status2",
   ordersController.searchOrders
 ); //搜索
 

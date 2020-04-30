@@ -42,13 +42,13 @@ router.post("/searchGoodsForUser/:status/:page/:size/:status1", _goodsController
 
 router.post("/createOrderForm", _ordersController["default"].createOrderForm); //用户打包创建订单
 
-router.get("/getOrderForm/:status/:page/:size/:status1/:status2/:status3", _ordersController["default"].getOrderForm); //获取客户所有订单
+router.get("/getOrderForm/:status/:page/:size/:status1/:status2", _ordersController["default"].getOrderForm); //获取客户所有订单
 
 router.put("/orderDelivery", _ordersController["default"].orderDelivery); // 客户填写订单邮寄地址
 
 router.put("/isDeliveryAndRank", _ordersController["default"].isDeliveryAndRank); //客户确定收货及评分
 
-router.post("/searchOrdersForUser/:status/:page/:size/:status1/:status2/:status3", _ordersController["default"].searchOrdersForUser); //售后
+router.post("/searchOrdersForUser/:status/:page/:size/:status1/:status2", _ordersController["default"].searchOrdersForUser); //售后
 
 router.post("/createAfterSale", _aftersaleController["default"].createAfterSale); //客户提交售后
 
@@ -73,20 +73,20 @@ router.get("/getAllUser/:page/:size", _userInfoController["default"].getAllUser)
 router["delete"]("/goodDelete/:id", _goodsController["default"].deleteGoods);
 router.put("/goodUpdate/:id", _goodsController["default"].updateGoods); // 入库商品信息填写
 
-router.get("/getAllGoods/:status/:page/:size/:status1/:status2", _goodsController["default"].getAllGoods); // 获取所有商品
+router.get("/getAllGoods/:status/:page/:size/:status1", _goodsController["default"].getAllGoods); // 获取所有商品
 
 router.post("/submitReturnGoods", _goodsController["default"].submitReturnGoods); //客户发出快递填写退货商品单号及快递商，确认退货
 
-router.post("/searchGoods/:status/:page/:size/:status1/:status2", _goodsController["default"].searchGoods); //搜索
+router.post("/searchGoods/:status/:page/:size/:status1", _goodsController["default"].searchGoods); //搜索
 //订单
 
 router.put("/updateOrderForm/:id", _ordersController["default"].updateOrderForm); // 客服返回已打包订单详情
 
-router.get("/getAllOrderForm/:status/:page/:size/:status1/:status2/:status3", _ordersController["default"].getAllOrderForm); //获取所有订单
+router.get("/getAllOrderForm/:status/:page/:size/:status1/:status2", _ordersController["default"].getAllOrderForm); //获取所有订单
 
 router.put("/orderDelivering/:id", _ordersController["default"].orderDelivering); //客服返回订单号及成本初步统计
 
-router.post("/searchOrders/:status/:page/:size/:status1/:status2/:status3", _ordersController["default"].searchOrders); //搜索
+router.post("/searchOrders/:status/:page/:size/:status1/:status2", _ordersController["default"].searchOrders); //搜索
 //售后
 
 router.put("/solveAfterSale/:id", _aftersaleController["default"].solveAfterSale); // 客服反馈售后
