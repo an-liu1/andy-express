@@ -140,8 +140,6 @@ goodsController.getGoods = function (req, res) {
       goodStatus: req.params.status
     }, {
       goodStatus: req.params.status1
-    }, {
-      goodStatus: req.params.status2
     }],
     user_id: req.user.id
   }).skip(pageOptions.page * pageOptions.size).limit(pageOptions.size).then(function (good) {
@@ -241,7 +239,7 @@ goodsController.searchGoodsForUser = function (req, res) {
     }],
     user_id: req.user.id,
     goodStatus: {
-      $in: [req.params.status, req.params.status1, req.params.status2]
+      $in: [req.params.status, req.params.status1]
     }
   }).skip(pageOptions.page * pageOptions.size).limit(pageOptions.size).then(function (goods) {
     return res.json({

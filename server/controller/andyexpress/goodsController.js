@@ -112,7 +112,6 @@ goodsController.getGoods = (req, res) => {
     $or: [
       { goodStatus: req.params.status },
       { goodStatus: req.params.status1 },
-      { goodStatus: req.params.status2 },
     ],
     user_id: req.user.id,
   })
@@ -201,7 +200,7 @@ goodsController.searchGoodsForUser = (req, res) => {
     ],
     user_id: req.user.id,
     goodStatus: {
-      $in: [req.params.status, req.params.status1, req.params.status2],
+      $in: [req.params.status, req.params.status1],
     },
   })
     .skip(pageOptions.page * pageOptions.size)

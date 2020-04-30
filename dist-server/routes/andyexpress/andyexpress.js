@@ -34,11 +34,11 @@ router.post("/avatarUpload", _userInfoController["default"].avatarUpload); //头
 
 router.post("/goodSubmit", _goodsController["default"].submitGoods); //提交国内物流信息（未入库商品）
 
-router.get("/goodGet/:status/:page/:size/:status1/:status2", _goodsController["default"].getGoods); // 获取用户所有未入库商品
+router.get("/goodGet/:status/:page/:size/:status1", _goodsController["default"].getGoods); // 获取用户所有未入库商品
 
 router.post("/returnGoods", _goodsController["default"].returnGoods); // 用户提交退货地址
 
-router.post("/searchGoodsForUser/:status/:page/:size/:status1/:status2", _goodsController["default"].searchGoodsForUser); //订单
+router.post("/searchGoodsForUser/:status/:page/:size/:status1", _goodsController["default"].searchGoodsForUser); //订单
 
 router.post("/createOrderForm", _ordersController["default"].createOrderForm); //用户打包创建订单
 
