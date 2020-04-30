@@ -72,4 +72,30 @@ userInfoController.getAllUser = (req, res) => {
     .catch((err) => res.status(400).json("Error: " + err));
 };
 
+userInfoController.searchUser = (req, res) => {
+  const pageOptions = {
+    page: parseInt(req.params.page) || 0,
+    size: parseInt(req.params.size) || 10,
+  };
+  UserInfo.find({
+    $or: [
+      { _id: eval(`/${req.body.searchString}/i`) },
+      { user_id: eval(`/${req.body.searchString}/i`) },
+      { username: eval(`/${req.body.searchString}/i`) },
+      { email: eval(`/${req.body.searchString}/i`) },
+      { phoneNumber: eval(`/${req.body.searchString}/i`) },
+    ],
+  })
+    .skip(pageOptions.page * pageOptions.size)
+    .limit(pageOptions.size)
+    .then((user) =>
+      res.json({
+        success: true,
+        code: 0,
+        data: user,
+      })
+    )
+    .catch((err) => res.status(400).json("Error: " + err));
+};
+
 export default userInfoController;

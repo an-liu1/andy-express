@@ -102,4 +102,31 @@ advicesController.updateAdvice = (req, res) => {
     .catch((err) => res.status(400).json("Error: " + err));
 };
 
+advicesController.searchAdminAdvice = (req, res) => {
+  const pageOptions = {
+    page: parseInt(req.params.page) || 0,
+    size: parseInt(req.params.size) || 10,
+  };
+  Advices.find({
+    $or: [
+      { _id: eval(`/${req.body.searchString}/i`) },
+      { user_id: eval(`/${req.body.searchString}/i`) },
+      { username: eval(`/${req.body.searchString}/i`) },
+      { email: eval(`/${req.body.searchString}/i`) },
+      { advice_title: eval(`/${req.body.searchString}/i`) },
+      { advice_content: eval(`/${req.body.searchString}/i`) },
+    ],
+  })
+    .skip(pageOptions.page * pageOptions.size)
+    .limit(pageOptions.size)
+    .then((advice) =>
+      res.json({
+        success: true,
+        code: 0,
+        data: advice,
+      })
+    )
+    .catch((err) => res.status(400).json("Error: " + err));
+};
+
 export default advicesController;

@@ -68,6 +68,8 @@ router.get("/getAdvice/:id", _advicesController["default"].getAdvice); //具体�
 //user
 
 router.get("/getAllUser/:page/:size", _userInfoController["default"].getAllUser); // 后台获取所有用户信息
+
+router.post("/searchUser/:page/:size", _userInfoController["default"].searchUser); // 后台搜索所有用户信息
 //good
 
 router["delete"]("/goodDelete/:id", _goodsController["default"].deleteGoods);
@@ -92,11 +94,15 @@ router.post("/searchOrders/:status/:page/:size/:status1/:status2", _ordersContro
 router.put("/solveAfterSale/:id", _aftersaleController["default"].solveAfterSale); // 客服反馈售后
 
 router.get("/getAdminAfterSale/:page/:size", _aftersaleController["default"].getAdminAfterSale); //获取全部售后
+
+router.post("/searchAdminAfterSale/:page/:size", _aftersaleController["default"].searchAdminAfterSale); //获取搜索全部售后
 //advice
 
 router.get("/getAdminAdvice/:page/:size", _advicesController["default"].getAdminAdvice); //获取所有投诉
 
 router.put("/updateAdvice/:id", _advicesController["default"].updateAdvice); //客服反馈建议
+
+router.post("/searchAdminAdvice/:page/:size", _advicesController["default"].searchAdminAdvice); //获取搜索所有投诉
 //公告与邮件
 
 router.get("/getAdminAnnouncement/:page/:size", _announcementController["default"].getAdminAnnouncement); //获取所有公告

@@ -118,5 +118,36 @@ advicesController.updateAdvice = function (req, res) {
   });
 };
 
+advicesController.searchAdminAdvice = function (req, res) {
+  var pageOptions = {
+    page: parseInt(req.params.page) || 0,
+    size: parseInt(req.params.size) || 10
+  };
+
+  _advices["default"].find({
+    $or: [{
+      _id: eval("/".concat(req.body.searchString, "/i"))
+    }, {
+      user_id: eval("/".concat(req.body.searchString, "/i"))
+    }, {
+      username: eval("/".concat(req.body.searchString, "/i"))
+    }, {
+      email: eval("/".concat(req.body.searchString, "/i"))
+    }, {
+      advice_title: eval("/".concat(req.body.searchString, "/i"))
+    }, {
+      advice_content: eval("/".concat(req.body.searchString, "/i"))
+    }]
+  }).skip(pageOptions.page * pageOptions.size).limit(pageOptions.size).then(function (advice) {
+    return res.json({
+      success: true,
+      code: 0,
+      data: advice
+    });
+  })["catch"](function (err) {
+    return res.status(400).json("Error: " + err);
+  });
+};
+
 var _default = advicesController;
 exports["default"] = _default;

@@ -158,6 +158,9 @@ goodsController.searchGoods = (req, res) => {
   };
   Goods.find({
     $or: [
+      { _id: eval(`/${req.body.searchString}/i`) },
+      { user_id: eval(`/${req.body.searchString}/i`) },
+      { username: eval(`/${req.body.searchString}/i`) },
       { localExpressNumber: eval(`/${req.body.searchString}/i`) },
       { goodName: eval(`/${req.body.searchString}/i`) },
       { username: eval(`/${req.body.searchString}/i`) },
@@ -187,6 +190,9 @@ goodsController.searchGoodsForUser = (req, res) => {
   };
   Goods.find({
     $or: [
+      { _id: eval(`/${req.body.searchString}/i`) },
+      { user_id: eval(`/${req.body.searchString}/i`) },
+      { username: eval(`/${req.body.searchString}/i`) },
       { localExpressNumber: eval(`/${req.body.searchString}/i`) },
       { goodName: eval(`/${req.body.searchString}/i`) },
       { username: eval(`/${req.body.searchString}/i`) },

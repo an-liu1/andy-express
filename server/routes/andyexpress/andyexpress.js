@@ -54,6 +54,7 @@ router.get("/getAdvice/:id", advicesController.getAdvice); //具体某个客户�
 
 //user
 router.get("/getAllUser/:page/:size", userInfoController.getAllUser); // 后台获取所有用户信息
+router.post("/searchUser/:page/:size", userInfoController.searchUser); // 后台搜索所有用户信息
 
 //good
 router.delete("/goodDelete/:id", goodsController.deleteGoods);
@@ -86,10 +87,18 @@ router.get(
   "/getAdminAfterSale/:page/:size",
   aftersaleController.getAdminAfterSale
 ); //获取全部售后
+router.post(
+  "/searchAdminAfterSale/:page/:size",
+  aftersaleController.searchAdminAfterSale
+); //获取搜索全部售后
 
 //advice
 router.get("/getAdminAdvice/:page/:size", advicesController.getAdminAdvice); //获取所有投诉
 router.put("/updateAdvice/:id", advicesController.updateAdvice); //客服反馈建议
+router.post(
+  "/searchAdminAdvice/:page/:size",
+  advicesController.searchAdminAdvice
+); //获取搜索所有投诉
 
 //公告与邮件
 router.get(

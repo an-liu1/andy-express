@@ -94,5 +94,34 @@ userInfoController.getAllUser = function (req, res) {
   });
 };
 
+userInfoController.searchUser = function (req, res) {
+  var pageOptions = {
+    page: parseInt(req.params.page) || 0,
+    size: parseInt(req.params.size) || 10
+  };
+
+  _userInfo["default"].find({
+    $or: [{
+      _id: eval("/".concat(req.body.searchString, "/i"))
+    }, {
+      user_id: eval("/".concat(req.body.searchString, "/i"))
+    }, {
+      username: eval("/".concat(req.body.searchString, "/i"))
+    }, {
+      email: eval("/".concat(req.body.searchString, "/i"))
+    }, {
+      phoneNumber: eval("/".concat(req.body.searchString, "/i"))
+    }]
+  }).skip(pageOptions.page * pageOptions.size).limit(pageOptions.size).then(function (user) {
+    return res.json({
+      success: true,
+      code: 0,
+      data: user
+    });
+  })["catch"](function (err) {
+    return res.status(400).json("Error: " + err);
+  });
+};
+
 var _default = userInfoController;
 exports["default"] = _default;

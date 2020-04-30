@@ -146,5 +146,40 @@ aftersaleController.getAdminAfterSale = function (req, res) {
   });
 };
 
+aftersaleController.searchAdminAfterSale = function (req, res) {
+  var pageOptions = {
+    page: parseInt(req.params.page) || 0,
+    size: parseInt(req.params.size) || 10
+  };
+
+  _aftersale["default"].find({
+    $or: [{
+      _id: eval("/".concat(req.body.searchString, "/i"))
+    }, {
+      user_id: eval("/".concat(req.body.searchString, "/i"))
+    }, {
+      username: eval("/".concat(req.body.searchString, "/i"))
+    }, {
+      email: eval("/".concat(req.body.searchString, "/i"))
+    }, {
+      aftersale_title: eval("/".concat(req.body.searchString, "/i"))
+    }, {
+      aftersale_content: eval("/".concat(req.body.searchString, "/i"))
+    }, {
+      solution: eval("/".concat(req.body.searchString, "/i"))
+    }, {
+      compensation: eval("/".concat(req.body.searchString, "/i"))
+    }]
+  }).skip(pageOptions.page * pageOptions.size).limit(pageOptions.size).then(function (after) {
+    return res.json({
+      success: true,
+      code: 0,
+      data: after
+    });
+  })["catch"](function (err) {
+    return res.status(400).json("Error: " + err);
+  });
+};
+
 var _default = aftersaleController;
 exports["default"] = _default;
