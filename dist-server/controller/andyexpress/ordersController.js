@@ -159,11 +159,11 @@ ordersController.getAllOrderForm = function (req, res) {
 
   _orderForm["default"].find({
     $or: [{
-      goodStatus: req.params.status
+      orderStatus: req.params.status
     }, {
-      goodStatus: req.params.status1
+      orderStatus: req.params.status1
     }, {
-      goodStatus: req.params.status2
+      orderStatus: req.params.status2
     }]
   }).skip(pageOptions.page * pageOptions.size).limit(pageOptions.size).then(function (order) {
     return res.json({
@@ -185,11 +185,11 @@ ordersController.getOrderForm = function (req, res) {
 
   _orderForm["default"].find({
     $or: [{
-      goodStatus: req.params.status
+      orderStatus: req.params.status
     }, {
-      goodStatus: req.params.status1
+      orderStatus: req.params.status1
     }, {
-      goodStatus: req.params.status2
+      orderStatus: req.params.status2
     }],
     user_id: req.user.id
   }).skip(pageOptions.page * pageOptions.size).limit(pageOptions.size).then(function (order) {
@@ -221,7 +221,7 @@ ordersController.searchOrders = function (req, res) {
     }, {
       username: eval("/".concat(req.body.searchString, "/i"))
     }],
-    goodStatus: {
+    orderStatus: {
       $in: [req.params.status, req.params.status1, req.params.status2]
     }
   }).skip(pageOptions.page * pageOptions.size).limit(pageOptions.size).then(function (orders) {
@@ -254,7 +254,7 @@ ordersController.searchOrdersForUser = function (req, res) {
       username: eval("/".concat(req.body.searchString, "/i"))
     }],
     user_id: req.user.id,
-    goodStatus: {
+    orderStatus: {
       $in: [req.params.status, req.params.status1, req.params.status2]
     }
   }).skip(pageOptions.page * pageOptions.size).limit(pageOptions.size).then(function (orders) {

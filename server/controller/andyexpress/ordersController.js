@@ -114,9 +114,9 @@ ordersController.getAllOrderForm = (req, res) => {
   };
   OrderForm.find({
     $or: [
-      { goodStatus: req.params.status },
-      { goodStatus: req.params.status1 },
-      { goodStatus: req.params.status2 },
+      { orderStatus: req.params.status },
+      { orderStatus: req.params.status1 },
+      { orderStatus: req.params.status2 },
     ],
   })
     .skip(pageOptions.page * pageOptions.size)
@@ -139,9 +139,9 @@ ordersController.getOrderForm = (req, res) => {
   };
   OrderForm.find({
     $or: [
-      { goodStatus: req.params.status },
-      { goodStatus: req.params.status1 },
-      { goodStatus: req.params.status2 },
+      { orderStatus: req.params.status },
+      { orderStatus: req.params.status1 },
+      { orderStatus: req.params.status2 },
     ],
     user_id: req.user.id,
   })
@@ -170,7 +170,7 @@ ordersController.searchOrders = (req, res) => {
       { orderShippingNumber: eval(`/${req.body.searchString}/i`) },
       { username: eval(`/${req.body.searchString}/i`) },
     ],
-    goodStatus: {
+    orderStatus: {
       $in: [req.params.status, req.params.status1, req.params.status2],
     },
   })
@@ -200,7 +200,7 @@ ordersController.searchOrdersForUser = (req, res) => {
       { username: eval(`/${req.body.searchString}/i`) },
     ],
     user_id: req.user.id,
-    goodStatus: {
+    orderStatus: {
       $in: [req.params.status, req.params.status1, req.params.status2],
     },
   })
