@@ -112,6 +112,7 @@ goodsController.getGoods = (req, res) => {
     $or: [
       { goodStatus: req.params.status },
       { goodStatus: req.params.status1 },
+      { goodStatus: req.params.status2 },
     ],
     user_id: req.user.id,
   })
@@ -137,6 +138,7 @@ goodsController.getAllGoods = (req, res) => {
     $or: [
       { goodStatus: req.params.status },
       { goodStatus: req.params.status1 },
+      { goodStatus: req.params.status2 },
     ],
   })
     .skip(pageOptions.page * pageOptions.size)
@@ -167,7 +169,7 @@ goodsController.searchGoods = (req, res) => {
       { returnExpressNumber: eval(`/${req.body.searchString}/i`) },
     ],
     goodStatus: {
-      $in: [req.params.status, req.params.status1],
+      $in: [req.params.status, req.params.status1, req.params.status2],
     },
   })
     .skip(pageOptions.page * pageOptions.size)
@@ -198,7 +200,9 @@ goodsController.searchGoodsForUser = (req, res) => {
       { returnExpressNumber: eval(`/${req.body.searchString}/i`) },
     ],
     user_id: req.user.id,
-    goodStatus: { $in: [req.params.status, req.params.status1] },
+    goodStatus: {
+      $in: [req.params.status, req.params.status1, req.params.status2],
+    },
   })
     .skip(pageOptions.page * pageOptions.size)
     .limit(pageOptions.size)
