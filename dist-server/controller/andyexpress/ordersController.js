@@ -13,7 +13,20 @@ var _fs = _interopRequireDefault(require("fs"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
-var ordersController = {}; // 用户打包订单
+var ordersController = {}; // 后台获取所有订单信息
+
+ordersController.getOrderListNumber = function (req, res) {
+  _orderForm["default"].find().then(function (order) {
+    return res.json({
+      success: true,
+      code: 0,
+      data: order.length
+    });
+  })["catch"](function (err) {
+    return res.status(400).json("Error: " + err);
+  });
+}; // 用户打包订单
+
 
 ordersController.createOrderForm = function (req, res) {
   req.body.user_id = req.user.id;

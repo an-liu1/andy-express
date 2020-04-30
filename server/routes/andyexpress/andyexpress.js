@@ -16,10 +16,7 @@ router.post("/avatarUpload", userInfoController.avatarUpload); //头像上传
 
 //good
 router.post("/goodSubmit", goodsController.submitGoods); //提交国内物流信息（未入库商品）
-router.get(
-  "/goodGet/:status/:page/:size/:status1",
-  goodsController.getGoods
-); // 获取用户所有未入库商品
+router.get("/goodGet/:status/:page/:size/:status1", goodsController.getGoods); // 获取用户所有未入库商品
 router.post("/returnGoods", goodsController.returnGoods); // 用户提交退货地址
 router.post(
   "/searchGoodsForUser/:status/:page/:size/:status1",
@@ -58,6 +55,7 @@ router.get("/getAdvice/:id", advicesController.getAdvice); //具体某个客户�
 //user
 router.get("/getAllUser/:page/:size", userInfoController.getAllUser); // 后台获取所有用户信息
 router.post("/searchUser/:page/:size", userInfoController.searchUser); // 后台搜索所有用户信息
+router.get("/getUserNumber", userInfoController.getUserNumber); // 后台获取所有用户数量
 
 //good
 router.delete("/goodDelete/:id", goodsController.deleteGoods);
@@ -83,6 +81,7 @@ router.post(
   "/searchOrders/:status/:page/:size/:status1/:status2",
   ordersController.searchOrders
 ); //搜索
+router.get("/getOrderListNumber", ordersController.getOrderListNumber); // 后台获取所有订单数量
 
 //售后
 router.put("/solveAfterSale/:id", aftersaleController.solveAfterSale); // 客服反馈售后

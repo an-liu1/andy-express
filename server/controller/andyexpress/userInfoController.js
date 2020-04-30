@@ -4,6 +4,21 @@ import path from "path";
 
 const userInfoController = {};
 
+// 获取用户总数
+userInfoController.getUserNumber = (req, res) => {
+  UserInfo.find()
+    .then((user) => {
+      res.json({
+        success: true,
+        code: 0,
+        data: user.length,
+      });
+    })
+    .catch((err) => {
+      res.status(400).json("Error: " + err);
+    });
+};
+
 // 获取用户信息
 userInfoController.getUserInfo = (req, res) => {
   UserInfo.find({ user_id: req.user.id })

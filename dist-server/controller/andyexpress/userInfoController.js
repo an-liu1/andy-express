@@ -13,7 +13,20 @@ var _path = _interopRequireDefault(require("path"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
-var userInfoController = {}; // 获取用户信息
+var userInfoController = {}; // 获取用户总数
+
+userInfoController.getUserNumber = function (req, res) {
+  _userInfo["default"].find().then(function (user) {
+    res.json({
+      success: true,
+      code: 0,
+      data: user.length
+    });
+  })["catch"](function (err) {
+    res.status(400).json("Error: " + err);
+  });
+}; // 获取用户信息
+
 
 userInfoController.getUserInfo = function (req, res) {
   _userInfo["default"].find({

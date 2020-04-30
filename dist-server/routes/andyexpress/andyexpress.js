@@ -70,6 +70,8 @@ router.get("/getAdvice/:id", _advicesController["default"].getAdvice); //具体�
 router.get("/getAllUser/:page/:size", _userInfoController["default"].getAllUser); // 后台获取所有用户信息
 
 router.post("/searchUser/:page/:size", _userInfoController["default"].searchUser); // 后台搜索所有用户信息
+
+router.get("/getUserNumber", _userInfoController["default"].getUserNumber); // 后台获取所有用户数量
 //good
 
 router["delete"]("/goodDelete/:id", _goodsController["default"].deleteGoods);
@@ -89,6 +91,8 @@ router.get("/getAllOrderForm/:status/:page/:size/:status1/:status2", _ordersCont
 router.put("/orderDelivering/:id", _ordersController["default"].orderDelivering); //客服返回订单号及成本初步统计
 
 router.post("/searchOrders/:status/:page/:size/:status1/:status2", _ordersController["default"].searchOrders); //搜索
+
+router.get("/getOrderListNumber", _ordersController["default"].getOrderListNumber); // 后台获取所有订单数量
 //售后
 
 router.put("/solveAfterSale/:id", _aftersaleController["default"].solveAfterSale); // 客服反馈售后

@@ -4,6 +4,19 @@ import fs from "fs";
 
 const ordersController = {};
 
+// 后台获取所有订单信息
+ordersController.getOrderListNumber = (req, res) => {
+  OrderForm.find()
+    .then((order) =>
+      res.json({
+        success: true,
+        code: 0,
+        data: order.length,
+      })
+    )
+    .catch((err) => res.status(400).json("Error: " + err));
+};
+
 // 用户打包订单
 ordersController.createOrderForm = (req, res) => {
   req.body.user_id = req.user.id;
