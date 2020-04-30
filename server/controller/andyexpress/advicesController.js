@@ -52,7 +52,13 @@ advicesController.getAdvice = (req, res) => {
 
 // 客户所有投诉
 advicesController.getUserAdvice = (req, res) => {
+  const pageOptions = {
+    page: parseInt(req.params.page) || 0,
+    size: parseInt(req.params.size) || 10,
+  };
   Advices.find({ user_id: req.user.id })
+    .skip(pageOptions.page * pageOptions.size)
+    .limit(pageOptions.size)
     .then((advice) =>
       res.json({
         success: true,
@@ -65,7 +71,13 @@ advicesController.getUserAdvice = (req, res) => {
 
 // 后台所有投诉
 advicesController.getAdminAdvice = (req, res) => {
+  const pageOptions = {
+    page: parseInt(req.params.page) || 0,
+    size: parseInt(req.params.size) || 10,
+  };
   Advices.find()
+    .skip(pageOptions.page * pageOptions.size)
+    .limit(pageOptions.size)
     .then((advice) =>
       res.json({
         success: true,
@@ -89,6 +101,5 @@ advicesController.updateAdvice = (req, res) => {
     })
     .catch((err) => res.status(400).json("Error: " + err));
 };
-
 
 export default advicesController;

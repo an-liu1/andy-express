@@ -42,7 +42,12 @@ announcementController.updateAnnouncement = function (req, res) {
 
 
 announcementController.getAdminAnnouncement = function (req, res) {
-  _announcement["default"].find().then(function (announcement) {
+  var pageOptions = {
+    page: parseInt(req.params.page) || 0,
+    size: parseInt(req.params.size) || 10
+  };
+
+  _announcement["default"].find().skip(pageOptions.page * pageOptions.size).limit(pageOptions.size).then(function (announcement) {
     return res.json({
       success: true,
       code: 0,

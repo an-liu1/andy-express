@@ -108,7 +108,20 @@ ordersController.isDeliveryAndRank = (req, res) => {
 
 // 后台获取所有订单信息
 ordersController.getAllOrderForm = (req, res) => {
-  OrderForm.find()
+  const pageOptions = {
+    page: parseInt(req.params.page) || 0,
+    size: parseInt(req.params.size) || 10,
+  };
+  OrderForm.find({
+    $or: [
+      { goodStatus: req.params.status },
+      { goodStatus: req.params.status1 },
+      { goodStatus: req.params.status2 },
+      { goodStatus: req.params.status3 },
+    ],
+  })
+    .skip(pageOptions.page * pageOptions.size)
+    .limit(pageOptions.size)
     .then((order) =>
       res.json({
         success: true,
@@ -121,7 +134,21 @@ ordersController.getAllOrderForm = (req, res) => {
 
 // 用户获取订单信息
 ordersController.getOrderForm = (req, res) => {
-  OrderForm.find({ user_id: req.user.id })
+  const pageOptions = {
+    page: parseInt(req.params.page) || 0,
+    size: parseInt(req.params.size) || 10,
+  };
+  OrderForm.find({
+    $or: [
+      { goodStatus: req.params.status },
+      { goodStatus: req.params.status1 },
+      { goodStatus: req.params.status2 },
+      { goodStatus: req.params.status3 },
+    ],
+    user_id: req.user.id,
+  })
+    .skip(pageOptions.page * pageOptions.size)
+    .limit(pageOptions.size)
     .then((order) =>
       res.json({
         success: true,
@@ -133,12 +160,26 @@ ordersController.getOrderForm = (req, res) => {
 };
 
 ordersController.searchOrders = (req, res) => {
+  const pageOptions = {
+    page: parseInt(req.params.page) || 0,
+    size: parseInt(req.params.size) || 10,
+  };
   OrderForm.find({
     $or: [
       { orderShippingNumber: eval(`/${req.body.searchString}/i`) },
       { username: eval(`/${req.body.searchString}/i`) },
     ],
+    goodStatus: {
+      $in: [
+        req.params.status,
+        req.params.status1,
+        req.params.status2,
+        req.params.status3,
+      ],
+    },
   })
+    .skip(pageOptions.page * pageOptions.size)
+    .limit(pageOptions.size)
     .then((orders) =>
       res.json({
         success: true,
@@ -150,13 +191,27 @@ ordersController.searchOrders = (req, res) => {
 };
 
 ordersController.searchOrdersForUser = (req, res) => {
+  const pageOptions = {
+    page: parseInt(req.params.page) || 0,
+    size: parseInt(req.params.size) || 10,
+  };
   OrderForm.find({
     $or: [
       { orderShippingNumber: eval(`/${req.body.searchString}/i`) },
       { username: eval(`/${req.body.searchString}/i`) },
     ],
     user_id: req.user.id,
+    goodStatus: {
+      $in: [
+        req.params.status,
+        req.params.status1,
+        req.params.status2,
+        req.params.status3,
+      ],
+    },
   })
+    .skip(pageOptions.page * pageOptions.size)
+    .limit(pageOptions.size)
     .then((orders) =>
       res.json({
         success: true,

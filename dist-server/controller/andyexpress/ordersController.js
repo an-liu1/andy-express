@@ -152,7 +152,22 @@ ordersController.isDeliveryAndRank = function (req, res) {
 
 
 ordersController.getAllOrderForm = function (req, res) {
-  _orderForm["default"].find().then(function (order) {
+  var pageOptions = {
+    page: parseInt(req.params.page) || 0,
+    size: parseInt(req.params.size) || 10
+  };
+
+  _orderForm["default"].find({
+    $or: [{
+      goodStatus: req.params.status
+    }, {
+      goodStatus: req.params.status1
+    }, {
+      goodStatus: req.params.status2
+    }, {
+      goodStatus: req.params.status3
+    }]
+  }).skip(pageOptions.page * pageOptions.size).limit(pageOptions.size).then(function (order) {
     return res.json({
       success: true,
       code: 0,
@@ -165,9 +180,23 @@ ordersController.getAllOrderForm = function (req, res) {
 
 
 ordersController.getOrderForm = function (req, res) {
+  var pageOptions = {
+    page: parseInt(req.params.page) || 0,
+    size: parseInt(req.params.size) || 10
+  };
+
   _orderForm["default"].find({
+    $or: [{
+      goodStatus: req.params.status
+    }, {
+      goodStatus: req.params.status1
+    }, {
+      goodStatus: req.params.status2
+    }, {
+      goodStatus: req.params.status3
+    }],
     user_id: req.user.id
-  }).then(function (order) {
+  }).skip(pageOptions.page * pageOptions.size).limit(pageOptions.size).then(function (order) {
     return res.json({
       success: true,
       code: 0,
@@ -179,13 +208,21 @@ ordersController.getOrderForm = function (req, res) {
 };
 
 ordersController.searchOrders = function (req, res) {
+  var pageOptions = {
+    page: parseInt(req.params.page) || 0,
+    size: parseInt(req.params.size) || 10
+  };
+
   _orderForm["default"].find({
     $or: [{
       orderShippingNumber: eval("/".concat(req.body.searchString, "/i"))
     }, {
       username: eval("/".concat(req.body.searchString, "/i"))
-    }]
-  }).then(function (orders) {
+    }],
+    goodStatus: {
+      $in: [req.params.status, req.params.status1, req.params.status2, req.params.status3]
+    }
+  }).skip(pageOptions.page * pageOptions.size).limit(pageOptions.size).then(function (orders) {
     return res.json({
       success: true,
       code: 0,
@@ -197,14 +234,22 @@ ordersController.searchOrders = function (req, res) {
 };
 
 ordersController.searchOrdersForUser = function (req, res) {
+  var pageOptions = {
+    page: parseInt(req.params.page) || 0,
+    size: parseInt(req.params.size) || 10
+  };
+
   _orderForm["default"].find({
     $or: [{
       orderShippingNumber: eval("/".concat(req.body.searchString, "/i"))
     }, {
       username: eval("/".concat(req.body.searchString, "/i"))
     }],
-    user_id: req.user.id
-  }).then(function (orders) {
+    user_id: req.user.id,
+    goodStatus: {
+      $in: [req.params.status, req.params.status1, req.params.status2, req.params.status3]
+    }
+  }).skip(pageOptions.page * pageOptions.size).limit(pageOptions.size).then(function (orders) {
     return res.json({
       success: true,
       code: 0,

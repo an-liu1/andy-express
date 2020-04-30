@@ -88,7 +88,13 @@ aftersaleController.getAfterSale = (req, res) => {
 
 // 客户获取所有售后
 aftersaleController.getUserAfterSale = (req, res) => {
+  const pageOptions = {
+    page: parseInt(req.params.page) || 0,
+    size: parseInt(req.params.size) || 10,
+  };
   AfterSale.find({ user_id: req.user.id })
+    .skip(pageOptions.page * pageOptions.size)
+    .limit(pageOptions.size)
     .then((after) =>
       res.json({
         success: true,
@@ -101,7 +107,13 @@ aftersaleController.getUserAfterSale = (req, res) => {
 
 // 后台获取所有售后
 aftersaleController.getAdminAfterSale = (req, res) => {
+  const pageOptions = {
+    page: parseInt(req.params.page) || 0,
+    size: parseInt(req.params.size) || 10,
+  };
   AfterSale.find()
+    .skip(pageOptions.page * pageOptions.size)
+    .limit(pageOptions.size)
     .then((after) =>
       res.json({
         success: true,

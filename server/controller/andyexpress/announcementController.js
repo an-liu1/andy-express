@@ -30,7 +30,13 @@ announcementController.updateAnnouncement = (req, res) => {
 
 // 后台所有公告
 announcementController.getAdminAnnouncement = (req, res) => {
+  const pageOptions = {
+    page: parseInt(req.params.page) || 0,
+    size: parseInt(req.params.size) || 10,
+  };
   Announcement.find()
+    .skip(pageOptions.page * pageOptions.size)
+    .limit(pageOptions.size)
     .then((announcement) =>
       res.json({
         success: true,

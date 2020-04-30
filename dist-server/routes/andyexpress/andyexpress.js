@@ -42,17 +42,17 @@ router.post("/searchGoodsForUser/:status/:page/:size/:status1", _goodsController
 
 router.post("/createOrderForm", _ordersController["default"].createOrderForm); //用户打包创建订单
 
-router.get("/getOrderForm", _ordersController["default"].getOrderForm); //获取客户所有订单
+router.get("/getOrderForm/:status/:page/:size/:status1/:status2/:status3", _ordersController["default"].getOrderForm); //获取客户所有订单
 
 router.put("/orderDelivery", _ordersController["default"].orderDelivery); // 客户填写订单邮寄地址
 
 router.put("/isDeliveryAndRank", _ordersController["default"].isDeliveryAndRank); //客户确定收货及评分
 
-router.post("/searchOrdersForUser", _ordersController["default"].searchOrdersForUser); //售后
+router.post("/searchOrdersForUser/:status/:page/:size/:status1/:status2/:status3", _ordersController["default"].searchOrdersForUser); //售后
 
 router.post("/createAfterSale", _aftersaleController["default"].createAfterSale); //客户提交售后
 
-router.get("/getUserAfterSale", _aftersaleController["default"].getUserAfterSale); //获取客户所有售后
+router.get("/getUserAfterSale/:page/:size", _aftersaleController["default"].getUserAfterSale); //获取客户所有售后
 
 router.get("/getAfterSale/:id", _aftersaleController["default"].getAfterSale); //具体某个客户售后
 
@@ -61,13 +61,13 @@ router.put("/conformAfterSale/:id", _aftersaleController["default"].conformAfter
 
 router.post("/createAdvice", _advicesController["default"].createAdvice); // 客户提交投诉
 
-router.get("/getUserAdvice", _advicesController["default"].getUserAdvice); //获取客户所有投诉
+router.get("/getUserAdvice/:page/:size", _advicesController["default"].getUserAdvice); //获取客户所有投诉
 
 router.get("/getAdvice/:id", _advicesController["default"].getAdvice); //具体某个客户投诉
 // ADMIN INTERFACE
 //user
 
-router.get("/getAllUser", _userInfoController["default"].getAllUser); // 后台获取所有用户信息
+router.get("/getAllUser/:page/:size", _userInfoController["default"].getAllUser); // 后台获取所有用户信息
 //good
 
 router["delete"]("/goodDelete/:id", _goodsController["default"].deleteGoods);
@@ -82,24 +82,24 @@ router.post("/searchGoods/:status/:page/:size/:status1/:status2", _goodsControll
 
 router.put("/updateOrderForm/:id", _ordersController["default"].updateOrderForm); // 客服返回已打包订单详情
 
-router.get("/getAllOrderForm", _ordersController["default"].getAllOrderForm); //获取所有订单
+router.get("/getAllOrderForm/:status/:page/:size/:status1/:status2/:status3", _ordersController["default"].getAllOrderForm); //获取所有订单
 
 router.put("/orderDelivering/:id", _ordersController["default"].orderDelivering); //客服返回订单号及成本初步统计
 
-router.post("/searchOrders", _ordersController["default"].searchOrders); //搜索
+router.post("/searchOrders/:status/:page/:size/:status1/:status2/:status3", _ordersController["default"].searchOrders); //搜索
 //售后
 
 router.put("/solveAfterSale/:id", _aftersaleController["default"].solveAfterSale); // 客服反馈售后
 
-router.get("/getAdminAfterSale", _aftersaleController["default"].getAdminAfterSale); //获取全部售后
+router.get("/getAdminAfterSale/:page/:size", _aftersaleController["default"].getAdminAfterSale); //获取全部售后
 //advice
 
-router.get("/getAdminAdvice", _advicesController["default"].getAdminAdvice); //获取所有投诉
+router.get("/getAdminAdvice/:page/:size", _advicesController["default"].getAdminAdvice); //获取所有投诉
 
 router.put("/updateAdvice/:id", _advicesController["default"].updateAdvice); //客服反馈建议
 //公告与邮件
 
-router.get("/getAdminAnnouncement", _announcementController["default"].getAdminAnnouncement); //获取所有公告
+router.get("/getAdminAnnouncement/:page/:size", _announcementController["default"].getAdminAnnouncement); //获取所有公告
 
 router.get("/getAAnnouncement/:id", _announcementController["default"].getAAnnouncement); //获取后台具体某条公告
 

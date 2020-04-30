@@ -64,9 +64,14 @@ advicesController.getAdvice = function (req, res) {
 
 
 advicesController.getUserAdvice = function (req, res) {
+  var pageOptions = {
+    page: parseInt(req.params.page) || 0,
+    size: parseInt(req.params.size) || 10
+  };
+
   _advices["default"].find({
     user_id: req.user.id
-  }).then(function (advice) {
+  }).skip(pageOptions.page * pageOptions.size).limit(pageOptions.size).then(function (advice) {
     return res.json({
       success: true,
       code: 0,
@@ -79,7 +84,12 @@ advicesController.getUserAdvice = function (req, res) {
 
 
 advicesController.getAdminAdvice = function (req, res) {
-  _advices["default"].find().then(function (advice) {
+  var pageOptions = {
+    page: parseInt(req.params.page) || 0,
+    size: parseInt(req.params.size) || 10
+  };
+
+  _advices["default"].find().skip(pageOptions.page * pageOptions.size).limit(pageOptions.size).then(function (advice) {
     return res.json({
       success: true,
       code: 0,

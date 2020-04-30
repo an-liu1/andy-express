@@ -78,7 +78,12 @@ userInfoController.avatarUpload = function (req, res) {
 
 
 userInfoController.getAllUser = function (req, res) {
-  _userInfo["default"].find().then(function (user) {
+  var pageOptions = {
+    page: parseInt(req.params.page) || 0,
+    size: parseInt(req.params.size) || 10
+  };
+
+  _userInfo["default"].find().skip(pageOptions.page * pageOptions.size).limit(pageOptions.size).then(function (user) {
     return res.json({
       data: user,
       success: true,

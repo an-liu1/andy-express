@@ -110,9 +110,14 @@ aftersaleController.getAfterSale = function (req, res) {
 
 
 aftersaleController.getUserAfterSale = function (req, res) {
+  var pageOptions = {
+    page: parseInt(req.params.page) || 0,
+    size: parseInt(req.params.size) || 10
+  };
+
   _aftersale["default"].find({
     user_id: req.user.id
-  }).then(function (after) {
+  }).skip(pageOptions.page * pageOptions.size).limit(pageOptions.size).then(function (after) {
     return res.json({
       success: true,
       code: 0,
@@ -125,7 +130,12 @@ aftersaleController.getUserAfterSale = function (req, res) {
 
 
 aftersaleController.getAdminAfterSale = function (req, res) {
-  _aftersale["default"].find().then(function (after) {
+  var pageOptions = {
+    page: parseInt(req.params.page) || 0,
+    size: parseInt(req.params.size) || 10
+  };
+
+  _aftersale["default"].find().skip(pageOptions.page * pageOptions.size).limit(pageOptions.size).then(function (after) {
     return res.json({
       success: true,
       code: 0,

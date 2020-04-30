@@ -40,11 +40,13 @@ userInfoController.avatarUpload = (req, res) => {
   let time = Date.now();
   fs.mkdir("./public/images/andyexpress/avatar", function () {});
   let imagePath = `images/andyexpress/avatar/${req.user.id}_${time}.png`;
-  fs.writeFile(path.resolve(`./public/${imagePath}`), dataBuffer, function (err) {
+  fs.writeFile(path.resolve(`./public/${imagePath}`), dataBuffer, function (
+    err
+  ) {
     if (err) {
       console.log(err);
-    }else{
-      console.log("创建成功")
+    } else {
+      console.log("创建成功");
     }
   });
   UserInfo.updateOne({ user_id: req.user.id }, { avatar: imagePath }).then(
@@ -59,7 +61,13 @@ userInfoController.avatarUpload = (req, res) => {
 
 // 后台获取所有用户
 userInfoController.getAllUser = (req, res) => {
+  const pageOptions = {
+    page: parseInt(req.params.page) || 0,
+    size: parseInt(req.params.size) || 10,
+  };
   UserInfo.find()
+    .skip(pageOptions.page * pageOptions.size)
+    .limit(pageOptions.size)
     .then((user) => res.json({ data: user, success: true, code: 0 }))
     .catch((err) => res.status(400).json("Error: " + err));
 };
