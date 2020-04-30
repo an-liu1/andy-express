@@ -154,8 +154,6 @@ aftersaleController.searchAdminAfterSale = function (req, res) {
 
   _aftersale["default"].find({
     $or: [{
-      _id: eval("/".concat(req.body.searchString, "/i"))
-    }, {
       user_id: eval("/".concat(req.body.searchString, "/i"))
     }, {
       username: eval("/".concat(req.body.searchString, "/i"))
