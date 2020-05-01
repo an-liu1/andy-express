@@ -40,6 +40,26 @@ ordersController.createOrderForm = (req, res) => {
     .catch((err) => res.status(400).json("Error: " + err));
 };
 
+// 用户取消订单
+ordersController.cancleOrderForm = (req, res) => {
+  req.body.orderStatus = "已取消";
+  OrderForm.updateOne({ _id: req.params.id }, { $set: req.body })
+    .then((order) => {
+      order.orderGoodsList.map((i) => {
+        Goods.updateOne(
+          { _id: i.goodId },
+          { $set: { goodStatus: "已入库" } }
+        ).catch((err) => res.status(400).json("Error: " + err));
+      });
+      return res.json({
+        success: true,
+        code: 0,
+        data: order,
+      });
+    })
+    .catch((err) => res.status(400).json("Error: " + err));
+};
+
 // 客服上传订单详情
 ordersController.updateOrderForm = (req, res) => {
   let order_Img = req.body.orderImg;

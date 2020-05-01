@@ -54,6 +54,36 @@ ordersController.createOrderForm = function (req, res) {
   })["catch"](function (err) {
     return res.status(400).json("Error: " + err);
   });
+}; // 用户取消订单
+
+
+ordersController.cancleOrderForm = function (req, res) {
+  req.body.orderStatus = "已取消";
+
+  _orderForm["default"].updateOne({
+    _id: req.params.id
+  }, {
+    $set: req.body
+  }).then(function (order) {
+    order.orderGoodsList.map(function (i) {
+      _goods["default"].updateOne({
+        _id: i.goodId
+      }, {
+        $set: {
+          goodStatus: "已入库"
+        }
+      })["catch"](function (err) {
+        return res.status(400).json("Error: " + err);
+      });
+    });
+    return res.json({
+      success: true,
+      code: 0,
+      data: order
+    });
+  })["catch"](function (err) {
+    return res.status(400).json("Error: " + err);
+  });
 }; // 客服上传订单详情
 
 

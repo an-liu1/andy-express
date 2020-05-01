@@ -48,7 +48,9 @@ router.put("/orderDelivery", _ordersController["default"].orderDelivery); // 客
 
 router.put("/isDeliveryAndRank", _ordersController["default"].isDeliveryAndRank); //客户确定收货及评分
 
-router.post("/searchOrdersForUser/:status/:page/:size/:status1/:status2", _ordersController["default"].searchOrdersForUser); //售后
+router.post("/searchOrdersForUser/:status/:page/:size/:status1/:status2", _ordersController["default"].searchOrdersForUser);
+router.put("cancleOrderForm/:id", _ordersController["default"].cancleOrderForm); //用户取消订单
+//售后
 
 router.post("/createAfterSale", _aftersaleController["default"].createAfterSale); //客户提交售后
 

@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 
 const goodsSchema = new Schema(
   {
-    goodStatus: { type: String }, //待入库 已入库 待打包 已打包 退货中 已退货
+    goodStatus: { type: String }, //待入库 已入库   已打包 退货中 已退货
 
     // 客户上传单号创建物品信息（物品状态：待入库）
     user_id: { type: String },
@@ -41,6 +41,11 @@ const goodsSchema = new Schema(
     //客服填写退货快递信息
     returnExpressNumber: { type: String },
     returnExpressCompany: { type: String },
+
+    //退货信息
+    returnPayMethod: { type: String },
+    returnShippingPrice: { type: String },
+    IsPayed: { type: Boolean },
   },
   {
     timestamps: true,
