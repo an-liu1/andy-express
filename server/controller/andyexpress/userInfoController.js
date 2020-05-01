@@ -94,7 +94,6 @@ userInfoController.searchUser = (req, res) => {
   };
   UserInfo.find({
     $or: [
-      { _id: eval(`/${req.body.searchString}/i`) },
       { user_id: eval(`/${req.body.searchString}/i`) },
       { username: eval(`/${req.body.searchString}/i`) },
       { email: eval(`/${req.body.searchString}/i`) },

@@ -115,8 +115,6 @@ userInfoController.searchUser = function (req, res) {
 
   _userInfo["default"].find({
     $or: [{
-      _id: eval("/".concat(req.body.searchString, "/i"))
-    }, {
       user_id: eval("/".concat(req.body.searchString, "/i"))
     }, {
       username: eval("/".concat(req.body.searchString, "/i"))
