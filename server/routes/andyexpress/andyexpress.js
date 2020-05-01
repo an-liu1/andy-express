@@ -65,6 +65,7 @@ router.get(
   "/getAllGoods/:status/:page/:size/:status1/:status2",
   goodsController.getAllGoods
 ); // 获取所有商品
+router.post("/submitReturnGoodsInfo", goodsController.submitReturnGoodsInfo);// 后台提交退货信息
 router.post("/submitReturnGoods", goodsController.submitReturnGoods); //客户发出快递填写退货商品单号及快递商，确认退货
 router.post(
   "/searchGoods/:status/:page/:size/:status1/:status2",

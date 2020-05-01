@@ -106,6 +106,25 @@ goodsController.returnGoods = function (req, res) {
       return res.status(400).json("Error: " + err);
     });
   });
+}; // 后台提交退货信息
+
+
+goodsController.submitReturnGoodsInfo = function (req, res) {
+  req.body.returnedGoods.map(function (i) {
+    _goods["default"].updateOne({
+      _id: i
+    }, {
+      $set: req.body
+    }).then(function (good) {
+      return res.json({
+        success: true,
+        code: 0,
+        data: good
+      });
+    })["catch"](function (err) {
+      return res.status(400).json("Error: " + err);
+    });
+  });
 }; // 退货完成
 
 

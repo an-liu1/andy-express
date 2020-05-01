@@ -84,6 +84,23 @@ goodsController.returnGoods = (req, res) => {
       )
       .catch((err) => res.status(400).json("Error: " + err));
   });
+
+   
+};
+
+// 后台提交退货信息
+goodsController.submitReturnGoodsInfo = (req, res) => {
+  req.body.returnedGoods.map((i) => {
+    Goods.updateOne({ _id: i }, { $set: req.body })
+      .then((good) =>
+        res.json({
+          success: true,
+          code: 0,
+          data: good,
+        })
+      )
+      .catch((err) => res.status(400).json("Error: " + err));
+  });
 };
 
 // 退货完成
