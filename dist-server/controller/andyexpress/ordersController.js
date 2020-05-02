@@ -63,9 +63,11 @@ ordersController.cancleOrderForm = function (req, res) {
   _orderForm["default"].updateOne({
     _id: req.params.id
   }, {
-    $set: req.body
+    $set: {
+      orderStatus: req.body.orderStatus
+    }
   }).then(function (order) {
-    order.orderGoodsList.map(function (i) {
+    req.body.orderGoodsList.map(function (i) {
       _goods["default"].updateOne({
         _id: i.goodId
       }, {

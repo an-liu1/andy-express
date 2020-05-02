@@ -43,9 +43,12 @@ ordersController.createOrderForm = (req, res) => {
 // 用户取消订单
 ordersController.cancleOrderForm = (req, res) => {
   req.body.orderStatus = "已取消";
-  OrderForm.updateOne({ _id: req.params.id }, { $set: req.body })
+  OrderForm.updateOne(
+    { _id: req.params.id },
+    { $set: { orderStatus: req.body.orderStatus } }
+  )
     .then((order) => {
-      order.orderGoodsList.map((i) => {
+      req.body.orderGoodsList.map((i) => {
         Goods.updateOne(
           { _id: i.goodId },
           { $set: { goodStatus: "已入库" } }

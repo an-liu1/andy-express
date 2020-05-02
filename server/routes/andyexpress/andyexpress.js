@@ -35,7 +35,7 @@ router.post(
   "/searchOrdersForUser/:status/:page/:size/:status1/:status2",
   ordersController.searchOrdersForUser
 );
-router.put("cancleOrderForm/:id", ordersController.cancleOrderForm); //用户取消订单
+router.put("/cancleOrderForm/:id", ordersController.cancleOrderForm); //用户取消订单
 
 //售后
 router.post("/createAfterSale", aftersaleController.createAfterSale); //客户提交售后
