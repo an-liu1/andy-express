@@ -161,6 +161,8 @@ goodsController.getGoods = function (req, res) {
       goodStatus: req.params.status1
     }],
     user_id: req.user.id
+  }).sort({
+    updatedAt: "desc"
   }).skip(pageOptions.page * pageOptions.size).limit(pageOptions.size).then(function (good) {
     res.json({
       success: true,
@@ -187,6 +189,8 @@ goodsController.getAllGoods = function (req, res) {
     }, {
       goodStatus: req.params.status2
     }]
+  }).sort({
+    updatedAt: "desc"
   }).skip(pageOptions.page * pageOptions.size).limit(pageOptions.size).then(function (good) {
     return res.json({
       success: true,
@@ -223,6 +227,8 @@ goodsController.searchGoods = function (req, res) {
     goodStatus: {
       $in: [req.params.status, req.params.status1, req.params.status2]
     }
+  }).sort({
+    updatedAt: "desc"
   }).skip(pageOptions.page * pageOptions.size).limit(pageOptions.size).then(function (goods) {
     return res.json({
       success: true,
@@ -260,6 +266,8 @@ goodsController.searchGoodsForUser = function (req, res) {
     goodStatus: {
       $in: [req.params.status, req.params.status1]
     }
+  }).sort({
+    updatedAt: "desc"
   }).skip(pageOptions.page * pageOptions.size).limit(pageOptions.size).then(function (goods) {
     return res.json({
       success: true,

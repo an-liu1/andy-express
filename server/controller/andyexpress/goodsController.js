@@ -84,8 +84,6 @@ goodsController.returnGoods = (req, res) => {
       )
       .catch((err) => res.status(400).json("Error: " + err));
   });
-
-   
 };
 
 // 后台提交退货信息和客户确认并付款
@@ -132,6 +130,7 @@ goodsController.getGoods = (req, res) => {
     ],
     user_id: req.user.id,
   })
+    .sort({ updatedAt: "desc" })
     .skip(pageOptions.page * pageOptions.size)
     .limit(pageOptions.size)
     .then((good) => {
@@ -157,6 +156,7 @@ goodsController.getAllGoods = (req, res) => {
       { goodStatus: req.params.status2 },
     ],
   })
+    .sort({ updatedAt: "desc" })
     .skip(pageOptions.page * pageOptions.size)
     .limit(pageOptions.size)
     .then((good) =>
@@ -188,6 +188,7 @@ goodsController.searchGoods = (req, res) => {
       $in: [req.params.status, req.params.status1, req.params.status2],
     },
   })
+    .sort({ updatedAt: "desc" })
     .skip(pageOptions.page * pageOptions.size)
     .limit(pageOptions.size)
     .then((goods) =>
@@ -220,6 +221,7 @@ goodsController.searchGoodsForUser = (req, res) => {
       $in: [req.params.status, req.params.status1],
     },
   })
+    .sort({ updatedAt: "desc" })
     .skip(pageOptions.page * pageOptions.size)
     .limit(pageOptions.size)
     .then((goods) =>
