@@ -17,11 +17,11 @@ var userInfoController = {}; // 获取用户总数
 
 userInfoController.getUserNumber = function (req, res) {
   _userInfo["default"].find().then(function (user) {
-    adminUserNumber = user.filter(function (i) {
+    var adminUserNumber = user.filter(function (i) {
       return i.level === "Admin/管理员";
     }).length;
-    UserNumber = user.length;
-    normalUserNumber = UserNumber - adminUserNumber;
+    var UserNumber = user.length;
+    var normalUserNumber = UserNumber - adminUserNumber;
     return res.json({
       success: true,
       code: 0,

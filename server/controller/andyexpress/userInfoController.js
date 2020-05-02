@@ -8,10 +8,9 @@ const userInfoController = {};
 userInfoController.getUserNumber = (req, res) => {
   UserInfo.find()
     .then((user) => {
-      adminUserNumber = user.filter((i) => i.level === "Admin/管理员").length;
-      UserNumber = user.length;
-      normalUserNumber = UserNumber - adminUserNumber;
-
+      let adminUserNumber = user.filter((i) => i.level === "Admin/管理员").length;
+      let UserNumber = user.length;
+      let normalUserNumber = UserNumber - adminUserNumber;
       return res.json({
         success: true,
         code: 0,
