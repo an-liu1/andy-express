@@ -36,7 +36,7 @@ router.post("/goodSubmit", _goodsController["default"].submitGoods); //提交国
 
 router.get("/goodGet/:status/:page/:size/:status1", _goodsController["default"].getGoods); // 获取用户所有未入库商品
 
-router.post("/returnGoods", _goodsController["default"].returnGoods); // 用户提交退货地址
+router.put("/returnGoods", _goodsController["default"].returnGoods); // 用户提交退货地址
 
 router.post("/searchGoodsForUser/:status/:page/:size/:status1", _goodsController["default"].searchGoodsForUser); //订单
 
