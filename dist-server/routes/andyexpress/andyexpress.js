@@ -81,9 +81,9 @@ router.put("/goodUpdate/:id", _goodsController["default"].updateGoods); // 入�
 
 router.get("/getAllGoods/:status/:page/:size/:status1/:status2", _goodsController["default"].getAllGoods); // 获取所有商品
 
-router.post("/submitReturnGoodsInfo", _goodsController["default"].submitReturnGoodsInfo); // 后台提交退货信息
+router.put("/submitReturnGoodsInfo", _goodsController["default"].submitReturnGoodsInfo); // 后台提交退货信息和客户确认并付款
 
-router.post("/submitReturnGoods", _goodsController["default"].submitReturnGoods); //客户发出快递填写退货商品单号及快递商，确认退货
+router.put("/submitReturnGoods", _goodsController["default"].submitReturnGoods); //客户发出快递填写退货商品单号及快递商，确认退货
 
 router.post("/searchGoods/:status/:page/:size/:status1/:status2", _goodsController["default"].searchGoods); //搜索
 //订单

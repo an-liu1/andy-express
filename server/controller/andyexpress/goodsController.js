@@ -88,7 +88,7 @@ goodsController.returnGoods = (req, res) => {
    
 };
 
-// 后台提交退货信息
+// 后台提交退货信息和客户确认并付款
 goodsController.submitReturnGoodsInfo = (req, res) => {
   req.body.returnedGoods.map((i) => {
     Goods.updateOne({ _id: i }, { $set: req.body })

@@ -106,7 +106,7 @@ goodsController.returnGoods = function (req, res) {
       return res.status(400).json("Error: " + err);
     });
   });
-}; // 后台提交退货信息
+}; // 后台提交退货信息和客户确认并付款
 
 
 goodsController.submitReturnGoodsInfo = function (req, res) {
