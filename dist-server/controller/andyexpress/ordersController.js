@@ -58,13 +58,11 @@ ordersController.createOrderForm = function (req, res) {
 
 
 ordersController.cancleOrderForm = function (req, res) {
-  req.body.orderStatus = "已取消";
-
   _orderForm["default"].updateOne({
     _id: req.params.id
   }, {
     $set: {
-      orderStatus: req.body.orderStatus
+      orderStatus: "已取消"
     }
   }).then(function (order) {
     req.body.orderGoodsList.map(function (i) {
