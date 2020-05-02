@@ -8,10 +8,18 @@ const userInfoController = {};
 userInfoController.getUserNumber = (req, res) => {
   UserInfo.find()
     .then((user) => {
-      res.json({
+      adminUserNumber = user.filter((i) => i.level === "Admin/管理员").length;
+      UserNumber = user.length;
+      normalUserNumber = UserNumber - adminUserNumber;
+
+      return res.json({
         success: true,
         code: 0,
-        data: user.length,
+        data: {
+          adminUserNumber,
+          UserNumber,
+          normalUserNumber,
+        },
       });
     })
     .catch((err) => {
@@ -81,6 +89,7 @@ userInfoController.getAllUser = (req, res) => {
     size: parseInt(req.params.size) || 10,
   };
   UserInfo.find()
+    .sort({ updatedAt: "desc" })
     .skip(pageOptions.page * pageOptions.size)
     .limit(pageOptions.size)
     .then((user) => res.json({ data: user, success: true, code: 0 }))
@@ -100,6 +109,7 @@ userInfoController.searchUser = (req, res) => {
       { phoneNumber: eval(`/${req.body.searchString}/i`) },
     ],
   })
+    .sort({ updatedAt: "desc" })
     .skip(pageOptions.page * pageOptions.size)
     .limit(pageOptions.size)
     .then((user) =>

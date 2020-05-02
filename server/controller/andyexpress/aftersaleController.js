@@ -93,6 +93,7 @@ aftersaleController.getUserAfterSale = (req, res) => {
     size: parseInt(req.params.size) || 10,
   };
   AfterSale.find({ user_id: req.user.id })
+    .sort({ updatedAt: "desc" })
     .skip(pageOptions.page * pageOptions.size)
     .limit(pageOptions.size)
     .then((after) =>
@@ -112,6 +113,7 @@ aftersaleController.getAdminAfterSale = (req, res) => {
     size: parseInt(req.params.size) || 10,
   };
   AfterSale.find()
+    .sort({ updatedAt: "desc" })
     .skip(pageOptions.page * pageOptions.size)
     .limit(pageOptions.size)
     .then((after) =>
@@ -140,6 +142,7 @@ aftersaleController.searchAdminAfterSale = (req, res) => {
       { compensation: eval(`/${req.body.searchString}/i`) },
     ],
   })
+    .sort({ updatedAt: "desc" })
     .skip(pageOptions.page * pageOptions.size)
     .limit(pageOptions.size)
     .then((after) =>

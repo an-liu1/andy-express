@@ -154,6 +154,7 @@ ordersController.getAllOrderForm = (req, res) => {
       { orderStatus: req.params.status2 },
     ],
   })
+    .sort({ updatedAt: "desc" })
     .skip(pageOptions.page * pageOptions.size)
     .limit(pageOptions.size)
     .then((order) =>
@@ -180,6 +181,7 @@ ordersController.getOrderForm = (req, res) => {
     ],
     user_id: req.user.id,
   })
+    .sort({ updatedAt: "desc" })
     .skip(pageOptions.page * pageOptions.size)
     .limit(pageOptions.size)
     .then((order) =>
@@ -208,6 +210,7 @@ ordersController.searchOrders = (req, res) => {
       $in: [req.params.status, req.params.status1, req.params.status2],
     },
   })
+    .sort({ updatedAt: "desc" })
     .skip(pageOptions.page * pageOptions.size)
     .limit(pageOptions.size)
     .then((orders) =>
@@ -237,6 +240,7 @@ ordersController.searchOrdersForUser = (req, res) => {
       $in: [req.params.status, req.params.status1, req.params.status2],
     },
   })
+    .sort({ updatedAt: "desc" })
     .skip(pageOptions.page * pageOptions.size)
     .limit(pageOptions.size)
     .then((orders) =>

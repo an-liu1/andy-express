@@ -117,6 +117,8 @@ aftersaleController.getUserAfterSale = function (req, res) {
 
   _aftersale["default"].find({
     user_id: req.user.id
+  }).sort({
+    updatedAt: "desc"
   }).skip(pageOptions.page * pageOptions.size).limit(pageOptions.size).then(function (after) {
     return res.json({
       success: true,
@@ -135,7 +137,9 @@ aftersaleController.getAdminAfterSale = function (req, res) {
     size: parseInt(req.params.size) || 10
   };
 
-  _aftersale["default"].find().skip(pageOptions.page * pageOptions.size).limit(pageOptions.size).then(function (after) {
+  _aftersale["default"].find().sort({
+    updatedAt: "desc"
+  }).skip(pageOptions.page * pageOptions.size).limit(pageOptions.size).then(function (after) {
     return res.json({
       success: true,
       code: 0,
@@ -168,6 +172,8 @@ aftersaleController.searchAdminAfterSale = function (req, res) {
     }, {
       compensation: eval("/".concat(req.body.searchString, "/i"))
     }]
+  }).sort({
+    updatedAt: "desc"
   }).skip(pageOptions.page * pageOptions.size).limit(pageOptions.size).then(function (after) {
     return res.json({
       success: true,

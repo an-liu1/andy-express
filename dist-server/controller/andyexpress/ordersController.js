@@ -208,6 +208,8 @@ ordersController.getAllOrderForm = function (req, res) {
     }, {
       orderStatus: req.params.status2
     }]
+  }).sort({
+    updatedAt: "desc"
   }).skip(pageOptions.page * pageOptions.size).limit(pageOptions.size).then(function (order) {
     return res.json({
       success: true,
@@ -235,6 +237,8 @@ ordersController.getOrderForm = function (req, res) {
       orderStatus: req.params.status2
     }],
     user_id: req.user.id
+  }).sort({
+    updatedAt: "desc"
   }).skip(pageOptions.page * pageOptions.size).limit(pageOptions.size).then(function (order) {
     return res.json({
       success: true,
@@ -265,6 +269,8 @@ ordersController.searchOrders = function (req, res) {
     orderStatus: {
       $in: [req.params.status, req.params.status1, req.params.status2]
     }
+  }).sort({
+    updatedAt: "desc"
   }).skip(pageOptions.page * pageOptions.size).limit(pageOptions.size).then(function (orders) {
     return res.json({
       success: true,
@@ -296,6 +302,8 @@ ordersController.searchOrdersForUser = function (req, res) {
     orderStatus: {
       $in: [req.params.status, req.params.status1, req.params.status2]
     }
+  }).sort({
+    updatedAt: "desc"
   }).skip(pageOptions.page * pageOptions.size).limit(pageOptions.size).then(function (orders) {
     return res.json({
       success: true,

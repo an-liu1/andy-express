@@ -35,6 +35,7 @@ announcementController.getAdminAnnouncement = (req, res) => {
     size: parseInt(req.params.size) || 10,
   };
   Announcement.find()
+    .sort({ updatedAt: "desc" })
     .skip(pageOptions.page * pageOptions.size)
     .limit(pageOptions.size)
     .then((announcement) =>

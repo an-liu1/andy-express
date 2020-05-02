@@ -17,10 +17,19 @@ var userInfoController = {}; // 获取用户总数
 
 userInfoController.getUserNumber = function (req, res) {
   _userInfo["default"].find().then(function (user) {
-    res.json({
+    adminUserNumber = user.filter(function (i) {
+      return i.level === "Admin/管理员";
+    }).length;
+    UserNumber = user.length;
+    normalUserNumber = UserNumber - adminUserNumber;
+    return res.json({
       success: true,
       code: 0,
-      data: user.length
+      data: {
+        adminUserNumber: adminUserNumber,
+        UserNumber: UserNumber,
+        normalUserNumber: normalUserNumber
+      }
     });
   })["catch"](function (err) {
     res.status(400).json("Error: " + err);
@@ -96,7 +105,9 @@ userInfoController.getAllUser = function (req, res) {
     size: parseInt(req.params.size) || 10
   };
 
-  _userInfo["default"].find().skip(pageOptions.page * pageOptions.size).limit(pageOptions.size).then(function (user) {
+  _userInfo["default"].find().sort({
+    updatedAt: "desc"
+  }).skip(pageOptions.page * pageOptions.size).limit(pageOptions.size).then(function (user) {
     return res.json({
       data: user,
       success: true,
@@ -123,6 +134,8 @@ userInfoController.searchUser = function (req, res) {
     }, {
       phoneNumber: eval("/".concat(req.body.searchString, "/i"))
     }]
+  }).sort({
+    updatedAt: "desc"
   }).skip(pageOptions.page * pageOptions.size).limit(pageOptions.size).then(function (user) {
     return res.json({
       success: true,

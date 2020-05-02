@@ -47,7 +47,9 @@ announcementController.getAdminAnnouncement = function (req, res) {
     size: parseInt(req.params.size) || 10
   };
 
-  _announcement["default"].find().skip(pageOptions.page * pageOptions.size).limit(pageOptions.size).then(function (announcement) {
+  _announcement["default"].find().sort({
+    updatedAt: "desc"
+  }).skip(pageOptions.page * pageOptions.size).limit(pageOptions.size).then(function (announcement) {
     return res.json({
       success: true,
       code: 0,

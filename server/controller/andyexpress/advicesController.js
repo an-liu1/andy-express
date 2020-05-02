@@ -57,6 +57,7 @@ advicesController.getUserAdvice = (req, res) => {
     size: parseInt(req.params.size) || 10,
   };
   Advices.find({ user_id: req.user.id })
+    .sort({ updatedAt: "desc" })
     .skip(pageOptions.page * pageOptions.size)
     .limit(pageOptions.size)
     .then((advice) =>
@@ -76,6 +77,7 @@ advicesController.getAdminAdvice = (req, res) => {
     size: parseInt(req.params.size) || 10,
   };
   Advices.find()
+    .sort({ updatedAt: "desc" })
     .skip(pageOptions.page * pageOptions.size)
     .limit(pageOptions.size)
     .then((advice) =>
@@ -116,6 +118,7 @@ advicesController.searchAdminAdvice = (req, res) => {
       { advice_content: eval(`/${req.body.searchString}/i`) },
     ],
   })
+    .sort({ updatedAt: "desc" })
     .skip(pageOptions.page * pageOptions.size)
     .limit(pageOptions.size)
     .then((advice) =>

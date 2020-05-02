@@ -71,6 +71,8 @@ advicesController.getUserAdvice = function (req, res) {
 
   _advices["default"].find({
     user_id: req.user.id
+  }).sort({
+    updatedAt: "desc"
   }).skip(pageOptions.page * pageOptions.size).limit(pageOptions.size).then(function (advice) {
     return res.json({
       success: true,
@@ -89,7 +91,9 @@ advicesController.getAdminAdvice = function (req, res) {
     size: parseInt(req.params.size) || 10
   };
 
-  _advices["default"].find().skip(pageOptions.page * pageOptions.size).limit(pageOptions.size).then(function (advice) {
+  _advices["default"].find().sort({
+    updatedAt: "desc"
+  }).skip(pageOptions.page * pageOptions.size).limit(pageOptions.size).then(function (advice) {
     return res.json({
       success: true,
       code: 0,
@@ -136,6 +140,8 @@ advicesController.searchAdminAdvice = function (req, res) {
     }, {
       advice_content: eval("/".concat(req.body.searchString, "/i"))
     }]
+  }).sort({
+    updatedAt: "desc"
   }).skip(pageOptions.page * pageOptions.size).limit(pageOptions.size).then(function (advice) {
     return res.json({
       success: true,
