@@ -27,6 +27,19 @@ goodsController.submitGoods = (req, res) => {
     .catch((err) => res.status(400).json("Error: " + err));
 };
 
+// 客户更新待入库信息
+goodsController.userUpdateGoods = (req, res) => {
+  Goods.updateOne({ _id: req.params.id }, { $set: req.body })
+    .then((good) => {
+      return res.json({
+        success: true,
+        code: 0,
+        data: good,
+      });
+    })
+    .catch((err) => res.status(400).json("Error: " + err));
+};
+
 // 后台更新进仓库物品信息
 goodsController.updateGoods = (req, res) => {
   let good_image = req.body.goodImg;

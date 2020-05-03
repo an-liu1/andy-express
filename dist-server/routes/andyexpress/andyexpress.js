@@ -34,6 +34,8 @@ router.post("/avatarUpload", _userInfoController["default"].avatarUpload); //头
 
 router.post("/goodSubmit", _goodsController["default"].submitGoods); //提交国内物流信息（未入库商品）
 
+router.put("/userUpdateGoods/:id", _goodsController["default"].userUpdateGoods); // 客户更新待入库信息
+
 router.get("/goodGet/:status/:page/:size/:status1", _goodsController["default"].getGoods); // 获取用户所有未入库商品
 
 router.put("/returnGoods", _goodsController["default"].returnGoods); // 用户提交退货地址

@@ -36,6 +36,23 @@ goodsController.submitGoods = function (req, res) {
   })["catch"](function (err) {
     return res.status(400).json("Error: " + err);
   });
+}; // 客户更新待入库信息
+
+
+goodsController.userUpdateGoods = function (req, res) {
+  _goods["default"].updateOne({
+    _id: req.params.id
+  }, {
+    $set: req.body
+  }).then(function (good) {
+    return res.json({
+      success: true,
+      code: 0,
+      data: good
+    });
+  })["catch"](function (err) {
+    return res.status(400).json("Error: " + err);
+  });
 }; // 后台更新进仓库物品信息
 
 
