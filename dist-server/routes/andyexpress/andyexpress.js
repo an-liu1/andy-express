@@ -24,7 +24,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "d
 var router = _express["default"].Router();
 
 // USER INTERFACE
-//user
+router.get("/getUpToken/:uploadTime", _userInfoController["default"].getUpToken); //user
+
 router.get("/getUserInfo", _userInfoController["default"].getUserInfo); // 获取个人信息
 
 router.put("/updateUserInfo", _userInfoController["default"].updateUserInfo); // 更新个人信息

@@ -1,6 +1,6 @@
 import AfterSale from "../../model/andyexpress/aftersale.model";
 import OrderForm from "../../model/andyexpress/orderForm.model";
-import fs from "fs";
+// import fs from "fs";
 
 const aftersaleController = {};
 
@@ -10,18 +10,18 @@ aftersaleController.createAfterSale = (req, res) => {
   req.body.user_id = req.user.id;
   req.body.email = req.user.email;
 
-  let imagePath = req.body.aftersale_image.map((i) => {
-    var base64Data = i.replace(/^data:image\/\w+;base64,/, "");
-    var dataBuffer = Buffer.from(base64Data, "base64");
-    let time = Date.now();
-    let image = `images/andyexpress/aftersale/${req.user.id}_${time}.png`;
-    fs.writeFile(`./public/${image}`, dataBuffer, function (err) {
-      if (err) return;
-    });
-    return image;
-  });
+  // let imagePath = req.body.aftersale_image.map((i) => {
+  //   var base64Data = i.replace(/^data:image\/\w+;base64,/, "");
+  //   var dataBuffer = Buffer.from(base64Data, "base64");
+  //   let time = Date.now();
+  //   let image = `images/andyexpress/aftersale/${req.user.id}_${time}.png`;
+  //   fs.writeFile(`./public/${image}`, dataBuffer, function (err) {
+  //     if (err) return;
+  //   });
+  //   return image;
+  // });
 
-  req.body.aftersale_image = imagePath;
+  // req.body.aftersale_image = imagePath;
   req.body.is_solve = 0;
   req.body.compensation = "";
 

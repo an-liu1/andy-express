@@ -1,6 +1,7 @@
 import UserInfo from "../../model/andyexpress/userInfo.model";
-import fs from "fs";
-import path from "path";
+// import fs from "fs";
+// import path from "path";
+import { uploadFile, getUpToken } from "../../config/fileUpload";
 
 const userInfoController = {};
 
@@ -8,7 +9,8 @@ const userInfoController = {};
 userInfoController.getUserNumber = (req, res) => {
   UserInfo.find()
     .then((user) => {
-      let adminUserNumber = user.filter((i) => i.level === "Admin/管理员").length;
+      let adminUserNumber = user.filter((i) => i.level === "Admin/管理员")
+        .length;
       let UserNumber = user.length;
       let normalUserNumber = UserNumber - adminUserNumber;
       return res.json({
@@ -57,21 +59,24 @@ userInfoController.updateUserInfo = (req, res) => {
 // 头像上传
 userInfoController.avatarUpload = (req, res) => {
   let avatar = req.body.avatar;
-  var base64Data = avatar.replace(/^data:image\/\w+;base64,/, "");
-  var dataBuffer = Buffer.from(base64Data, "base64");
-  let time = Date.now();
-  fs.mkdir("./public/images/andyexpress/avatar", function () {});
-  let imagePath = `images/andyexpress/avatar/${req.user.id}_${time}.png`;
-  fs.writeFile(path.resolve(`./public/${imagePath}`), dataBuffer, function (
-    err
-  ) {
-    if (err) {
-      console.log(err);
-    } else {
-      console.log("创建成功");
-    }
-  });
-  UserInfo.updateOne({ user_id: req.user.id }, { avatar: imagePath }).then(
+  // var base64Data = avatar.replace(/^data:image\/\w+;base64,/, "");
+  // var dataBuffer = Buffer.from(base64Data, "base64");
+  // let time = Date.now();
+  // fs.mkdir("./public/images/andyexpress/avatar", function () {});
+  // let imagePath = `images/andyexpress/avatar/${req.user.id}_${time}.png`;
+  // let imagePath = `avatar/${req.user.id}_${time}.png`;
+  // uploadFile(imagePath, avatar);
+
+  // fs.writeFile(path.resolve(`./public/${imagePath}`), dataBuffer, function (
+  //   err
+  // ) {
+  //   if (err) {
+  //     console.log(err);
+  //   } else {
+  //     console.log("创建成功");
+  //   }
+  // });
+  UserInfo.updateOne({ user_id: req.user.id }, { avatar: avatar }).then(
     (user) =>
       res.json({
         success: true,
@@ -119,6 +124,17 @@ userInfoController.searchUser = (req, res) => {
       })
     )
     .catch((err) => res.status(400).json("Error: " + err));
+};
+
+// 获取token
+userInfoController.getUpToken = (req, res) => {
+  let imagePath = `${req.user.id}_${req.params.uploadTime}.png`;
+  let token = getUpToken(imagePath);
+  return res.json({
+    success: true,
+    code: 0,
+    data: { token: token, key: imagePath },
+  });
 };
 
 export default userInfoController;

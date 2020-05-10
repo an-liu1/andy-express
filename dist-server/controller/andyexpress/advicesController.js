@@ -7,25 +7,22 @@ exports["default"] = void 0;
 
 var _advices = _interopRequireDefault(require("../../model/andyexpress/advices.model"));
 
-var _fs = _interopRequireDefault(require("fs"));
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
+// import fs from "fs";
 var advicesController = {}; // 用户发起投诉申请
 
 advicesController.createAdvice = function (req, res) {
-  var imagePath = req.body.evident_image.map(function (i) {
-    var base64Data = i.replace(/^data:image\/\w+;base64,/, "");
-    var dataBuffer = Buffer.from(base64Data, "base64");
-    var time = Date.now();
-    var image = "images/andyexpress/advices/".concat(req.user.id, "_").concat(time, ".png");
-
-    _fs["default"].writeFile("./public/".concat(image), dataBuffer, function (err) {
-      if (err) return;
-    });
-
-    return image;
-  });
+  // let imagePath = req.body.evident_image.map((i) => {
+  //   var base64Data = i.replace(/^data:image\/\w+;base64,/, "");
+  //   var dataBuffer = Buffer.from(base64Data, "base64");
+  //   let time = Date.now();
+  //   let image = `images/andyexpress/advices/${req.user.id}_${time}.png`;
+  //   fs.writeFile(`./public/${image}`, dataBuffer, function (err) {
+  //     if (err) return;
+  //   });
+  //   return image;
+  // });
   var advice = {
     usernam: req.user.username,
     user_id: req.user.id,
@@ -33,7 +30,7 @@ advicesController.createAdvice = function (req, res) {
     advice_title: req.body.advice_title,
     advice_type: req.body.advice_type,
     advice_content: req.body.advice_content,
-    evident_image: imagePath
+    evident_image: req.body.evident_image
   };
 
   _advices["default"].create(advice).then(function (advice) {

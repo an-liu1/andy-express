@@ -9,29 +9,26 @@ var _aftersale = _interopRequireDefault(require("../../model/andyexpress/aftersa
 
 var _orderForm = _interopRequireDefault(require("../../model/andyexpress/orderForm.model"));
 
-var _fs = _interopRequireDefault(require("fs"));
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
+// import fs from "fs";
 var aftersaleController = {}; // 客户提交售后申请
 
 aftersaleController.createAfterSale = function (req, res) {
   req.body.username = req.user.username;
   req.body.user_id = req.user.id;
-  req.body.email = req.user.email;
-  var imagePath = req.body.aftersale_image.map(function (i) {
-    var base64Data = i.replace(/^data:image\/\w+;base64,/, "");
-    var dataBuffer = Buffer.from(base64Data, "base64");
-    var time = Date.now();
-    var image = "images/andyexpress/aftersale/".concat(req.user.id, "_").concat(time, ".png");
+  req.body.email = req.user.email; // let imagePath = req.body.aftersale_image.map((i) => {
+  //   var base64Data = i.replace(/^data:image\/\w+;base64,/, "");
+  //   var dataBuffer = Buffer.from(base64Data, "base64");
+  //   let time = Date.now();
+  //   let image = `images/andyexpress/aftersale/${req.user.id}_${time}.png`;
+  //   fs.writeFile(`./public/${image}`, dataBuffer, function (err) {
+  //     if (err) return;
+  //   });
+  //   return image;
+  // });
+  // req.body.aftersale_image = imagePath;
 
-    _fs["default"].writeFile("./public/".concat(image), dataBuffer, function (err) {
-      if (err) return;
-    });
-
-    return image;
-  });
-  req.body.aftersale_image = imagePath;
   req.body.is_solve = 0;
   req.body.compensation = "";
 

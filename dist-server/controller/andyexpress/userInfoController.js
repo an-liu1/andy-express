@@ -7,12 +7,12 @@ exports["default"] = void 0;
 
 var _userInfo = _interopRequireDefault(require("../../model/andyexpress/userInfo.model"));
 
-var _fs = _interopRequireDefault(require("fs"));
-
-var _path = _interopRequireDefault(require("path"));
+var _fileUpload = require("../../config/fileUpload");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
+// import fs from "fs";
+// import path from "path";
 var userInfoController = {}; // 获取用户总数
 
 userInfoController.getUserNumber = function (req, res) {
@@ -68,27 +68,27 @@ userInfoController.updateUserInfo = function (req, res) {
 
 
 userInfoController.avatarUpload = function (req, res) {
-  var avatar = req.body.avatar;
-  var base64Data = avatar.replace(/^data:image\/\w+;base64,/, "");
-  var dataBuffer = Buffer.from(base64Data, "base64");
-  var time = Date.now();
-
-  _fs["default"].mkdir("./public/images/andyexpress/avatar", function () {});
-
-  var imagePath = "images/andyexpress/avatar/".concat(req.user.id, "_").concat(time, ".png");
-
-  _fs["default"].writeFile(_path["default"].resolve("./public/".concat(imagePath)), dataBuffer, function (err) {
-    if (err) {
-      console.log(err);
-    } else {
-      console.log("创建成功");
-    }
-  });
+  var avatar = req.body.avatar; // var base64Data = avatar.replace(/^data:image\/\w+;base64,/, "");
+  // var dataBuffer = Buffer.from(base64Data, "base64");
+  // let time = Date.now();
+  // fs.mkdir("./public/images/andyexpress/avatar", function () {});
+  // let imagePath = `images/andyexpress/avatar/${req.user.id}_${time}.png`;
+  // let imagePath = `avatar/${req.user.id}_${time}.png`;
+  // uploadFile(imagePath, avatar);
+  // fs.writeFile(path.resolve(`./public/${imagePath}`), dataBuffer, function (
+  //   err
+  // ) {
+  //   if (err) {
+  //     console.log(err);
+  //   } else {
+  //     console.log("创建成功");
+  //   }
+  // });
 
   _userInfo["default"].updateOne({
     user_id: req.user.id
   }, {
-    avatar: imagePath
+    avatar: avatar
   }).then(function (user) {
     return res.json({
       success: true,
@@ -144,6 +144,20 @@ userInfoController.searchUser = function (req, res) {
     });
   })["catch"](function (err) {
     return res.status(400).json("Error: " + err);
+  });
+}; // 获取token
+
+
+userInfoController.getUpToken = function (req, res) {
+  var imagePath = "".concat(req.user.id, "_").concat(req.params.uploadTime, ".png");
+  var token = (0, _fileUpload.getUpToken)(imagePath);
+  return res.json({
+    success: true,
+    code: 0,
+    data: {
+      token: token,
+      key: imagePath
+    }
   });
 };
 

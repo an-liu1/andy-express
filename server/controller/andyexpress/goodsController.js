@@ -1,5 +1,5 @@
 import Goods from "../../model/andyexpress/goods.model";
-import fs from "fs";
+// import fs from "fs";
 import mail from "../../config/sendEmail";
 
 const goodsController = {};
@@ -42,15 +42,15 @@ goodsController.userUpdateGoods = (req, res) => {
 
 // 后台更新进仓库物品信息
 goodsController.updateGoods = (req, res) => {
-  let good_image = req.body.goodImg;
-  var base64Data = good_image.replace(/^data:image\/\w+;base64,/, "");
-  var dataBuffer = Buffer.from(base64Data, "base64");
-  let time = Date.now();
-  let imagePath = `images/andyexpress/goods/${req.user.id}_${time}.png`;
-  fs.writeFile(`./public/${imagePath}`, dataBuffer, function (err) {
-    if (err) return;
-  });
-  req.body.goodImg = imagePath;
+  // let good_image = req.body.goodImg;
+  // var base64Data = good_image.replace(/^data:image\/\w+;base64,/, "");
+  // var dataBuffer = Buffer.from(base64Data, "base64");
+  // let time = Date.now();
+  // let imagePath = `images/andyexpress/goods/${req.user.id}_${time}.png`;
+  // fs.writeFile(`./public/${imagePath}`, dataBuffer, function (err) {
+  //   if (err) return;
+  // });
+  // req.body.goodImg = imagePath;
   req.body.isStorage = 1;
   req.body.storageTime = new Date();
   req.body.goodStatus = "已入库";

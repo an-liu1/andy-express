@@ -9,10 +9,9 @@ var _orderForm = _interopRequireDefault(require("../../model/andyexpress/orderFo
 
 var _goods = _interopRequireDefault(require("../../model/andyexpress/goods.model"));
 
-var _fs = _interopRequireDefault(require("fs"));
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
+// import fs from "fs";
 var ordersController = {}; // 后台获取所有订单信息
 
 ordersController.getOrderListNumber = function (req, res) {
@@ -88,17 +87,15 @@ ordersController.cancleOrderForm = function (req, res) {
 
 
 ordersController.updateOrderForm = function (req, res) {
-  var order_Img = req.body.orderImg;
-  var base64Data = order_Img.replace(/^data:image\/\w+;base64,/, "");
-  var dataBuffer = Buffer.from(base64Data, "base64");
-  var time = Date.now();
-  var imagePath = "images/andyexpress/orders/".concat(req.user.id, "_").concat(time, ".png");
-
-  _fs["default"].writeFile("./public/".concat(imagePath), dataBuffer, function (err) {
-    if (err) return;
-  });
-
-  req.body.orderImg = imagePath;
+  // let order_Img = req.body.orderImg;
+  // var base64Data = order_Img.replace(/^data:image\/\w+;base64,/, "");
+  // var dataBuffer = Buffer.from(base64Data, "base64");
+  // let time = Date.now();
+  // let imagePath = `images/andyexpress/orders/${req.user.id}_${time}.png`;
+  // fs.writeFile(`./public/${imagePath}`, dataBuffer, function (err) {
+  //   if (err) return;
+  // });
+  // req.body.orderImg = imagePath;
   req.body.orderStatus = "已打包";
   req.body.packageTime = time;
 

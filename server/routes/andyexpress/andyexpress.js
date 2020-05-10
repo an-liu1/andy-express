@@ -9,6 +9,8 @@ import announcementController from "../../controller/andyexpress/announcementCon
 
 // USER INTERFACE
 
+router.get("/getUpToken/:uploadTime", userInfoController.getUpToken);
+
 //user
 router.get("/getUserInfo", userInfoController.getUserInfo); // 获取个人信息
 router.put("/updateUserInfo", userInfoController.updateUserInfo); // 更新个人信息

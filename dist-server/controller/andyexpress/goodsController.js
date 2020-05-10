@@ -7,12 +7,11 @@ exports["default"] = void 0;
 
 var _goods = _interopRequireDefault(require("../../model/andyexpress/goods.model"));
 
-var _fs = _interopRequireDefault(require("fs"));
-
 var _sendEmail = _interopRequireDefault(require("../../config/sendEmail"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
+// import fs from "fs";
 var goodsController = {}; // 用户输入待入库物品信息
 
 goodsController.submitGoods = function (req, res) {
@@ -57,17 +56,15 @@ goodsController.userUpdateGoods = function (req, res) {
 
 
 goodsController.updateGoods = function (req, res) {
-  var good_image = req.body.goodImg;
-  var base64Data = good_image.replace(/^data:image\/\w+;base64,/, "");
-  var dataBuffer = Buffer.from(base64Data, "base64");
-  var time = Date.now();
-  var imagePath = "images/andyexpress/goods/".concat(req.user.id, "_").concat(time, ".png");
-
-  _fs["default"].writeFile("./public/".concat(imagePath), dataBuffer, function (err) {
-    if (err) return;
-  });
-
-  req.body.goodImg = imagePath;
+  // let good_image = req.body.goodImg;
+  // var base64Data = good_image.replace(/^data:image\/\w+;base64,/, "");
+  // var dataBuffer = Buffer.from(base64Data, "base64");
+  // let time = Date.now();
+  // let imagePath = `images/andyexpress/goods/${req.user.id}_${time}.png`;
+  // fs.writeFile(`./public/${imagePath}`, dataBuffer, function (err) {
+  //   if (err) return;
+  // });
+  // req.body.goodImg = imagePath;
   req.body.isStorage = 1;
   req.body.storageTime = new Date();
   req.body.goodStatus = "已入库";

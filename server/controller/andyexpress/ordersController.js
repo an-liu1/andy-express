@@ -1,6 +1,6 @@
 import OrderForm from "../../model/andyexpress/orderForm.model";
 import Goods from "../../model/andyexpress/goods.model";
-import fs from "fs";
+// import fs from "fs";
 
 const ordersController = {};
 
@@ -64,15 +64,15 @@ ordersController.cancleOrderForm = (req, res) => {
 
 // 客服上传订单详情
 ordersController.updateOrderForm = (req, res) => {
-  let order_Img = req.body.orderImg;
-  var base64Data = order_Img.replace(/^data:image\/\w+;base64,/, "");
-  var dataBuffer = Buffer.from(base64Data, "base64");
-  let time = Date.now();
-  let imagePath = `images/andyexpress/orders/${req.user.id}_${time}.png`;
-  fs.writeFile(`./public/${imagePath}`, dataBuffer, function (err) {
-    if (err) return;
-  });
-  req.body.orderImg = imagePath;
+  // let order_Img = req.body.orderImg;
+  // var base64Data = order_Img.replace(/^data:image\/\w+;base64,/, "");
+  // var dataBuffer = Buffer.from(base64Data, "base64");
+  // let time = Date.now();
+  // let imagePath = `images/andyexpress/orders/${req.user.id}_${time}.png`;
+  // fs.writeFile(`./public/${imagePath}`, dataBuffer, function (err) {
+  //   if (err) return;
+  // });
+  // req.body.orderImg = imagePath;
   req.body.orderStatus = "已打包";
   req.body.packageTime = time;
 
