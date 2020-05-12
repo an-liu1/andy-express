@@ -67,7 +67,7 @@ ordersController.updateOrderForm = (req, res) => {
   // let order_Img = req.body.orderImg;
   // var base64Data = order_Img.replace(/^data:image\/\w+;base64,/, "");
   // var dataBuffer = Buffer.from(base64Data, "base64");
-  // let time = Date.now();
+  let time = Date.now();
   // let imagePath = `images/andyexpress/orders/${req.user.id}_${time}.png`;
   // fs.writeFile(`./public/${imagePath}`, dataBuffer, function (err) {
   //   if (err) return;
