@@ -90,14 +90,14 @@ ordersController.updateOrderForm = function (req, res) {
   // let order_Img = req.body.orderImg;
   // var base64Data = order_Img.replace(/^data:image\/\w+;base64,/, "");
   // var dataBuffer = Buffer.from(base64Data, "base64");
-  var time = Date.now(); // let imagePath = `images/andyexpress/orders/${req.user.id}_${time}.png`;
+  // let time = Date.now();
+  // let imagePath = `images/andyexpress/orders/${req.user.id}_${time}.png`;
   // fs.writeFile(`./public/${imagePath}`, dataBuffer, function (err) {
   //   if (err) return;
   // });
   // req.body.orderImg = imagePath;
-
   req.body.orderStatus = "已打包";
-  req.body.packageTime = time;
+  req.body.packageTime = new Date();
 
   _orderForm["default"].updateOne({
     _id: req.params.id
