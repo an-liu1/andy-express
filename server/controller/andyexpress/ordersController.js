@@ -67,14 +67,13 @@ ordersController.updateOrderForm = (req, res) => {
   // let order_Img = req.body.orderImg;
   // var base64Data = order_Img.replace(/^data:image\/\w+;base64,/, "");
   // var dataBuffer = Buffer.from(base64Data, "base64");
-  let time = new Date();
+  // let time = Date.now();
   // let imagePath = `images/andyexpress/orders/${req.user.id}_${time}.png`;
   // fs.writeFile(`./public/${imagePath}`, dataBuffer, function (err) {
   //   if (err) return;
   // });
   // req.body.orderImg = imagePath;
   req.body.orderStatus = "已打包";
-  req.body.packageTime = time;
 
   OrderForm.updateOne({ _id: req.params.id }, { $set: req.body })
     .then((order) => {
@@ -82,7 +81,13 @@ ordersController.updateOrderForm = (req, res) => {
       req.body.goodsLists.map((i) => {
         Goods.updateOne(
           { _id: i },
-          { $set: { goodStatus: "已打包", isPackage: 1, packageTime: time } }
+          {
+            $set: {
+              goodStatus: "已打包",
+              isPackage: 1,
+              packageTime: req.body.packageTime,
+            },
+          }
         ).catch((err) => res.status(400).json("Error: " + err));
       });
       return res.json({

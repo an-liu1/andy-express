@@ -90,14 +90,13 @@ ordersController.updateOrderForm = function (req, res) {
   // let order_Img = req.body.orderImg;
   // var base64Data = order_Img.replace(/^data:image\/\w+;base64,/, "");
   // var dataBuffer = Buffer.from(base64Data, "base64");
-  var time = new Date(); // let imagePath = `images/andyexpress/orders/${req.user.id}_${time}.png`;
+  // let time = Date.now();
+  // let imagePath = `images/andyexpress/orders/${req.user.id}_${time}.png`;
   // fs.writeFile(`./public/${imagePath}`, dataBuffer, function (err) {
   //   if (err) return;
   // });
   // req.body.orderImg = imagePath;
-
   req.body.orderStatus = "已打包";
-  req.body.packageTime = time;
 
   _orderForm["default"].updateOne({
     _id: req.params.id
@@ -112,7 +111,7 @@ ordersController.updateOrderForm = function (req, res) {
         $set: {
           goodStatus: "已打包",
           isPackage: 1,
-          packageTime: time
+          packageTime: req.body.packageTime
         }
       })["catch"](function (err) {
         return res.status(400).json("Error: " + err);

@@ -65,8 +65,8 @@ goodsController.updateGoods = function (req, res) {
   //   if (err) return;
   // });
   // req.body.goodImg = imagePath;
-  req.body.isStorage = 1;
-  req.body.storageTime = new Date();
+  req.body.isStorage = 1; // req.body.storageTime = new Date();
+
   req.body.goodStatus = "已入库";
 
   _goods["default"].updateOne({

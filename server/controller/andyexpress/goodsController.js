@@ -52,7 +52,7 @@ goodsController.updateGoods = (req, res) => {
   // });
   // req.body.goodImg = imagePath;
   req.body.isStorage = 1;
-  req.body.storageTime = new Date();
+  // req.body.storageTime = new Date();
   req.body.goodStatus = "已入库";
   Goods.updateOne({ _id: req.params.id }, { $set: req.body })
     .then((good) => {
