@@ -54,6 +54,9 @@ const orderFormSchema = new Schema(
     is_delivery: { type: Boolean, default: 0 },
     orderEvaluate: { type: String },
 
+    //是否提交售后
+    is_aftersale: { type: Boolean, default: 0 },
+
     //赔付
     compensation: { type: String },
   },

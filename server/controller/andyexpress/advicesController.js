@@ -39,7 +39,7 @@ advicesController.createAdvice = (req, res) => {
 
 // 具体投诉详情
 advicesController.getAdvice = (req, res) => {
-  Advices.find({ _id: req.params.id })
+  Advices.find({ _id: req.params.id }) 
     .then((advice) =>
       res.json({
         success: true,

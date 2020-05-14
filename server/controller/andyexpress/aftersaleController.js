@@ -26,14 +26,22 @@ aftersaleController.createAfterSale = (req, res) => {
   req.body.compensation = "";
 
   AfterSale.create(req.body)
-    .then((after) =>
+    .then((after) => {
+      OrderForm.updateOne(
+        { _id: req.body.order_id },
+        {
+          $set: {
+            is_aftersale: true,
+          },
+        }
+      );
       //加邮件提示已成功
-      res.json({
+      return res.json({
         success: true,
         code: 0,
         data: after,
-      })
-    )
+      });
+    })
     .catch((err) => res.status(400).json("Error: " + err));
 };
 

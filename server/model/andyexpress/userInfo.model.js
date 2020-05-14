@@ -29,6 +29,8 @@ const userInfoSchema = new Schema(
     birthday: { type: Date },
     phoneNumber: { type: String },
     gender: { type: String },
+    weixin: { type: String },
+    qq: { type: String },
   },
   {
     timestamps: true,

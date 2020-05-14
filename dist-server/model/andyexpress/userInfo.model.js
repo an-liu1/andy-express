@@ -62,6 +62,12 @@ var userInfoSchema = new Schema({
   },
   gender: {
     type: String
+  },
+  weixin: {
+    type: String
+  },
+  qq: {
+    type: String
   }
 }, {
   timestamps: true
