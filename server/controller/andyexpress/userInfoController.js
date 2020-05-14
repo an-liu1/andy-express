@@ -141,7 +141,8 @@ userInfoController.getUpToken = (req, res) => {
 userInfoController.rechargeAccount = (req, res) => {
   UserInfo.find({ user_id: req.user.id })
     .then((user) => {
-      let totalBalance = parseInt(user.balance) + parseInt(req.body.rechargeBalance);
+      let totalBalance =
+        parseInt(user[0].balance) + parseInt(req.body.rechargeBalance);
       UserInfo.updateOne(
         { _id: user._id },
         { $set: { balance: parseInt(totalBalance) } }
@@ -164,7 +165,11 @@ userInfoController.rechargeAccount = (req, res) => {
 userInfoController.payFromAccount = (req, res) => {
   UserInfo.find({ user_id: req.user.id })
     .then((user) => {
-      let totalBalance = parseInt(user.balance) - parseInt(req.body.payBalance);
+      let totalBalance =
+        parseInt(user[0].balance) - parseInt(req.body.payBalance);
+      if (parseInt(totalBalance) < 0) {
+        return res.status(400).json("余额不足, 请充值！");
+      }
       UserInfo.updateOne(
         { _id: user._id },
         { $set: { balance: parseInt(totalBalance) } }

@@ -166,7 +166,7 @@ userInfoController.rechargeAccount = function (req, res) {
   _userInfo["default"].find({
     user_id: req.user.id
   }).then(function (user) {
-    var totalBalance = parseInt(user.balance) + parseInt(req.body.rechargeBalance);
+    var totalBalance = parseInt(user[0].balance) + parseInt(req.body.rechargeBalance);
 
     _userInfo["default"].updateOne({
       _id: user._id
@@ -193,7 +193,11 @@ userInfoController.payFromAccount = function (req, res) {
   _userInfo["default"].find({
     user_id: req.user.id
   }).then(function (user) {
-    var totalBalance = parseInt(user.balance) - parseInt(req.body.payBalance);
+    var totalBalance = parseInt(user[0].balance) - parseInt(req.body.payBalance);
+
+    if (parseInt(totalBalance) < 0) {
+      return res.status(400).json("余额不足, 请充值！");
+    }
 
     _userInfo["default"].updateOne({
       _id: user._id
