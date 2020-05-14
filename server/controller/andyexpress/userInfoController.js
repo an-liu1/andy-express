@@ -137,4 +137,44 @@ userInfoController.getUpToken = (req, res) => {
   });
 };
 
+//充值
+userInfoController.rechargeAccount = (req, res) => {
+  UserInfo.find({ user_id: req.user.id })
+    .then((user) => {
+      let totalBalance = user.balance + req.body.rechargeBalance;
+      UserInfo.updateOne({ _id: user._id }, { $set: { balance: totalBalance } })
+        .then((user) =>
+          res.json({
+            success: true,
+            code: 0,
+            data: user,
+          })
+        )
+        .catch((err) => res.status(400).json("Error: " + err));
+    })
+    .catch((err) => {
+      res.status(400).json("Error: " + err);
+    });
+};
+
+//付款
+userInfoController.payFromAccount = (req, res) => {
+  UserInfo.find({ user_id: req.user.id })
+    .then((user) => {
+      let totalBalance = user.balance - req.body.payBalance;
+      UserInfo.updateOne({ _id: user._id }, { $set: { balance: totalBalance } })
+        .then((user) =>
+          res.json({
+            success: true,
+            code: 0,
+            data: user,
+          })
+        )
+        .catch((err) => res.status(400).json("Error: " + err));
+    })
+    .catch((err) => {
+      res.status(400).json("Error: " + err);
+    });
+};
+
 export default userInfoController;

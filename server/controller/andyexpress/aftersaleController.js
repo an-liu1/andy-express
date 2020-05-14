@@ -34,7 +34,7 @@ aftersaleController.createAfterSale = (req, res) => {
             is_aftersale: true,
           },
         }
-      );
+      ).catch((err) => res.status(400).json("Error: " + err));
       //加邮件提示已成功
       return res.json({
         success: true,
@@ -56,7 +56,7 @@ aftersaleController.solveAfterSale = (req, res) => {
             compensation: req.body.compensation,
           },
         }
-      );
+      ).catch((err) => res.status(400).json("Error: " + err));
       //加邮件反馈给客户
       return res.json({
         success: true,

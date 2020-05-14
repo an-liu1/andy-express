@@ -159,6 +159,60 @@ userInfoController.getUpToken = function (req, res) {
       key: imagePath
     }
   });
+}; //充值
+
+
+userInfoController.rechargeAccount = function (req, res) {
+  _userInfo["default"].find({
+    user_id: req.user.id
+  }).then(function (user) {
+    var totalBalance = user.balance + req.body.rechargeBalance;
+
+    _userInfo["default"].updateOne({
+      _id: user._id
+    }, {
+      $set: {
+        balance: totalBalance
+      }
+    }).then(function (user) {
+      return res.json({
+        success: true,
+        code: 0,
+        data: user
+      });
+    })["catch"](function (err) {
+      return res.status(400).json("Error: " + err);
+    });
+  })["catch"](function (err) {
+    res.status(400).json("Error: " + err);
+  });
+}; //付款
+
+
+userInfoController.payFromAccount = function (req, res) {
+  _userInfo["default"].find({
+    user_id: req.user.id
+  }).then(function (user) {
+    var totalBalance = user.balance - req.body.payBalance;
+
+    _userInfo["default"].updateOne({
+      _id: user._id
+    }, {
+      $set: {
+        balance: totalBalance
+      }
+    }).then(function (user) {
+      return res.json({
+        success: true,
+        code: 0,
+        data: user
+      });
+    })["catch"](function (err) {
+      return res.status(400).json("Error: " + err);
+    });
+  })["catch"](function (err) {
+    res.status(400).json("Error: " + err);
+  });
 };
 
 var _default = userInfoController;

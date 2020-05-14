@@ -15,6 +15,8 @@ router.get("/getUpToken/:uploadTime", userInfoController.getUpToken);
 router.get("/getUserInfo", userInfoController.getUserInfo); // 获取个人信息
 router.put("/updateUserInfo", userInfoController.updateUserInfo); // 更新个人信息
 router.post("/avatarUpload", userInfoController.avatarUpload); //头像上传
+router.put("/rechargeAccount", userInfoController.rechargeAccount);//充值
+router.put("/payFromAccount", userInfoController.payFromAccount);//付款
 
 //good
 router.post("/goodSubmit", goodsController.submitGoods); //提交国内物流信息（未入库商品）

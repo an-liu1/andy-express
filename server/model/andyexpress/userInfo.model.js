@@ -31,6 +31,9 @@ const userInfoSchema = new Schema(
     gender: { type: String },
     weixin: { type: String },
     qq: { type: String },
+
+    //余额
+    balance: { type: Number, default: 0 },
   },
   {
     timestamps: true,

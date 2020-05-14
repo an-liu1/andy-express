@@ -68,6 +68,11 @@ var userInfoSchema = new Schema({
   },
   qq: {
     type: String
+  },
+  //余额
+  balance: {
+    type: Number,
+    "default": 0
   }
 }, {
   timestamps: true

@@ -39,6 +39,8 @@ aftersaleController.createAfterSale = function (req, res) {
       $set: {
         is_aftersale: true
       }
+    })["catch"](function (err) {
+      return res.status(400).json("Error: " + err);
     }); //加邮件提示已成功
 
 
@@ -65,6 +67,8 @@ aftersaleController.solveAfterSale = function (req, res) {
       $set: {
         compensation: req.body.compensation
       }
+    })["catch"](function (err) {
+      return res.status(400).json("Error: " + err);
     }); //加邮件反馈给客户
 
 

@@ -31,6 +31,10 @@ router.get("/getUserInfo", _userInfoController["default"].getUserInfo); // 获�
 router.put("/updateUserInfo", _userInfoController["default"].updateUserInfo); // 更新个人信息
 
 router.post("/avatarUpload", _userInfoController["default"].avatarUpload); //头像上传
+
+router.put("/rechargeAccount", _userInfoController["default"].rechargeAccount); //充值
+
+router.put("/payFromAccount", _userInfoController["default"].payFromAccount); //付款
 //good
 
 router.post("/goodSubmit", _goodsController["default"].submitGoods); //提交国内物流信息（未入库商品）
