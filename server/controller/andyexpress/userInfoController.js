@@ -141,8 +141,11 @@ userInfoController.getUpToken = (req, res) => {
 userInfoController.rechargeAccount = (req, res) => {
   UserInfo.find({ user_id: req.user.id })
     .then((user) => {
-      let totalBalance = user.balance + req.body.rechargeBalance;
-      UserInfo.updateOne({ _id: user._id }, { $set: { balance: totalBalance } })
+      let totalBalance = parseInt(user.balance) + parseInt(req.body.rechargeBalance);
+      UserInfo.updateOne(
+        { _id: user._id },
+        { $set: { balance: parseInt(totalBalance) } }
+      )
         .then((user) =>
           res.json({
             success: true,
@@ -161,8 +164,11 @@ userInfoController.rechargeAccount = (req, res) => {
 userInfoController.payFromAccount = (req, res) => {
   UserInfo.find({ user_id: req.user.id })
     .then((user) => {
-      let totalBalance = user.balance - req.body.payBalance;
-      UserInfo.updateOne({ _id: user._id }, { $set: { balance: totalBalance } })
+      let totalBalance = parseInt(user.balance) - parseInt(req.body.payBalance);
+      UserInfo.updateOne(
+        { _id: user._id },
+        { $set: { balance: parseInt(totalBalance) } }
+      )
         .then((user) =>
           res.json({
             success: true,

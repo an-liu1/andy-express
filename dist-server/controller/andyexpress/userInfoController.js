@@ -166,13 +166,13 @@ userInfoController.rechargeAccount = function (req, res) {
   _userInfo["default"].find({
     user_id: req.user.id
   }).then(function (user) {
-    var totalBalance = user.balance + req.body.rechargeBalance;
+    var totalBalance = parseInt(user.balance) + parseInt(req.body.rechargeBalance);
 
     _userInfo["default"].updateOne({
       _id: user._id
     }, {
       $set: {
-        balance: totalBalance
+        balance: parseInt(totalBalance)
       }
     }).then(function (user) {
       return res.json({
@@ -193,13 +193,13 @@ userInfoController.payFromAccount = function (req, res) {
   _userInfo["default"].find({
     user_id: req.user.id
   }).then(function (user) {
-    var totalBalance = user.balance - req.body.payBalance;
+    var totalBalance = parseInt(user.balance) - parseInt(req.body.payBalance);
 
     _userInfo["default"].updateOne({
       _id: user._id
     }, {
       $set: {
-        balance: totalBalance
+        balance: parseInt(totalBalance)
       }
     }).then(function (user) {
       return res.json({
