@@ -144,7 +144,7 @@ userInfoController.rechargeAccount = (req, res) => {
       let totalBalance =
         parseInt(user[0].balance) + parseInt(req.body.rechargeBalance);
       UserInfo.updateOne(
-        { _id: user._id },
+        { _id: user[0]._id },
         { $set: { balance: parseInt(totalBalance) } }
       )
         .then((user) =>
@@ -171,7 +171,7 @@ userInfoController.payFromAccount = (req, res) => {
         return res.status(400).json("余额不足, 请充值！");
       }
       UserInfo.updateOne(
-        { _id: user._id },
+        { _id: user[0]._id },
         { $set: { balance: parseInt(totalBalance) } }
       )
         .then((user) =>

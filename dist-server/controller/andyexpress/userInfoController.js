@@ -169,7 +169,7 @@ userInfoController.rechargeAccount = function (req, res) {
     var totalBalance = parseInt(user[0].balance) + parseInt(req.body.rechargeBalance);
 
     _userInfo["default"].updateOne({
-      _id: user._id
+      _id: user[0]._id
     }, {
       $set: {
         balance: parseInt(totalBalance)
@@ -200,7 +200,7 @@ userInfoController.payFromAccount = function (req, res) {
     }
 
     _userInfo["default"].updateOne({
-      _id: user._id
+      _id: user[0]._id
     }, {
       $set: {
         balance: parseInt(totalBalance)
