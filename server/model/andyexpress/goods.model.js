@@ -24,6 +24,8 @@ const goodsSchema = new Schema(
     isStorage: { type: Boolean },
     storageTime: { type: Date },
     note: { type: String },
+    stockOperator: { type: String }, //入库操作员
+    stockUpdateOperator: { type: String }, //入库更新员
 
     //判断物品是否打包 （已打包）
     isPackage: { type: Boolean },
@@ -41,6 +43,7 @@ const goodsSchema = new Schema(
     //客服填写退货快递信息
     returnExpressNumber: { type: String },
     returnExpressCompany: { type: String },
+    goodReturnOperator: { type: String }, // 退货操作员
 
     //退货信息
     returnPayMethod: { type: String },

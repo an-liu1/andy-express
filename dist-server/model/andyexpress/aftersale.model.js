@@ -50,6 +50,10 @@ var aftersaleSchema = new Schema({
     type: String,
     trim: true
   },
+  aftersaleOperator: {
+    type: String
+  },
+  // 售后操作员
   // 客户关闭售后
   is_solve: {
     type: Boolean

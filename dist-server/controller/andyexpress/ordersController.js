@@ -16,10 +16,37 @@ var ordersController = {}; // 后台获取所有订单信息
 
 ordersController.getOrderListNumber = function (req, res) {
   _orderForm["default"].find().then(function (order) {
+    var incomeList = [];
+    var profitList = [];
+    var compensationList = [];
+    order.filter(function (i) {
+      return i.orderStatus === "已签收";
+    }).map(function (i) {
+      incomeList.push(i.incomePrice);
+      profitList.push(i.incomePrice - i.costPrice);
+
+      if (i.compensation) {
+        compensationList.push(i.compensation);
+      }
+    });
+    var totalIncome = incomeList.reduce(function (tmp, item) {
+      return tmp + item;
+    });
+    var totalProfit = profitList.reduce(function (tmp, item) {
+      return tmp + item;
+    });
+    var totalCompensation = compensationList.reduce(function (tmp, item) {
+      return tmp + item;
+    });
     return res.json({
       success: true,
       code: 0,
-      data: order.length
+      data: {
+        orderNumber: order.length,
+        totalIncome: totalIncome,
+        totalProfit: totalProfit - totalCompensation,
+        totalCompensation: totalCompensation
+      }
     });
   })["catch"](function (err) {
     return res.status(400).json("Error: " + err);

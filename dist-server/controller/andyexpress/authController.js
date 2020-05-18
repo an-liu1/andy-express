@@ -89,6 +89,8 @@ authController.checkCode = function (req, res) {
 authController.userLogin = function (req, res) {
   var email = req.body.email;
   var password = req.body.password;
+  var localTime = Date.now();
+  var localOffset = -240 * 60 * 1000;
 
   _user["default"].findOne({
     email: email
@@ -122,7 +124,7 @@ authController.userLogin = function (req, res) {
                   user_id: user._id,
                   username: user.username,
                   email: user.email,
-                  last_login_time: new Date(),
+                  last_login_time: new Date(localTime + localOffset),
                   level: "Normal/普通会员"
                 });
               }
@@ -131,7 +133,7 @@ authController.userLogin = function (req, res) {
                 user_id: user._id
               }, {
                 $set: {
-                  last_login_time: new Date()
+                  last_login_time: new Date(localTime + localOffset)
                 }
               }).then(function () {
                 return res.json({

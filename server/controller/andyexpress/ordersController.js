@@ -7,13 +7,40 @@ const ordersController = {};
 // 后台获取所有订单信息
 ordersController.getOrderListNumber = (req, res) => {
   OrderForm.find()
-    .then((order) =>
-      res.json({
+    .then((order) => {
+      let incomeList = [];
+      let profitList = [];
+      let compensationList = [];
+      order
+        .filter((i) => i.orderStatus === "已签收")
+        .map((i) => {
+          incomeList.push(i.incomePrice);
+          profitList.push(i.incomePrice - i.costPrice);
+          if (i.compensation) {
+            compensationList.push(i.compensation);
+          }
+        });
+      let totalIncome = incomeList.reduce((tmp, item) => {
+        return tmp + item;
+      });
+      let totalProfit = profitList.reduce((tmp, item) => {
+        return tmp + item;
+      });
+      let totalCompensation = compensationList.reduce((tmp, item) => {
+        return tmp + item;
+      });
+
+      return res.json({
         success: true,
         code: 0,
-        data: order.length,
-      })
-    )
+        data: {
+          orderNumber: order.length,
+          totalIncome: totalIncome,
+          totalProfit: totalProfit - totalCompensation,
+          totalCompensation: totalCompensation,
+        },
+      });
+    })
     .catch((err) => res.status(400).json("Error: " + err));
 };
 

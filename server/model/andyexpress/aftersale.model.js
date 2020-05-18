@@ -18,6 +18,7 @@ const aftersaleSchema = new Schema(
     // 客服给出解决方案及金额赔偿
     compensation: { type: String, trim: true },
     solution: { type: String, trim: true },
+    aftersaleOperator: { type: String }, // 售后操作员
 
     // 客户关闭售后
     is_solve: { type: Boolean },

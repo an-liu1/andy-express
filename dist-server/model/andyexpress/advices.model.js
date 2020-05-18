@@ -41,7 +41,11 @@ var advicesSchema = new Schema({
   //反馈与提高
   advice_improvement: {
     type: String
-  }
+  },
+  adviceOperator: {
+    type: String
+  } // 建议操作员
+
 }, {
   timestamps: true
 });

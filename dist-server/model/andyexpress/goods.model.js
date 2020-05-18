@@ -62,6 +62,14 @@ var goodsSchema = new Schema({
   note: {
     type: String
   },
+  stockOperator: {
+    type: String
+  },
+  //入库操作员
+  stockUpdateOperator: {
+    type: String
+  },
+  //入库更新员
   //判断物品是否打包 （已打包）
   isPackage: {
     type: Boolean
@@ -98,6 +106,10 @@ var goodsSchema = new Schema({
   returnExpressCompany: {
     type: String
   },
+  goodReturnOperator: {
+    type: String
+  },
+  // 退货操作员
   //退货信息
   returnPayMethod: {
     type: String

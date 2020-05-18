@@ -72,7 +72,8 @@ authController.checkCode = (req, res) => {
 authController.userLogin = (req, res) => {
   const email = req.body.email;
   const password = req.body.password;
-
+  var localTime = Date.now();
+  var localOffset = -240 * 60 * 1000;
   User.findOne({ email }).then((user) => {
     if (!user) {
       return res.status(400).json("用户名不存在!");
@@ -98,7 +99,7 @@ authController.userLogin = (req, res) => {
                       user_id: user._id,
                       username: user.username,
                       email: user.email,
-                      last_login_time: new Date(),
+                      last_login_time: new Date(localTime + localOffset),
                       level: "Normal/普通会员",
                     });
                   }
@@ -106,7 +107,7 @@ authController.userLogin = (req, res) => {
                     { user_id: user._id },
                     {
                       $set: {
-                        last_login_time: new Date(),
+                        last_login_time: new Date(localTime + localOffset),
                       },
                     }
                   )

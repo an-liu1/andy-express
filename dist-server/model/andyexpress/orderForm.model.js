@@ -81,6 +81,14 @@ var orderFormSchema = new Schema({
   packageTime: {
     type: Date
   },
+  packageOperator: {
+    type: String
+  },
+  // 打包操作员
+  packageUpdateOperator: {
+    type: String
+  },
+  // 打包更新员
   // 客户填写订单邮寄地址 （订单状态：待发货）
   orderExpressRetail: {
     type: String
@@ -113,6 +121,14 @@ var orderFormSchema = new Schema({
   costPrice: {
     type: Number
   },
+  expressOperator: {
+    type: String
+  },
+  // 发货操作员
+  expressUpdateOperator: {
+    type: String
+  },
+  // 发货更新员
   // 客户确定收货及评分（订单状态：已签收）
   is_delivery: {
     type: Boolean,
