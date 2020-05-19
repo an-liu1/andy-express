@@ -19,6 +19,8 @@ var _aftersaleController = _interopRequireDefault(require("../../controller/andy
 
 var _announcementController = _interopRequireDefault(require("../../controller/andyexpress/announcementController"));
 
+var _dataController = _interopRequireDefault(require("../../controller/andyexpress/dataController"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 var router = _express["default"].Router();
@@ -45,7 +47,9 @@ router.get("/goodGet/:status/:page/:size/:status1", _goodsController["default"].
 
 router.put("/returnGoods", _goodsController["default"].returnGoods); // 用户提交退货地址
 
-router.post("/searchGoodsForUser/:status/:page/:size/:status1", _goodsController["default"].searchGoodsForUser); //订单
+router.post("/searchGoodsForUser/:status/:page/:size/:status1", _goodsController["default"].searchGoodsForUser);
+router.put("/cancleReturnGoods/:id", _goodsController["default"].cancleReturnGoods); //用户取消退货
+//订单
 
 router.post("/createOrderForm", _ordersController["default"].createOrderForm); //用户打包创建订单
 
@@ -74,7 +78,9 @@ router.get("/getUserAdvice/:page/:size", _advicesController["default"].getUserAd
 
 router.get("/getAdvice/:id", _advicesController["default"].getAdvice); //具体某个客户投诉
 // ADMIN INTERFACE
-//user
+//data
+
+router.put("/getDataAnalysis", _dataController["default"].getDataAnalysis); //user
 
 router.get("/getAllUser/:page/:size", _userInfoController["default"].getAllUser); // 后台获取所有用户信息
 

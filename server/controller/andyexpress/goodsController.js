@@ -99,6 +99,20 @@ goodsController.returnGoods = (req, res) => {
   });
 };
 
+//用户取消退货
+goodsController.cancleReturnGoods = (req, res) => {
+  req.body.goodStatus = "已入库";
+  Goods.updateOne({ _id: i }, { $set: req.body })
+    .then((good) =>
+      res.json({
+        success: true,
+        code: 0,
+        data: good,
+      })
+    )
+    .catch((err) => res.status(400).json("Error: " + err));
+};
+
 // 后台提交退货信息和客户确认并付款
 goodsController.submitReturnGoodsInfo = (req, res) => {
   req.body.returnedGoods.map((i) => {

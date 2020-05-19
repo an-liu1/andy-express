@@ -120,6 +120,25 @@ goodsController.returnGoods = function (req, res) {
       return res.status(400).json("Error: " + err);
     });
   });
+}; //用户取消退货
+
+
+goodsController.cancleReturnGoods = function (req, res) {
+  req.body.goodStatus = "已入库";
+
+  _goods["default"].updateOne({
+    _id: i
+  }, {
+    $set: req.body
+  }).then(function (good) {
+    return res.json({
+      success: true,
+      code: 0,
+      data: good
+    });
+  })["catch"](function (err) {
+    return res.status(400).json("Error: " + err);
+  });
 }; // 后台提交退货信息和客户确认并付款
 
 

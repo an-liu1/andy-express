@@ -39,6 +39,7 @@ const goodsSchema = new Schema(
     returnShippingPostcode: { type: String },
     returnShippingPhone: { type: String },
     returnShippingRecevier: { type: String },
+    returnShippingNotes: { type: String },
 
     //客服填写退货快递信息
     returnExpressNumber: { type: String },

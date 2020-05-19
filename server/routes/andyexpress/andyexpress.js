@@ -6,6 +6,7 @@ import advicesController from "../../controller/andyexpress/advicesController";
 import ordersController from "../../controller/andyexpress/ordersController";
 import aftersaleController from "../../controller/andyexpress/aftersaleController";
 import announcementController from "../../controller/andyexpress/announcementController";
+import dataController from "../../controller/andyexpress/dataController";
 
 // USER INTERFACE
 
@@ -15,8 +16,8 @@ router.get("/getUpToken/:uploadTime", userInfoController.getUpToken);
 router.get("/getUserInfo", userInfoController.getUserInfo); // 获取个人信息
 router.put("/updateUserInfo", userInfoController.updateUserInfo); // 更新个人信息
 router.post("/avatarUpload", userInfoController.avatarUpload); //头像上传
-router.put("/rechargeAccount", userInfoController.rechargeAccount);//充值
-router.put("/payFromAccount", userInfoController.payFromAccount);//付款
+router.put("/rechargeAccount", userInfoController.rechargeAccount); //充值
+router.put("/payFromAccount", userInfoController.payFromAccount); //付款
 
 //good
 router.post("/goodSubmit", goodsController.submitGoods); //提交国内物流信息（未入库商品）
@@ -27,6 +28,7 @@ router.post(
   "/searchGoodsForUser/:status/:page/:size/:status1",
   goodsController.searchGoodsForUser
 );
+router.put("/cancleReturnGoods/:id", goodsController.cancleReturnGoods); //用户取消退货
 
 //订单
 router.post("/createOrderForm", ordersController.createOrderForm); //用户打包创建订单
@@ -57,6 +59,9 @@ router.get("/getUserAdvice/:page/:size", advicesController.getUserAdvice); //获
 router.get("/getAdvice/:id", advicesController.getAdvice); //具体某个客户投诉
 
 // ADMIN INTERFACE
+
+//data
+router.put("/getDataAnalysis", dataController.getDataAnalysis);
 
 //user
 router.get("/getAllUser/:page/:size", userInfoController.getAllUser); // 后台获取所有用户信息
