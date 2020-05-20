@@ -11,12 +11,61 @@ var _orderForm = _interopRequireDefault(require("../../model/andyexpress/orderFo
 
 var _goods = _interopRequireDefault(require("../../model/andyexpress/goods.model"));
 
+var _advices = _interopRequireDefault(require("../../model/andyexpress/advices.model"));
+
+var _aftersale = _interopRequireDefault(require("../../model/andyexpress/aftersale.model"));
+
 var _momentTimezone = _interopRequireDefault(require("moment-timezone"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 // import moment from "moment";
-var dataController = {}; // 具体投诉详情
+var dataController = {}; // 获取订单数据
+
+dataController.getOrderAnalysis = function (req, res) {
+  _goods["default"].find().then(function (goods) {
+    var stockPending = goods.filter(function (i) {
+      return i.goodStatus === "待入库";
+    }).length;
+    var returnPackages = goods.filter(function (i) {
+      return i.goodStatus === "退货中";
+    }).length;
+
+    _orderForm["default"].find().then(function (orders) {
+      var packagePending = orders.filter(function (i) {
+        return i.orderStatus === "待打包";
+      }).length;
+      var expressPending = orders.filter(function (i) {
+        return i.orderStatus === "待发货";
+      }).length;
+
+      _aftersale["default"].find().then(function (after) {
+        var afterSalePending = after.filter(function (i) {
+          return i.is_solve == false;
+        }).length;
+
+        _advices["default"].find().then(function (advices) {
+          var advicePending = advices.filter(function (i) {
+            return !i.advice_improvement;
+          }).length;
+          return res.json({
+            success: true,
+            code: 0,
+            data: {
+              stockPending: stockPending,
+              returnPackages: returnPackages,
+              packagePending: packagePending,
+              expressPending: expressPending,
+              afterSalePending: afterSalePending,
+              advicePending: advicePending
+            }
+          });
+        });
+      });
+    });
+  });
+}; // 获取图标数据
+
 
 dataController.getDataAnalysis = function (req, res) {
   //   let today = moment().tz("Asia/Shanghai").format("MMDD");

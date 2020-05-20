@@ -80,7 +80,8 @@ router.get("/getAdvice/:id", _advicesController["default"].getAdvice); //具体�
 // ADMIN INTERFACE
 //data
 
-router.put("/getDataAnalysis", _dataController["default"].getDataAnalysis); //user
+router.put("/getDataAnalysis", _dataController["default"].getDataAnalysis);
+router.get("/getOrderAnalysis", _dataController["default"].getOrderAnalysis); //user
 
 router.get("/getAllUser/:page/:size", _userInfoController["default"].getAllUser); // 后台获取所有用户信息
 

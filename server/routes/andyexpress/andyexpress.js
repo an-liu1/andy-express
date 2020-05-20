@@ -62,6 +62,8 @@ router.get("/getAdvice/:id", advicesController.getAdvice); //具体某个客户�
 
 //data
 router.put("/getDataAnalysis", dataController.getDataAnalysis);
+router.get("/getOrderAnalysis", dataController.getOrderAnalysis);
+
 
 //user
 router.get("/getAllUser/:page/:size", userInfoController.getAllUser); // 后台获取所有用户信息

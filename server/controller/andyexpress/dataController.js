@@ -1,12 +1,47 @@
 import UserInfo from "../../model/andyexpress/userInfo.model";
 import OrderForm from "../../model/andyexpress/orderForm.model";
 import Goods from "../../model/andyexpress/goods.model";
+import Advice from "../../model/andyexpress/advices.model";
+import AfterSale from "../../model/andyexpress/aftersale.model";
 // import moment from "moment";
 import moment from "moment-timezone";
 
 const dataController = {};
 
-// 具体投诉详情
+// 获取订单数据
+dataController.getOrderAnalysis = (req, res) => {
+  Goods.find().then((goods) => {
+    let stockPending = goods.filter((i) => i.goodStatus === "待入库").length;
+    let returnPackages = goods.filter((i) => i.goodStatus === "退货中").length;
+    OrderForm.find().then((orders) => {
+      let packagePending = orders.filter((i) => i.orderStatus === "待打包")
+        .length;
+      let expressPending = orders.filter((i) => i.orderStatus === "待发货")
+        .length;
+      AfterSale.find().then((after) => {
+        let afterSalePending = after.filter((i) => i.is_solve == false).length;
+        Advice.find().then((advices) => {
+          let advicePending = advices.filter((i) => !i.advice_improvement)
+            .length;
+          return res.json({
+            success: true,
+            code: 0,
+            data: {
+              stockPending: stockPending,
+              returnPackages: returnPackages,
+              packagePending: packagePending,
+              expressPending: expressPending,
+              afterSalePending: afterSalePending,
+              advicePending: advicePending,
+            },
+          });
+        });
+      });
+    });
+  });
+};
+
+// 获取图标数据
 dataController.getDataAnalysis = (req, res) => {
   //   let today = moment().tz("Asia/Shanghai").format("MMDD");
   let today = req.body.today;
