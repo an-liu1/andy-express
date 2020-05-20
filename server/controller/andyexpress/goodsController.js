@@ -102,7 +102,7 @@ goodsController.returnGoods = (req, res) => {
 //用户取消退货
 goodsController.cancleReturnGoods = (req, res) => {
   req.body.goodStatus = "已入库";
-  Goods.updateOne({ _id: i }, { $set: req.body })
+  Goods.updateOne({ _id: req.params.id }, { $set: req.body })
     .then((good) =>
       res.json({
         success: true,

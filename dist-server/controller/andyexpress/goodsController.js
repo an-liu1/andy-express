@@ -127,7 +127,7 @@ goodsController.cancleReturnGoods = function (req, res) {
   req.body.goodStatus = "已入库";
 
   _goods["default"].updateOne({
-    _id: i
+    _id: req.params.id
   }, {
     $set: req.body
   }).then(function (good) {
