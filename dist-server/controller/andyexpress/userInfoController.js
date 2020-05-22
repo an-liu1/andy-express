@@ -7,6 +7,8 @@ exports["default"] = void 0;
 
 var _userInfo = _interopRequireDefault(require("../../model/andyexpress/userInfo.model"));
 
+var _user = _interopRequireDefault(require("../../model/user.model"));
+
 var _fileUpload = require("../../config/fileUpload");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
@@ -56,6 +58,14 @@ userInfoController.updateUserInfo = function (req, res) {
   _userInfo["default"].updateOne({
     user_id: req.user.id
   }, req.body).then(function (user) {
+    _user["default"].updateOne({
+      _id: req.user.id
+    }, {
+      username: req.body.username
+    })["catch"](function (err) {
+      return res.status(400).json("Error: " + err);
+    });
+
     return res.json({
       success: true,
       code: 0,

@@ -1,4 +1,5 @@
 import UserInfo from "../../model/andyexpress/userInfo.model";
+import User from "../../model/user.model";
 // import fs from "fs";
 // import path from "path";
 import { uploadFile, getUpToken } from "../../config/fileUpload";
@@ -46,13 +47,17 @@ userInfoController.getUserInfo = (req, res) => {
 // 用户信息更改
 userInfoController.updateUserInfo = (req, res) => {
   UserInfo.updateOne({ user_id: req.user.id }, req.body)
-    .then((user) =>
-      res.json({
+    .then((user) => {
+      User.updateOne(
+        { _id: req.user.id },
+        { username: req.body.username }
+      ).catch((err) => res.status(400).json("Error: " + err));
+      return res.json({
         success: true,
         code: 0,
         data: user,
-      })
-    )
+      });
+    })
     .catch((err) => res.status(400).json("Error: " + err));
 };
 
