@@ -20,7 +20,7 @@ var userInfoSchema = new Schema({
   },
   avatar: {
     type: String,
-    "default": "images/andyexpress/avatar/default_avatar.png"
+    "default": "default_avatar.png"
   },
   email: {
     type: String

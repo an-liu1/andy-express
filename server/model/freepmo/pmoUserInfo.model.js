@@ -9,7 +9,7 @@ const pmoUserInfoSchema = new Schema(
     avatar: {
       type: String,
       default:
-        "images/default_avatar.png",
+        "default_avatar.png",
     },
     email: { type: String },
   },

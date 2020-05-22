@@ -8,7 +8,7 @@ const userInfoSchema = new Schema(
     user_id: { type: String },
     avatar: {
       type: String,
-      default: "images/andyexpress/avatar/default_avatar.png",
+      default: "default_avatar.png",
     },
     email: { type: String },
     last_login_time: {
