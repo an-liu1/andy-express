@@ -111,6 +111,8 @@ userInfoController.searchUser = (req, res) => {
       { username: eval(`/${req.body.searchString}/i`) },
       { email: eval(`/${req.body.searchString}/i`) },
       { phoneNumber: eval(`/${req.body.searchString}/i`) },
+      { weixin: eval(`/${req.body.searchString}/i`) },
+      { qq: eval(`/${req.body.searchString}/i`) },
     ],
   })
     .sort({ updatedAt: "desc" })

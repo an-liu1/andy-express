@@ -51,6 +51,7 @@ const orderFormSchema = new Schema(
     //客服返回订单号及成本初步统计（订单状态：已发货）
     orderShippingNumber: { type: String },
     costPrice: { type: Number },
+    shippingTime: { type: Date },
     expressOperator: { type: String }, // 发货操作员
     expressUpdateOperator: { type: String }, // 发货更新员
 
