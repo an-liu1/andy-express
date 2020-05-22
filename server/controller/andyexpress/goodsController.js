@@ -57,7 +57,7 @@ goodsController.updateGoods = (req, res) => {
   Goods.updateOne({ _id: req.params.id }, { $set: req.body })
     .then((good) => {
       mail({
-        from: "AndyExpress <AndyExpress.admin@andyexpress.andyliu.ca>",
+        from: "AndyExpress <yvetteandyadmin@163.com>",
         to: req.user.email,
         subject: "[AndyExpress]包裹入库通知",
         text: `尊敬的${req.user.username}，您好！您的货物 ${good.goodName} 已入库。本邮件由系统自动发出，请勿直接回复！`,

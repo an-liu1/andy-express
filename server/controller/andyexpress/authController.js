@@ -31,10 +31,10 @@ authController.userRegister = (req, res) => {
           User.create(req.body)
             .then((user) => {
               mail({
-                from: "AndyExpress <AndyExpress.admin@andyexpress.andyliu.ca>",
+                from: "AndyExpress <yvetteandyadmin@163.com>",
                 to: req.body.email,
                 subject: "[AndyExpress]激活邮箱账号",
-                text: `尊敬的${user.username}，您好！点击链接即可激活您的AndyExpress账号, http://159.89.121.159:3000/express/checkCode/${user.email}/${user.code} 为保障您的帐号安全，请在24小时内点击该链接，您也可以将链接复制到浏览器地址栏访问。 若如果并没您的操作，请忽略本邮件，由此给您带来的不便请谅解。本邮件由系统自动发出，请勿直接回复！`,
+                text: `尊敬的${user.username}，您好！点击链接即可激活您的AndyExpress账号, http://andy-express.herokuapp.com/express/checkCode/${user.email}/${user.code} 为保障您的帐号安全，请在24小时内点击该链接，您也可以将链接复制到浏览器地址栏访问。 若如果并没您的操作，请忽略本邮件，由此给您带来的不便请谅解。本邮件由系统自动发出，请勿直接回复！`,
               });
               return res.json({
                 success: true,
@@ -60,7 +60,7 @@ authController.checkCode = (req, res) => {
       ) {
         User.findOneAndUpdate({ email: email }, { islive: true }, { new: true })
           .then(() => {
-            res.redirect("https://andyexpress.andyliu.ca/#/login");
+            res.redirect("http://andyexpress.andyliu.ca/#/login/login");
             res.end();
           })
           .catch((err) => res.status(400).json("Error: " + err));
@@ -137,7 +137,7 @@ authController.requestReset = (req, res) => {
     .then((user) => {
       if (user) {
         mail({
-          from: "AndyExpress <AndyExpress.admin@andyexpress.andyliu.ca>",
+          from: "AndyExpress <yvetteandyadmin@163.com>",
           to: req.body.email,
           subject: "[AndyExpress]账号密码重置命令，请求激活",
           text: `尊敬的${user.username}，您好！点击链接即可跳转至密码重置界面, http://andyexpress.andyliu.ca/resetpassword/${user.email}/${user.code}/true 为保障您的帐号安全，请在24小时内点击该链接，您也可以将链接复制到浏览器地址栏访问。 若如果并没您的操作，请忽略本邮件，由此给您带来的不便请谅解。本邮件由系统自动发出，请勿直接回复！`,

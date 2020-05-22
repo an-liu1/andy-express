@@ -121,6 +121,9 @@ var orderFormSchema = new Schema({
   costPrice: {
     type: Number
   },
+  shippingTime: {
+    type: Date
+  },
   expressOperator: {
     type: String
   },

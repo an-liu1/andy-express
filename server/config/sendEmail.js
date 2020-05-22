@@ -1,11 +1,11 @@
 import nodemailer from "nodemailer";
 
 const transporter = nodemailer.createTransport({
-  service: "gmail",
-  auth: {
-    user: "andyvviiar@gmail.com",
-    pass: "8829122Aa",
-  },
+  // service: "gmail",
+  // auth: {
+  //   user: "andyvviiar@gmail.com",
+  //   pass: "8829122Aa",
+  // },
   // host: "hp303.hostpapa.com",
   // // host: "umaexpress.ca",
   // Server: "freepmo.andyliu.ca",
@@ -14,6 +14,14 @@ const transporter = nodemailer.createTransport({
   //   user: "freepmo.admin@freepmo.andyliu.ca",
   //   pass: "8829122Aa",
   // },
+
+  host: "smtp.163.com",
+  secure: true,
+  port: 465,
+  auth: {
+    user: "yvetteandyadmin@163.com",
+    pass: "ZKSKKQPIMTIAAPNX",
+  },
 });
 
 export default function (mail) {

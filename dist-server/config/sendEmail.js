@@ -10,11 +10,12 @@ var _nodemailer = _interopRequireDefault(require("nodemailer"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 var transporter = _nodemailer["default"].createTransport({
-  service: "gmail",
-  auth: {
-    user: "andyvviiar@gmail.com",
-    pass: "8829122Aa"
-  } // host: "hp303.hostpapa.com",
+  // service: "gmail",
+  // auth: {
+  //   user: "andyvviiar@gmail.com",
+  //   pass: "8829122Aa",
+  // },
+  // host: "hp303.hostpapa.com",
   // // host: "umaexpress.ca",
   // Server: "freepmo.andyliu.ca",
   // port: 465,
@@ -22,7 +23,13 @@ var transporter = _nodemailer["default"].createTransport({
   //   user: "freepmo.admin@freepmo.andyliu.ca",
   //   pass: "8829122Aa",
   // },
-
+  host: "smtp.163.com",
+  secure: true,
+  port: 465,
+  auth: {
+    user: "yvetteandyadmin@163.com",
+    pass: "ZKSKKQPIMTIAAPNX"
+  }
 });
 
 function _default(mail) {

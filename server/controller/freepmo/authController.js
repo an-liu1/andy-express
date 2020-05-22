@@ -31,10 +31,10 @@ authController.userRegister = (req, res) => {
           User.create(req.body)
             .then((user) => {
               mail({
-                from: "freePMO <freepmo.admin@freepmo.andyliu.ca>",
+                from: "freePMO <yvetteandyadmin@163.com>",
                 to: req.body.email,
                 subject: "[freePMO]激活邮箱账号",
-                text: `尊敬的${user.username}，您好！点击链接即可激活您的freePMO账号, http://159.89.121.159:3000/freepmo/checkCode/${user.email}/${user.code} 为保障您的帐号安全，请在24小时内点击该链接，您也可以将链接复制到浏览器地址栏访问。 若如果并没您的操作，请忽略本邮件，由此给您带来的不便请谅解。本邮件由系统自动发出，请勿直接回复！`,
+                text: `尊敬的${user.username}，您好！点击链接即可激活您的freePMO账号, http://andy-express.herokuapp.com/freepmo/checkCode/${user.email}/${user.code} 为保障您的帐号安全，请在24小时内点击该链接，您也可以将链接复制到浏览器地址栏访问。 若如果并没您的操作，请忽略本邮件，由此给您带来的不便请谅解。本邮件由系统自动发出，请勿直接回复！`,
               });
               return res.json({
                 success: true,

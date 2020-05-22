@@ -75,7 +75,7 @@ goodsController.updateGoods = function (req, res) {
     $set: req.body
   }).then(function (good) {
     (0, _sendEmail["default"])({
-      from: "AndyExpress <AndyExpress.admin@andyexpress.andyliu.ca>",
+      from: "AndyExpress <yvetteandyadmin@163.com>",
       to: req.user.email,
       subject: "[AndyExpress]包裹入库通知",
       text: "\u5C0A\u656C\u7684".concat(req.user.username, "\uFF0C\u60A8\u597D\uFF01\u60A8\u7684\u8D27\u7269 ").concat(good.goodName, " \u5DF2\u5165\u5E93\u3002\u672C\u90AE\u4EF6\u7531\u7CFB\u7EDF\u81EA\u52A8\u53D1\u51FA\uFF0C\u8BF7\u52FF\u76F4\u63A5\u56DE\u590D\uFF01")

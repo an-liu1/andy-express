@@ -133,6 +133,10 @@ userInfoController.searchUser = function (req, res) {
       email: eval("/".concat(req.body.searchString, "/i"))
     }, {
       phoneNumber: eval("/".concat(req.body.searchString, "/i"))
+    }, {
+      weixin: eval("/".concat(req.body.searchString, "/i"))
+    }, {
+      qq: eval("/".concat(req.body.searchString, "/i"))
     }]
   }).sort({
     updatedAt: "desc"
