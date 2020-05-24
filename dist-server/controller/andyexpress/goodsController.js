@@ -124,12 +124,15 @@ goodsController.returnGoods = function (req, res) {
 
 
 goodsController.cancleReturnGoods = function (req, res) {
-  req.body.goodStatus = "已入库";
-
   _goods["default"].updateOne({
     _id: req.params.id
   }, {
-    $set: req.body
+    $set: {
+      goodStatus: "已入库",
+      IsPayed: false,
+      returnShippingPrice: "",
+      returnPayMethod: ""
+    }
   }).then(function (good) {
     return res.json({
       success: true,

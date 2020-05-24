@@ -99,6 +99,7 @@ authController.userLogin = (req, res) => {
                       user_id: user._id,
                       username: user.username,
                       email: user.email,
+                      weixin: user.weixin,
                     });
                   }
                   res.json({

@@ -121,7 +121,8 @@ authController.userLogin = function (req, res) {
                 _pmoUserInfo["default"].create({
                   user_id: user._id,
                   username: user.username,
-                  email: user.email
+                  email: user.email,
+                  weixin: user.weixin
                 });
               }
 

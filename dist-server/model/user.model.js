@@ -24,7 +24,12 @@ var userSchema = new Schema({
   email: {
     type: String,
     required: true,
-    // unique: true,
+    unique: true,
+    trim: true
+  },
+  weixin: {
+    type: String,
+    unique: true,
     trim: true
   },
   code: {
