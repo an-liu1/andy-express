@@ -147,7 +147,7 @@ authController.requestReset = (req, res) => {
           code: 0,
         });
       } else {
-        return res.status(400).json("请输入正确的邮箱账户！");
+        return res.status(400).json("此用户不存在, 请输入正确的邮箱账户！");
       }
     })
     .catch((err) => res.status(400).json("Error: " + err));
