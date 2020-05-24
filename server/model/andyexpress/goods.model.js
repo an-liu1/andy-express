@@ -9,6 +9,7 @@ const goodsSchema = new Schema(
     // 客户上传单号创建物品信息（物品状态：待入库）
     user_id: { type: String },
     username: { type: String },
+    email: { type: String },
     goodName: { type: String },
     localExpressNumber: { type: String },
     localExpressCompany: { type: String },

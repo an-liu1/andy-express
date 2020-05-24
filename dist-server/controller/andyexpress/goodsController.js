@@ -9,6 +9,8 @@ var _goods = _interopRequireDefault(require("../../model/andyexpress/goods.model
 
 var _sendEmail = _interopRequireDefault(require("../../config/sendEmail"));
 
+var _announcement = _interopRequireDefault(require("../../model/andyexpress/announcement.model"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 // import fs from "fs";
@@ -18,6 +20,7 @@ goodsController.submitGoods = function (req, res) {
   req.body = {
     user_id: req.user.id,
     username: req.user.username,
+    email: req.user.email,
     goodName: req.body.goodName,
     localExpressNumber: req.body.localExpressNumber,
     localExpressCompany: req.body.localExpressCompany,
@@ -56,34 +59,39 @@ goodsController.userUpdateGoods = function (req, res) {
 
 
 goodsController.updateGoods = function (req, res) {
-  // let good_image = req.body.goodImg;
-  // var base64Data = good_image.replace(/^data:image\/\w+;base64,/, "");
-  // var dataBuffer = Buffer.from(base64Data, "base64");
-  // let time = Date.now();
-  // let imagePath = `images/andyexpress/goods/${req.user.id}_${time}.png`;
-  // fs.writeFile(`./public/${imagePath}`, dataBuffer, function (err) {
-  //   if (err) return;
-  // });
-  // req.body.goodImg = imagePath;
-  req.body.isStorage = 1; // req.body.storageTime = new Date();
-
+  req.body.isStorage = 1;
   req.body.goodStatus = "已入库";
 
   _goods["default"].updateOne({
     _id: req.params.id
   }, {
     $set: req.body
-  }).then(function (good) {
-    (0, _sendEmail["default"])({
-      from: "AndyExpress <yvetteandyadmin@163.com>",
-      to: req.user.email,
-      subject: "[AndyExpress]包裹入库通知",
-      text: "\u5C0A\u656C\u7684".concat(req.user.username, "\uFF0C\u60A8\u597D\uFF01\u60A8\u7684\u8D27\u7269 ").concat(good.goodName, " \u5DF2\u5165\u5E93\u3002\u672C\u90AE\u4EF6\u7531\u7CFB\u7EDF\u81EA\u52A8\u53D1\u51FA\uFF0C\u8BF7\u52FF\u76F4\u63A5\u56DE\u590D\uFF01")
-    });
-    return res.json({
-      success: true,
-      code: 0,
-      data: good
+  }).then(function () {
+    _goods["default"].find({
+      _id: req.params.id
+    }).then(function (good) {
+      var getEmailContent = function getEmailContent(emailContent) {
+        emailContent = JSON.stringify(emailContent).replace("$username$", good[0].username);
+        emailContent = JSON.stringify(emailContent).replace("$goodName$", good[0].goodName);
+        (0, _sendEmail["default"])({
+          from: "AndyExpress <yvetteandyadmin@163.com>",
+          to: good[0].email,
+          subject: "[AndyExpress]包裹入库通知",
+          html: emailContent
+        });
+      };
+
+      _announcement["default"].find({
+        title: "包裹入库通知"
+      }).then(function (announcements) {
+        getEmailContent(announcements[0].content);
+      });
+
+      return res.json({
+        success: true,
+        code: 0,
+        data: good
+      });
     });
   })["catch"](function (err) {
     return res.status(400).json("Error: " + err);

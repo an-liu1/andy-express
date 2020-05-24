@@ -22,6 +22,9 @@ var goodsSchema = new Schema({
   username: {
     type: String
   },
+  email: {
+    type: String
+  },
   goodName: {
     type: String
   },

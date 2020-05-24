@@ -1,6 +1,7 @@
 import Goods from "../../model/andyexpress/goods.model";
 // import fs from "fs";
 import mail from "../../config/sendEmail";
+import Announcement from "../../model/andyexpress/announcement.model";
 
 const goodsController = {};
 
@@ -9,6 +10,7 @@ goodsController.submitGoods = (req, res) => {
   req.body = {
     user_id: req.user.id,
     username: req.user.username,
+    email: req.user.email,
     goodName: req.body.goodName,
     localExpressNumber: req.body.localExpressNumber,
     localExpressCompany: req.body.localExpressCompany,
@@ -42,30 +44,35 @@ goodsController.userUpdateGoods = (req, res) => {
 
 // 后台更新进仓库物品信息
 goodsController.updateGoods = (req, res) => {
-  // let good_image = req.body.goodImg;
-  // var base64Data = good_image.replace(/^data:image\/\w+;base64,/, "");
-  // var dataBuffer = Buffer.from(base64Data, "base64");
-  // let time = Date.now();
-  // let imagePath = `images/andyexpress/goods/${req.user.id}_${time}.png`;
-  // fs.writeFile(`./public/${imagePath}`, dataBuffer, function (err) {
-  //   if (err) return;
-  // });
-  // req.body.goodImg = imagePath;
   req.body.isStorage = 1;
-  // req.body.storageTime = new Date();
   req.body.goodStatus = "已入库";
   Goods.updateOne({ _id: req.params.id }, { $set: req.body })
-    .then((good) => {
-      mail({
-        from: "AndyExpress <yvetteandyadmin@163.com>",
-        to: req.user.email,
-        subject: "[AndyExpress]包裹入库通知",
-        text: `尊敬的${req.user.username}，您好！您的货物 ${good.goodName} 已入库。本邮件由系统自动发出，请勿直接回复！`,
-      });
-      return res.json({
-        success: true,
-        code: 0,
-        data: good,
+    .then(() => {
+      Goods.find({ _id: req.params.id }).then((good) => {
+        var getEmailContent = (emailContent) => {
+          emailContent = JSON.stringify(emailContent).replace(
+            "$username$",
+            good[0].username
+          );
+          emailContent = JSON.stringify(emailContent).replace(
+            "$goodName$",
+            good[0].goodName
+          );
+          mail({
+            from: "AndyExpress <yvetteandyadmin@163.com>",
+            to: good[0].email,
+            subject: "[AndyExpress]包裹入库通知",
+            html: emailContent,
+          });
+        };
+        Announcement.find({ title: "包裹入库通知" }).then((announcements) => {
+          getEmailContent(announcements[0].content);
+        });
+        return res.json({
+          success: true,
+          code: 0,
+          data: good,
+        });
       });
     })
     .catch((err) => res.status(400).json("Error: " + err));
@@ -195,13 +202,13 @@ goodsController.getAllGoods = (req, res) => {
     .sort({ updatedAt: "desc" })
     .skip(pageOptions.page * pageOptions.size)
     .limit(pageOptions.size)
-    .then((good) =>
-      res.json({
+    .then((good) => {
+      return res.json({
         success: true,
         code: 0,
         data: good,
-      })
-    )
+      });
+    })
     .catch((err) => res.status(400).json("Error: " + err));
 };
 
