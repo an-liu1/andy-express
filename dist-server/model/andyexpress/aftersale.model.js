@@ -43,7 +43,7 @@ var aftersaleSchema = new Schema({
   },
   // 客服给出解决方案及金额赔偿
   compensation: {
-    type: String,
+    type: Number,
     trim: true
   },
   solution: {

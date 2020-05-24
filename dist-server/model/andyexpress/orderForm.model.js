@@ -147,7 +147,7 @@ var orderFormSchema = new Schema({
   },
   //赔付
   compensation: {
-    type: String
+    type: Number
   }
 }, {
   timestamps: true

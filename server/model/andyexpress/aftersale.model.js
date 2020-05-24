@@ -16,7 +16,7 @@ const aftersaleSchema = new Schema(
     aftersale_image: { type: Array },
 
     // 客服给出解决方案及金额赔偿
-    compensation: { type: String, trim: true },
+    compensation: { type: Number, trim: true },
     solution: { type: String, trim: true },
     aftersaleOperator: { type: String }, // 售后操作员
 

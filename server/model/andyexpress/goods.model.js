@@ -48,7 +48,7 @@ const goodsSchema = new Schema(
 
     //退货信息
     returnPayMethod: { type: String },
-    returnShippingPrice: { type: String },
+    returnShippingPrice: { type: Number },
     IsPayed: { type: Boolean },
   },
   {

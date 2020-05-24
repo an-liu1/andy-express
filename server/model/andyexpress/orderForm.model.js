@@ -63,7 +63,7 @@ const orderFormSchema = new Schema(
     is_aftersale: { type: Boolean, default: 0 },
 
     //赔付
-    compensation: { type: String },
+    compensation: { type: Number },
   },
   {
     timestamps: true,

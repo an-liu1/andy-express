@@ -118,7 +118,7 @@ var goodsSchema = new Schema({
     type: String
   },
   returnShippingPrice: {
-    type: String
+    type: Number
   },
   IsPayed: {
     type: Boolean
