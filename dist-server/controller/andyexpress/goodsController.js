@@ -71,20 +71,20 @@ goodsController.updateGoods = function (req, res) {
       _id: req.params.id
     }).then(function (good) {
       var getEmailContent = function getEmailContent(emailContent) {
-        emailContent = JSON.stringify(emailContent).replace("$username$", good[0].username);
-        emailContent = JSON.stringify(emailContent).replace("$goodName$", good[0].goodName);
+        emailContent.content = emailContent.content.replace("$username$", good[0].username);
+        emailContent.content = emailContent.content.replace("$goodName$", good[0].goodName);
         (0, _sendEmail["default"])({
           from: "AndyExpress <yvetteandyadmin@163.com>",
           to: good[0].email,
-          subject: "[AndyExpress]包裹入库通知",
-          html: emailContent
+          subject: emailContent.summary,
+          html: emailContent.content
         });
       };
 
       _announcement["default"].find({
         title: "包裹入库通知"
       }).then(function (announcements) {
-        getEmailContent(announcements[0].content);
+        getEmailContent(announcements[0]);
       });
 
       return res.json({
@@ -160,6 +160,27 @@ goodsController.submitReturnGoodsInfo = function (req, res) {
     }, {
       $set: req.body
     }).then(function (good) {
+      _goods["default"].find({
+        _id: i
+      }).then(function (good) {
+        var getEmailContent = function getEmailContent(emailContent) {
+          emailContent.content = emailContent.content.replace("$username$", good[0].username);
+          emailContent.content = emailContent.content.replace("$goodName$", good[0].goodName);
+          (0, _sendEmail["default"])({
+            from: "AndyExpress <yvetteandyadmin@163.com>",
+            to: good[0].email,
+            subject: emailContent.summary,
+            html: emailContent.content
+          });
+        };
+
+        _announcement["default"].find({
+          title: "确认退货通知"
+        }).then(function (announcements) {
+          getEmailContent(announcements[0]);
+        });
+      });
+
       return res.json({
         success: true,
         code: 0,
@@ -180,6 +201,27 @@ goodsController.submitReturnGoods = function (req, res) {
     }, {
       $set: req.body
     }).then(function (good) {
+      _goods["default"].find({
+        _id: i
+      }).then(function (good) {
+        var getEmailContent = function getEmailContent(emailContent) {
+          emailContent.content = emailContent.content.replace("$username$", good[0].username);
+          emailContent.content = emailContent.content.replace("$goodName$", good[0].goodName);
+          (0, _sendEmail["default"])({
+            from: "AndyExpress <yvetteandyadmin@163.com>",
+            to: good[0].email,
+            subject: emailContent.summary,
+            html: emailContent.content
+          });
+        };
+
+        _announcement["default"].find({
+          title: "退货完成通知"
+        }).then(function (announcements) {
+          getEmailContent(announcements[0]);
+        });
+      });
+
       return res.json({
         success: true,
         code: 0,

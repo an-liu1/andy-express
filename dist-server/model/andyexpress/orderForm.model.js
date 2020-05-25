@@ -22,6 +22,9 @@ var orderFormSchema = new Schema({
   username: {
     type: String
   },
+  email: {
+    type: String
+  },
   orderGoodsList: [{
     goodId: String,
     goodName: String,

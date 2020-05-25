@@ -4,6 +4,7 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import keys from "../../config/keys";
 import mail from "../../config/sendEmail";
+import Announcement from "../../model/andyexpress/announcement.model";
 
 const authController = {};
 
@@ -30,12 +31,27 @@ authController.userRegister = (req, res) => {
             .substr(0, 8);
           User.create(req.body)
             .then((user) => {
-              mail({
-                from: "AndyExpress <yvetteandyadmin@163.com>",
-                to: req.body.email,
-                subject: "[AndyExpress]激活邮箱账号",
-                text: `尊敬的${user.username}，您好！点击链接即可激活您的AndyExpress账号, http://andy-express.herokuapp.com/express/checkCode/${user.email}/${user.code} 为保障您的帐号安全，请在24小时内点击该链接，您也可以将链接复制到浏览器地址栏访问。 若如果并没您的操作，请忽略本邮件，由此给您带来的不便请谅解。本邮件由系统自动发出，请勿直接回复！`,
-              });
+              var getEmailContent = (emailContent) => {
+                emailContent.content = emailContent.content.replace(
+                  "$username$",
+                  user.username
+                );
+                emailContent.content = emailContent.content.replace(
+                  "$activelink$",
+                  `http://andy-express.herokuapp.com/express/checkCode/${user.email}/${user.code}`
+                );
+                mail({
+                  from: "AndyExpress <yvetteandyadmin@163.com>",
+                  to: req.body.email,
+                  subject: emailContent.summary,
+                  html: emailContent.content,
+                });
+              };
+              Announcement.find({ title: "用户注册通知" }).then(
+                (announcements) => {
+                  getEmailContent(announcements[0]);
+                }
+              );
               return res.json({
                 success: true,
                 code: 0,
@@ -136,11 +152,24 @@ authController.requestReset = (req, res) => {
   User.findOne({ email: req.body.email })
     .then((user) => {
       if (user) {
-        mail({
-          from: "AndyExpress <yvetteandyadmin@163.com>",
-          to: req.body.email,
-          subject: "[AndyExpress]账号密码重置命令，请求激活",
-          text: `尊敬的${user.username}，您好！点击链接即可跳转至密码重置界面, http://andyexpress.andyliu.ca/#/resetpassword/${user.email}/${user.code}/true 为保障您的帐号安全，请在24小时内点击该链接，您也可以将链接复制到浏览器地址栏访问。 若如果并没您的操作，请忽略本邮件，由此给您带来的不便请谅解。本邮件由系统自动发出，请勿直接回复！`,
+        var getEmailContent = (emailContent) => {
+          emailContent.content = emailContent.content.replace(
+            "$username$",
+            user.username
+          );
+          emailContent.content = emailContent.content.replace(
+            "$activelink$",
+            `http://andyexpress.andyliu.ca/#/resetpassword/${user.email}/${user.code}/true`
+          );
+          mail({
+            from: "AndyExpress <yvetteandyadmin@163.com>",
+            to: req.body.email,
+            subject: emailContent.summary,
+            html: emailContent.content,
+          });
+        };
+        Announcement.find({ title: "密码重置通知" }).then((announcements) => {
+          getEmailContent(announcements[0]);
         });
         return res.json({
           success: true,

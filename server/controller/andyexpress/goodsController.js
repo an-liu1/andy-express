@@ -50,23 +50,23 @@ goodsController.updateGoods = (req, res) => {
     .then(() => {
       Goods.find({ _id: req.params.id }).then((good) => {
         var getEmailContent = (emailContent) => {
-          emailContent = JSON.stringify(emailContent).replace(
+          emailContent.content = emailContent.content.replace(
             "$username$",
             good[0].username
           );
-          emailContent = JSON.stringify(emailContent).replace(
+          emailContent.content = emailContent.content.replace(
             "$goodName$",
             good[0].goodName
           );
           mail({
             from: "AndyExpress <yvetteandyadmin@163.com>",
             to: good[0].email,
-            subject: "[AndyExpress]包裹入库通知",
-            html: emailContent,
+            subject: emailContent.summary,
+            html: emailContent.content,
           });
         };
         Announcement.find({ title: "包裹入库通知" }).then((announcements) => {
-          getEmailContent(announcements[0].content);
+          getEmailContent(announcements[0]);
         });
         return res.json({
           success: true,
@@ -133,13 +133,34 @@ goodsController.cancleReturnGoods = (req, res) => {
 goodsController.submitReturnGoodsInfo = (req, res) => {
   req.body.returnedGoods.map((i) => {
     Goods.updateOne({ _id: i }, { $set: req.body })
-      .then((good) =>
-        res.json({
+      .then((good) => {
+        Goods.find({ _id: i }).then((good) => {
+          var getEmailContent = (emailContent) => {
+            emailContent.content = emailContent.content.replace(
+              "$username$",
+              good[0].username
+            );
+            emailContent.content = emailContent.content.replace(
+              "$goodName$",
+              good[0].goodName
+            );
+            mail({
+              from: "AndyExpress <yvetteandyadmin@163.com>",
+              to: good[0].email,
+              subject: emailContent.summary,
+              html: emailContent.content,
+            });
+          };
+          Announcement.find({ title: "确认退货通知" }).then((announcements) => {
+            getEmailContent(announcements[0]);
+          });
+        });
+        return res.json({
           success: true,
           code: 0,
           data: good,
-        })
-      )
+        });
+      })
       .catch((err) => res.status(400).json("Error: " + err));
   });
 };
@@ -149,13 +170,34 @@ goodsController.submitReturnGoods = (req, res) => {
   req.body.goodStatus = "已退货";
   req.body.returnedGoods.map((i) => {
     Goods.updateOne({ _id: i }, { $set: req.body })
-      .then((good) =>
-        res.json({
+      .then((good) => {
+        Goods.find({ _id: i }).then((good) => {
+          var getEmailContent = (emailContent) => {
+            emailContent.content = emailContent.content.replace(
+              "$username$",
+              good[0].username
+            );
+            emailContent.content = emailContent.content.replace(
+              "$goodName$",
+              good[0].goodName
+            );
+            mail({
+              from: "AndyExpress <yvetteandyadmin@163.com>",
+              to: good[0].email,
+              subject: emailContent.summary,
+              html: emailContent.content,
+            });
+          };
+          Announcement.find({ title: "退货完成通知" }).then((announcements) => {
+            getEmailContent(announcements[0]);
+          });
+        });
+        return res.json({
           success: true,
           code: 0,
           data: good,
-        })
-      )
+        });
+      })
       .catch((err) => res.status(400).json("Error: " + err));
   });
 };

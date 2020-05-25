@@ -9,6 +9,10 @@ var _orderForm = _interopRequireDefault(require("../../model/andyexpress/orderFo
 
 var _goods = _interopRequireDefault(require("../../model/andyexpress/goods.model"));
 
+var _announcement = _interopRequireDefault(require("../../model/andyexpress/announcement.model"));
+
+var _sendEmail = _interopRequireDefault(require("../../config/sendEmail"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 // import fs from "fs";
@@ -57,6 +61,7 @@ ordersController.getOrderListNumber = function (req, res) {
 ordersController.createOrderForm = function (req, res) {
   req.body.user_id = req.user.id;
   req.body.username = req.user.username;
+  req.body.email = req.user.email;
   req.body.orderStatus = "待打包";
 
   _orderForm["default"].create(req.body).then(function (order) {
@@ -114,15 +119,6 @@ ordersController.cancleOrderForm = function (req, res) {
 
 
 ordersController.updateOrderForm = function (req, res) {
-  // let order_Img = req.body.orderImg;
-  // var base64Data = order_Img.replace(/^data:image\/\w+;base64,/, "");
-  // var dataBuffer = Buffer.from(base64Data, "base64");
-  // let time = Date.now();
-  // let imagePath = `images/andyexpress/orders/${req.user.id}_${time}.png`;
-  // fs.writeFile(`./public/${imagePath}`, dataBuffer, function (err) {
-  //   if (err) return;
-  // });
-  // req.body.orderImg = imagePath;
   req.body.orderStatus = "已打包";
 
   _orderForm["default"].updateOne({
@@ -131,6 +127,27 @@ ordersController.updateOrderForm = function (req, res) {
     $set: req.body
   }).then(function (order) {
     //加发送邮件提醒订单已生成
+    _orderForm["default"].find({
+      _id: req.params.id
+    }).then(function (order1) {
+      var getEmailContent = function getEmailContent(emailContent) {
+        emailContent.content = emailContent.content.replace("$username$", order1[0].username);
+        emailContent.content = emailContent.content.replace("$_id$", order1[0]._id);
+        (0, _sendEmail["default"])({
+          from: "AndyExpress <yvetteandyadmin@163.com>",
+          to: order1[0].email,
+          subject: emailContent.summary,
+          html: emailContent.content
+        });
+      };
+
+      _announcement["default"].find({
+        title: "打包完成通知"
+      }).then(function (announcements) {
+        getEmailContent(announcements[0]);
+      });
+    });
+
     req.body.goodsLists.map(function (i) {
       _goods["default"].updateOne({
         _id: i
@@ -184,6 +201,27 @@ ordersController.orderDelivering = function (req, res) {
   }, {
     $set: req.body
   }).then(function (order) {
+    _orderForm["default"].find({
+      _id: req.params.id
+    }).then(function (order1) {
+      var getEmailContent = function getEmailContent(emailContent) {
+        emailContent.content = emailContent.content.replace("$username$", order1[0].username);
+        emailContent.content = emailContent.content.replace("$_id$", order1[0]._id);
+        (0, _sendEmail["default"])({
+          from: "AndyExpress <yvetteandyadmin@163.com>",
+          to: order1[0].email,
+          subject: emailContent.summary,
+          html: emailContent.content
+        });
+      };
+
+      _announcement["default"].find({
+        title: "订单发货通知"
+      }).then(function (announcements) {
+        getEmailContent(announcements[0]);
+      });
+    });
+
     return res.json({
       success: true,
       code: 0,

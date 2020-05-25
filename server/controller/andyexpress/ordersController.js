@@ -1,5 +1,7 @@
 import OrderForm from "../../model/andyexpress/orderForm.model";
 import Goods from "../../model/andyexpress/goods.model";
+import Announcement from "../../model/andyexpress/announcement.model";
+import mail from "../../config/sendEmail";
 // import fs from "fs";
 
 const ordersController = {};
@@ -48,6 +50,7 @@ ordersController.getOrderListNumber = (req, res) => {
 ordersController.createOrderForm = (req, res) => {
   req.body.user_id = req.user.id;
   req.body.username = req.user.username;
+  req.body.email = req.user.email;
   req.body.orderStatus = "待打包";
   OrderForm.create(req.body)
     .then((order) => {
@@ -91,20 +94,31 @@ ordersController.cancleOrderForm = (req, res) => {
 
 // 客服上传订单详情
 ordersController.updateOrderForm = (req, res) => {
-  // let order_Img = req.body.orderImg;
-  // var base64Data = order_Img.replace(/^data:image\/\w+;base64,/, "");
-  // var dataBuffer = Buffer.from(base64Data, "base64");
-  // let time = Date.now();
-  // let imagePath = `images/andyexpress/orders/${req.user.id}_${time}.png`;
-  // fs.writeFile(`./public/${imagePath}`, dataBuffer, function (err) {
-  //   if (err) return;
-  // });
-  // req.body.orderImg = imagePath;
   req.body.orderStatus = "已打包";
-
   OrderForm.updateOne({ _id: req.params.id }, { $set: req.body })
     .then((order) => {
       //加发送邮件提醒订单已生成
+      OrderForm.find({ _id: req.params.id }).then((order1) => {
+        var getEmailContent = (emailContent) => {
+          emailContent.content = emailContent.content.replace(
+            "$username$",
+            order1[0].username
+          );
+          emailContent.content = emailContent.content.replace(
+            "$_id$",
+            order1[0]._id
+          );
+          mail({
+            from: "AndyExpress <yvetteandyadmin@163.com>",
+            to: order1[0].email,
+            subject: emailContent.summary,
+            html: emailContent.content,
+          });
+        };
+        Announcement.find({ title: "打包完成通知" }).then((announcements) => {
+          getEmailContent(announcements[0]);
+        });
+      });
       req.body.goodsLists.map((i) => {
         Goods.updateOne(
           { _id: i },
@@ -147,6 +161,27 @@ ordersController.orderDelivering = (req, res) => {
   req.body.orderStatus = "已发货";
   OrderForm.updateOne({ _id: req.params.id }, { $set: req.body })
     .then((order) => {
+      OrderForm.find({ _id: req.params.id }).then((order1) => {
+        var getEmailContent = (emailContent) => {
+          emailContent.content = emailContent.content.replace(
+            "$username$",
+            order1[0].username
+          );
+          emailContent.content = emailContent.content.replace(
+            "$_id$",
+            order1[0]._id
+          );
+          mail({
+            from: "AndyExpress <yvetteandyadmin@163.com>",
+            to: order1[0].email,
+            subject: emailContent.summary,
+            html: emailContent.content,
+          });
+        };
+        Announcement.find({ title: "订单发货通知" }).then((announcements) => {
+          getEmailContent(announcements[0]);
+        });
+      });
       return res.json({
         success: true,
         code: 0,

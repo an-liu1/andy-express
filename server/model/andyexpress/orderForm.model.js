@@ -9,6 +9,7 @@ const orderFormSchema = new Schema(
     //创建订单（订单状态：待打包）
     user_id: { type: String },
     username: { type: String },
+    email: { type: String },
     orderGoodsList: [
       {
         goodId: String,
