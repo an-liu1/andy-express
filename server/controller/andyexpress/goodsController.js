@@ -119,6 +119,14 @@ goodsController.cancleReturnGoods = (req, res) => {
           },
         }
       ).catch((err) => res.status(400).json("Error: " + err));
+      Goods.updateOne(
+        { _id: req.params.id },
+        {
+          $set: {
+            returnBackPrice: good.returnShippingPrice,
+          },
+        }
+      ).catch((err) => res.status(400).json("Error: " + err));
     }
   });
   Goods.updateOne(
@@ -128,6 +136,7 @@ goodsController.cancleReturnGoods = (req, res) => {
         goodStatus: "已入库",
         IsPayed: false,
         returnShippingPrice: "",
+        returnShippingCostPrice: "",
         returnPayMethod: "",
       },
     }
@@ -149,8 +158,7 @@ goodsController.getPayedReturnGoods = (req, res) => {
     size: parseInt(req.params.size) || 10,
   };
   Goods.find({
-    goodStatus: "退货中",
-    IsPayed: true,
+    $or: [{ returnBackPrice: { $gt: 0 } }, { goodStatus: "已退货" }],
   })
     .sort({ updatedAt: "desc" })
     .skip(pageOptions.page * pageOptions.size)

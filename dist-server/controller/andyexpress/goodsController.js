@@ -147,6 +147,16 @@ goodsController.cancleReturnGoods = function (req, res) {
       })["catch"](function (err) {
         return res.status(400).json("Error: " + err);
       });
+
+      _goods["default"].updateOne({
+        _id: req.params.id
+      }, {
+        $set: {
+          returnBackPrice: good.returnShippingPrice
+        }
+      })["catch"](function (err) {
+        return res.status(400).json("Error: " + err);
+      });
     }
   });
 
@@ -157,6 +167,7 @@ goodsController.cancleReturnGoods = function (req, res) {
       goodStatus: "已入库",
       IsPayed: false,
       returnShippingPrice: "",
+      returnShippingCostPrice: "",
       returnPayMethod: ""
     }
   }).then(function (good) {
@@ -178,8 +189,13 @@ goodsController.getPayedReturnGoods = function (req, res) {
   };
 
   _goods["default"].find({
-    goodStatus: "退货中",
-    IsPayed: true
+    $or: [{
+      returnBackPrice: {
+        $gt: 0
+      }
+    }, {
+      goodStatus: "已退货"
+    }]
   }).sort({
     updatedAt: "desc"
   }).skip(pageOptions.page * pageOptions.size).limit(pageOptions.size).then(function (good) {
