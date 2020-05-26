@@ -123,6 +123,9 @@ var goodsSchema = new Schema({
   returnShippingPrice: {
     type: Number
   },
+  returnShippingCostPrice: {
+    type: Number
+  },
   IsPayed: {
     type: Boolean
   }

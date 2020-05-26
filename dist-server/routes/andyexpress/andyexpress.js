@@ -49,6 +49,8 @@ router.put("/returnGoods", _goodsController["default"].returnGoods); // 用户�
 
 router.post("/searchGoodsForUser/:status/:page/:size/:status1", _goodsController["default"].searchGoodsForUser);
 router.put("/cancleReturnGoods/:id", _goodsController["default"].cancleReturnGoods); //用户取消退货
+
+router.get("/getPayedReturnGoods/:page/:size", _goodsController["default"].getPayedReturnGoods); // 用户获取取消已付退货款物品
 //订单
 
 router.post("/createOrderForm", _ordersController["default"].createOrderForm); //用户打包创建订单
@@ -61,6 +63,8 @@ router.put("/isDeliveryAndRank", _ordersController["default"].isDeliveryAndRank)
 
 router.post("/searchOrdersForUser/:status/:page/:size/:status1/:status2", _ordersController["default"].searchOrdersForUser);
 router.put("/cancleOrderForm/:id", _ordersController["default"].cancleOrderForm); //用户取消订单
+
+router.get("/getPaiedCancleOrderForm/:page/:size", _ordersController["default"].getPaiedCancleOrderForm); // 客服获取全部已取消且付费订单
 //售后
 
 router.post("/createAfterSale", _aftersaleController["default"].createAfterSale); //客户提交售后

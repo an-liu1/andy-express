@@ -2,6 +2,7 @@ import Goods from "../../model/andyexpress/goods.model";
 // import fs from "fs";
 import mail from "../../config/sendEmail";
 import Announcement from "../../model/andyexpress/announcement.model";
+import UserInfo from "../../model/andyexpress/userInfo.model";
 
 const goodsController = {};
 
@@ -108,6 +109,18 @@ goodsController.returnGoods = (req, res) => {
 
 //用户取消退货
 goodsController.cancleReturnGoods = (req, res) => {
+  Goods.find({ _id: req.params.id }).then((good) => {
+    if (good.IsPayed) {
+      UserInfo.updateOne(
+        { _id: req.user.id },
+        {
+          $set: {
+            balance: balance + good.returnShippingPrice,
+          },
+        }
+      ).catch((err) => res.status(400).json("Error: " + err));
+    }
+  });
   Goods.updateOne(
     { _id: req.params.id },
     {
@@ -119,13 +132,13 @@ goodsController.cancleReturnGoods = (req, res) => {
       },
     }
   )
-    .then((good) =>
-      res.json({
+    .then((good) => {
+      return res.json({
         success: true,
         code: 0,
         data: good,
-      })
-    )
+      });
+    })
     .catch((err) => res.status(400).json("Error: " + err));
 };
 
@@ -200,6 +213,29 @@ goodsController.submitReturnGoods = (req, res) => {
       })
       .catch((err) => res.status(400).json("Error: " + err));
   });
+};
+
+// 用户获取取消已付退货款物品
+goodsController.getPayedReturnGoods = (req, res) => {
+  const pageOptions = {
+    page: parseInt(req.params.page) || 0,
+    size: parseInt(req.params.size) || 10,
+  };
+  Goods.find({
+    goodStatus: "退货中",
+    IsPayed: true,
+  })
+    .sort({ updatedAt: "desc" })
+    .skip(pageOptions.page * pageOptions.size)
+    .limit(pageOptions.size)
+    .then((good) => {
+      res.json({
+        success: true,
+        code: 0,
+        data: good,
+      });
+    })
+    .catch((err) => res.status(400).json("Error: " + err));
 };
 
 // 用户获取自己所有物品

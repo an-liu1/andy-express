@@ -115,6 +115,31 @@ ordersController.cancleOrderForm = function (req, res) {
   })["catch"](function (err) {
     return res.status(400).json("Error: " + err);
   });
+}; // 客服获取全部已取消且付费订单
+
+
+ordersController.getPaiedCancleOrderForm = function (req, res) {
+  var pageOptions = {
+    page: parseInt(req.params.page) || 0,
+    size: parseInt(req.params.size) || 10
+  };
+
+  _orderForm["default"].find({
+    orderStatus: "已取消",
+    cancleFee: {
+      $not: 0
+    }
+  }).sort({
+    updatedAt: "desc"
+  }).skip(pageOptions.page * pageOptions.size).limit(pageOptions.size).then(function (order) {
+    return res.json({
+      success: true,
+      code: 0,
+      data: order
+    });
+  })["catch"](function (err) {
+    return res.status(400).json("Error: " + err);
+  });
 }; // 客服上传订单详情
 
 

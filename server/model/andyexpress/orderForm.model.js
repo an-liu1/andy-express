@@ -65,6 +65,9 @@ const orderFormSchema = new Schema(
 
     //赔付
     compensation: { type: Number },
+
+    //取消订单
+    cancleFee: { type: Number },
   },
   {
     timestamps: true,

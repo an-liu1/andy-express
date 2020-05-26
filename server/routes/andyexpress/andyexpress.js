@@ -29,6 +29,10 @@ router.post(
   goodsController.searchGoodsForUser
 );
 router.put("/cancleReturnGoods/:id", goodsController.cancleReturnGoods); //用户取消退货
+router.get(
+  "/getPayedReturnGoods/:page/:size",
+  goodsController.getPayedReturnGoods
+); // 用户获取取消已付退货款物品
 
 //订单
 router.post("/createOrderForm", ordersController.createOrderForm); //用户打包创建订单
@@ -43,6 +47,10 @@ router.post(
   ordersController.searchOrdersForUser
 );
 router.put("/cancleOrderForm/:id", ordersController.cancleOrderForm); //用户取消订单
+router.get(
+  "/getPaiedCancleOrderForm/:page/:size",
+  ordersController.getPaiedCancleOrderForm
+); // 客服获取全部已取消且付费订单
 
 //售后
 router.post("/createAfterSale", aftersaleController.createAfterSale); //客户提交售后
@@ -63,7 +71,6 @@ router.get("/getAdvice/:id", advicesController.getAdvice); //具体某个客户�
 //data
 router.put("/getDataAnalysis", dataController.getDataAnalysis);
 router.get("/getOrderAnalysis", dataController.getOrderAnalysis);
-
 
 //user
 router.get("/getAllUser/:page/:size", userInfoController.getAllUser); // 后台获取所有用户信息

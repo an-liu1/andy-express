@@ -11,6 +11,8 @@ var _sendEmail = _interopRequireDefault(require("../../config/sendEmail"));
 
 var _announcement = _interopRequireDefault(require("../../model/andyexpress/announcement.model"));
 
+var _userInfo = _interopRequireDefault(require("../../model/andyexpress/userInfo.model"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 // import fs from "fs";
@@ -132,6 +134,22 @@ goodsController.returnGoods = function (req, res) {
 
 
 goodsController.cancleReturnGoods = function (req, res) {
+  _goods["default"].find({
+    _id: req.params.id
+  }).then(function (good) {
+    if (good.IsPayed) {
+      _userInfo["default"].updateOne({
+        _id: req.user.id
+      }, {
+        $set: {
+          balance: balance + good.returnShippingPrice
+        }
+      })["catch"](function (err) {
+        return res.status(400).json("Error: " + err);
+      });
+    }
+  });
+
   _goods["default"].updateOne({
     _id: req.params.id
   }, {
@@ -230,6 +248,29 @@ goodsController.submitReturnGoods = function (req, res) {
     })["catch"](function (err) {
       return res.status(400).json("Error: " + err);
     });
+  });
+}; // 用户获取取消已付退货款物品
+
+
+goodsController.getPayedReturnGoods = function (req, res) {
+  var pageOptions = {
+    page: parseInt(req.params.page) || 0,
+    size: parseInt(req.params.size) || 10
+  };
+
+  _goods["default"].find({
+    goodStatus: "退货中",
+    IsPayed: true
+  }).sort({
+    updatedAt: "desc"
+  }).skip(pageOptions.page * pageOptions.size).limit(pageOptions.size).then(function (good) {
+    res.json({
+      success: true,
+      code: 0,
+      data: good
+    });
+  })["catch"](function (err) {
+    return res.status(400).json("Error: " + err);
   });
 }; // 用户获取自己所有物品
 
