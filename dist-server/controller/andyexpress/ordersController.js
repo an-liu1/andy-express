@@ -127,7 +127,7 @@ ordersController.getPaiedCancleOrderForm = function (req, res) {
   _orderForm["default"].find({
     orderStatus: "已取消",
     cancleFee: {
-      $not: 0
+      $gt: 0
     }
   }).sort({
     updatedAt: "desc"

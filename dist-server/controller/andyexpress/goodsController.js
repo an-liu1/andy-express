@@ -168,6 +168,29 @@ goodsController.cancleReturnGoods = function (req, res) {
   })["catch"](function (err) {
     return res.status(400).json("Error: " + err);
   });
+}; // 用户获取取消已付退货款物品
+
+
+goodsController.getPayedReturnGoods = function (req, res) {
+  var pageOptions = {
+    page: parseInt(req.params.page) || 0,
+    size: parseInt(req.params.size) || 10
+  };
+
+  _goods["default"].find({
+    goodStatus: "退货中",
+    IsPayed: true
+  }).sort({
+    updatedAt: "desc"
+  }).skip(pageOptions.page * pageOptions.size).limit(pageOptions.size).then(function (good) {
+    res.json({
+      success: true,
+      code: 0,
+      data: good
+    });
+  })["catch"](function (err) {
+    return res.status(400).json("Error: " + err);
+  });
 }; // 后台提交退货信息和客户确认并付款
 
 
@@ -248,29 +271,6 @@ goodsController.submitReturnGoods = function (req, res) {
     })["catch"](function (err) {
       return res.status(400).json("Error: " + err);
     });
-  });
-}; // 用户获取取消已付退货款物品
-
-
-goodsController.getPayedReturnGoods = function (req, res) {
-  var pageOptions = {
-    page: parseInt(req.params.page) || 0,
-    size: parseInt(req.params.size) || 10
-  };
-
-  _goods["default"].find({
-    goodStatus: "退货中",
-    IsPayed: true
-  }).sort({
-    updatedAt: "desc"
-  }).skip(pageOptions.page * pageOptions.size).limit(pageOptions.size).then(function (good) {
-    res.json({
-      success: true,
-      code: 0,
-      data: good
-    });
-  })["catch"](function (err) {
-    return res.status(400).json("Error: " + err);
   });
 }; // 用户获取自己所有物品
 
