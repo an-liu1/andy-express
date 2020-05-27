@@ -54,7 +54,7 @@ const goodsSchema = new Schema(
     IsPayed: { type: Boolean },
 
     //退货已付款
-    returnBackPrice: { type: Number },
+    returnBackPrice: { type: Number, default: 0 },
   },
   {
     timestamps: true,

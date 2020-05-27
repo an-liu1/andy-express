@@ -131,7 +131,8 @@ var goodsSchema = new Schema({
   },
   //退货已付款
   returnBackPrice: {
-    type: Number
+    type: Number,
+    "default": 0
   }
 }, {
   timestamps: true

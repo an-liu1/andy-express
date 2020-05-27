@@ -152,7 +152,7 @@ goodsController.cancleReturnGoods = function (req, res) {
         _id: req.params.id
       }, {
         $set: {
-          returnBackPrice: good.returnShippingPrice
+          returnBackPrice: good.returnBackPrice + good.returnShippingPrice
         }
       })["catch"](function (err) {
         return res.status(400).json("Error: " + err);
