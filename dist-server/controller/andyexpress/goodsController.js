@@ -138,12 +138,18 @@ goodsController.cancleReturnGoods = function (req, res) {
     _id: req.params.id
   }).then(function (good) {
     if (good.IsPayed) {
-      _userInfo["default"].updateOne({
+      _userInfo["default"].find({
         _id: req.user.id
-      }, {
-        $set: {
-          balance: balance + good.returnShippingPrice
-        }
+      }).then(function (user) {
+        _userInfo["default"].updateOne({
+          _id: req.user.id
+        }, {
+          $set: {
+            balance: user.balance + good.returnShippingPrice
+          }
+        })["catch"](function (err) {
+          return res.status(400).json("Error: " + err);
+        });
       })["catch"](function (err) {
         return res.status(400).json("Error: " + err);
       });
