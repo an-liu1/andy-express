@@ -137,15 +137,17 @@ goodsController.cancleReturnGoods = function (req, res) {
   _goods["default"].find({
     _id: req.params.id
   }).then(function (good) {
-    if (good.IsPayed) {
+    if (good[0].IsPayed) {
       _userInfo["default"].find({
-        _id: req.user.id
+        user_id: req.user.id
       }).then(function (user) {
+        var newBalance = user[0].balance + good[0].returnShippingPrice;
+
         _userInfo["default"].updateOne({
-          _id: req.user.id
+          user_id: req.user.id
         }, {
           $set: {
-            balance: user.balance + good.returnShippingPrice
+            balance: newBalance
           }
         })["catch"](function (err) {
           return res.status(400).json("Error: " + err);
@@ -158,7 +160,7 @@ goodsController.cancleReturnGoods = function (req, res) {
         _id: req.params.id
       }, {
         $set: {
-          returnBackPrice: good.returnBackPrice + good.returnShippingPrice
+          returnBackPrice: good[0].returnBackPrice + good[0].returnShippingPrice
         }
       })["catch"](function (err) {
         return res.status(400).json("Error: " + err);

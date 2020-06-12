@@ -7,17 +7,6 @@ const advicesController = {};
 
 // 用户发起投诉申请
 advicesController.createAdvice = (req, res) => {
-  // let imagePath = req.body.evident_image.map((i) => {
-  //   var base64Data = i.replace(/^data:image\/\w+;base64,/, "");
-  //   var dataBuffer = Buffer.from(base64Data, "base64");
-  //   let time = Date.now();
-  //   let image = `images/andyexpress/advices/${req.user.id}_${time}.png`;
-  //   fs.writeFile(`./public/${image}`, dataBuffer, function (err) {
-  //     if (err) return;
-  //   });
-  //   return image;
-  // });
-
   let advice = {
     usernam: req.user.username,
     user_id: req.user.id,
@@ -29,19 +18,34 @@ advicesController.createAdvice = (req, res) => {
   };
 
   Advices.create(advice)
-    .then((advice) =>
-      res.json({
+    .then((advice) => {
+      var getEmailContent = (emailContent) => {
+        emailContent.content = emailContent.content.replace(
+          "$username$",
+          req.user.username
+        );
+        mail({
+          from: "AndyExpress <yvetteandyadmin@163.com>",
+          to: req.user.email,
+          subject: emailContent.summary,
+          html: emailContent.content,
+        });
+      };
+      Announcement.find({ title: "投诉提交通知" }).then((announcements) => {
+        getEmailContent(announcements[0]);
+      });
+      return res.json({
         success: true,
         code: 0,
         data: advice,
-      })
-    )
+      });
+    })
     .catch((err) => res.status(400).json("Error: " + err));
 };
 
 // 具体投诉详情
 advicesController.getAdvice = (req, res) => {
-  Advices.find({ _id: req.params.id }) 
+  Advices.find({ _id: req.params.id })
     .then((advice) =>
       res.json({
         success: true,
@@ -97,6 +101,23 @@ advicesController.updateAdvice = (req, res) => {
   Advices.updateOne({ _id: req.params.id }, { $set: req.body })
     .then((advice) => {
       //加邮件反馈给客户
+      Advices.find({ _id: req.params.id }).then((advice1) => {
+        var getEmailContent = (emailContent) => {
+          emailContent.content = emailContent.content.replace(
+            "$username$",
+            advice1[0].username
+          );
+          mail({
+            from: "AndyExpress <yvetteandyadmin@163.com>",
+            to: advice1[0].email,
+            subject: emailContent.summary,
+            html: emailContent.content,
+          });
+        };
+        Announcement.find({ title: "投诉反馈通知" }).then((announcements) => {
+          getEmailContent(announcements[0]);
+        });
+      });
       return res.json({
         success: true,
         code: 0,

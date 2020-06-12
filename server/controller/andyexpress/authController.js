@@ -9,9 +9,11 @@ import Announcement from "../../model/andyexpress/announcement.model";
 const authController = {};
 
 authController.userRegister = (req, res) => {
-  User.findOne({ email: req.body.email }).then((user) => {
+  User.find({
+    $or: [{ email: req.body.email }, { username: req.body.username }],
+  }).then((user) => {
     if (user) {
-      return res.status(400).json("用户邮箱已存在!");
+      return res.status(400).json("用户名或用户邮箱已存在，请重新输入!");
     } else {
       bcrypt.genSalt(10, function (err, salt) {
         bcrypt.hash(req.body.password, salt, function (err, hash) {

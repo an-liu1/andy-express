@@ -28,6 +28,12 @@ var goodsSchema = new Schema({
   goodName: {
     type: String
   },
+  goodNumber: {
+    type: Number
+  },
+  goodNotes: {
+    type: String
+  },
   localExpressNumber: {
     type: String
   },
@@ -48,6 +54,9 @@ var goodsSchema = new Schema({
     type: String
   },
   goodWeight: {
+    type: Number
+  },
+  goodPaidWeight: {
     type: Number
   },
   goodType: {

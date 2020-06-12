@@ -17,16 +17,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "d
 var advicesController = {}; // 用户发起投诉申请
 
 advicesController.createAdvice = function (req, res) {
-  // let imagePath = req.body.evident_image.map((i) => {
-  //   var base64Data = i.replace(/^data:image\/\w+;base64,/, "");
-  //   var dataBuffer = Buffer.from(base64Data, "base64");
-  //   let time = Date.now();
-  //   let image = `images/andyexpress/advices/${req.user.id}_${time}.png`;
-  //   fs.writeFile(`./public/${image}`, dataBuffer, function (err) {
-  //     if (err) return;
-  //   });
-  //   return image;
-  // });
   var advice = {
     usernam: req.user.username,
     user_id: req.user.id,
@@ -38,6 +28,22 @@ advicesController.createAdvice = function (req, res) {
   };
 
   _advices["default"].create(advice).then(function (advice) {
+    var getEmailContent = function getEmailContent(emailContent) {
+      emailContent.content = emailContent.content.replace("$username$", req.user.username);
+      (0, _sendEmail["default"])({
+        from: "AndyExpress <yvetteandyadmin@163.com>",
+        to: req.user.email,
+        subject: emailContent.summary,
+        html: emailContent.content
+      });
+    };
+
+    _announcement["default"].find({
+      title: "投诉提交通知"
+    }).then(function (announcements) {
+      getEmailContent(announcements[0]);
+    });
+
     return res.json({
       success: true,
       code: 0,
@@ -113,6 +119,26 @@ advicesController.updateAdvice = function (req, res) {
     $set: req.body
   }).then(function (advice) {
     //加邮件反馈给客户
+    _advices["default"].find({
+      _id: req.params.id
+    }).then(function (advice1) {
+      var getEmailContent = function getEmailContent(emailContent) {
+        emailContent.content = emailContent.content.replace("$username$", advice1[0].username);
+        (0, _sendEmail["default"])({
+          from: "AndyExpress <yvetteandyadmin@163.com>",
+          to: advice1[0].email,
+          subject: emailContent.summary,
+          html: emailContent.content
+        });
+      };
+
+      _announcement["default"].find({
+        title: "投诉反馈通知"
+      }).then(function (announcements) {
+        getEmailContent(announcements[0]);
+      });
+    });
+
     return res.json({
       success: true,
       code: 0,

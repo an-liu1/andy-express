@@ -24,11 +24,15 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "d
 var authController = {};
 
 authController.userRegister = function (req, res) {
-  _user["default"].findOne({
-    email: req.body.email
+  _user["default"].find({
+    $or: [{
+      email: req.body.email
+    }, {
+      username: req.body.username
+    }]
   }).then(function (user) {
     if (user) {
-      return res.status(400).json("用户邮箱已存在!");
+      return res.status(400).json("用户名或用户邮箱已存在，请重新输入!");
     } else {
       _bcryptjs["default"].genSalt(10, function (err, salt) {
         _bcryptjs["default"].hash(req.body.password, salt, function (err, hash) {

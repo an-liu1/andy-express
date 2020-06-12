@@ -11,6 +11,8 @@ const goodsSchema = new Schema(
     username: { type: String },
     email: { type: String },
     goodName: { type: String },
+    goodNumber: { type: Number },
+    goodNotes: { type: String },
     localExpressNumber: { type: String },
     localExpressCompany: { type: String },
 
@@ -20,6 +22,7 @@ const goodsSchema = new Schema(
     goodSize_height: { type: String },
     goodSize_length: { type: String },
     goodWeight: { type: Number },
+    goodPaidWeight: { type: Number },
     goodType: { type: Number },
     packageLocation: { type: String },
     isStorage: { type: Boolean },

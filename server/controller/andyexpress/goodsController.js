@@ -110,14 +110,15 @@ goodsController.returnGoods = (req, res) => {
 //用户取消退货
 goodsController.cancleReturnGoods = (req, res) => {
   Goods.find({ _id: req.params.id }).then((good) => {
-    if (good.IsPayed) {
-      UserInfo.find({ _id: req.user.id })
+    if (good[0].IsPayed) {
+      UserInfo.find({ user_id: req.user.id })
         .then((user) => {
+          var newBalance = user[0].balance + good[0].returnShippingPrice;
           UserInfo.updateOne(
-            { _id: req.user.id },
+            { user_id: req.user.id },
             {
               $set: {
-                balance: user.balance + good.returnShippingPrice,
+                balance: newBalance,
               },
             }
           ).catch((err) => res.status(400).json("Error: " + err));
@@ -127,7 +128,8 @@ goodsController.cancleReturnGoods = (req, res) => {
         { _id: req.params.id },
         {
           $set: {
-            returnBackPrice: good.returnBackPrice + good.returnShippingPrice,
+            returnBackPrice:
+              good[0].returnBackPrice + good[0].returnShippingPrice,
           },
         }
       ).catch((err) => res.status(400).json("Error: " + err));

@@ -48,6 +48,7 @@ ordersController.getOrderListNumber = (req, res) => {
 
 // 用户打包订单
 ordersController.createOrderForm = (req, res) => {
+  console.log(req.user.username);
   req.body.user_id = req.user.id;
   req.body.username = req.user.username;
   req.body.email = req.user.email;

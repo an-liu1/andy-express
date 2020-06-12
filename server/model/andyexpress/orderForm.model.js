@@ -64,7 +64,7 @@ const orderFormSchema = new Schema(
     is_aftersale: { type: Boolean, default: 0 },
 
     //赔付
-    compensation: { type: Number }, 
+    compensation: { type: Number },
 
     //取消订单
     cancleFee: { type: Number },

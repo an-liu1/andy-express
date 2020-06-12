@@ -59,6 +59,7 @@ ordersController.getOrderListNumber = function (req, res) {
 
 
 ordersController.createOrderForm = function (req, res) {
+  console.log(req.user.username);
   req.body.user_id = req.user.id;
   req.body.username = req.user.username;
   req.body.email = req.user.email;

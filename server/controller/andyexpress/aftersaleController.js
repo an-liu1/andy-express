@@ -11,19 +11,6 @@ aftersaleController.createAfterSale = (req, res) => {
   req.body.username = req.user.username;
   req.body.user_id = req.user.id;
   req.body.email = req.user.email;
-
-  // let imagePath = req.body.aftersale_image.map((i) => {
-  //   var base64Data = i.replace(/^data:image\/\w+;base64,/, "");
-  //   var dataBuffer = Buffer.from(base64Data, "base64");
-  //   let time = Date.now();
-  //   let image = `images/andyexpress/aftersale/${req.user.id}_${time}.png`;
-  //   fs.writeFile(`./public/${image}`, dataBuffer, function (err) {
-  //     if (err) return;
-  //   });
-  //   return image;
-  // });
-
-  // req.body.aftersale_image = imagePath;
   req.body.is_solve = 0;
   req.body.compensation = "";
 
@@ -38,6 +25,27 @@ aftersaleController.createAfterSale = (req, res) => {
         }
       ).catch((err) => res.status(400).json("Error: " + err));
       //加邮件提示已成功
+      OrderForm.find({ _id: req.body.order_id }).then((order1) => {
+        var getEmailContent = (emailContent) => {
+          emailContent.content = emailContent.content.replace(
+            "$username$",
+            order1[0].username
+          );
+          emailContent.content = emailContent.content.replace(
+            "$orderId$",
+            order1[0]._id
+          );
+          mail({
+            from: "AndyExpress <yvetteandyadmin@163.com>",
+            to: order1[0].email,
+            subject: emailContent.summary,
+            html: emailContent.content,
+          });
+        };
+        Announcement.find({ title: "售后提交通知" }).then((announcements) => {
+          getEmailContent(announcements[0]);
+        });
+      });
       return res.json({
         success: true,
         code: 0,
@@ -60,6 +68,27 @@ aftersaleController.solveAfterSale = (req, res) => {
         }
       ).catch((err) => res.status(400).json("Error: " + err));
       //加邮件反馈给客户
+      OrderForm.find({ _id: req.body.order_id }).then((order1) => {
+        var getEmailContent = (emailContent) => {
+          emailContent.content = emailContent.content.replace(
+            "$username$",
+            order1[0].username
+          );
+          emailContent.content = emailContent.content.replace(
+            "$orderId$",
+            order1[0]._id
+          );
+          mail({
+            from: "AndyExpress <yvetteandyadmin@163.com>",
+            to: order1[0].email,
+            subject: emailContent.summary,
+            html: emailContent.content,
+          });
+        };
+        Announcement.find({ title: "售后反馈通知" }).then((announcements) => {
+          getEmailContent(announcements[0]);
+        });
+      });
       return res.json({
         success: true,
         code: 0,
