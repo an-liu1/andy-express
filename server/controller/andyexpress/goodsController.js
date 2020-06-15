@@ -30,6 +30,26 @@ goodsController.submitGoods = (req, res) => {
     .catch((err) => res.status(400).json("Error: " + err));
 };
 
+// 客服输入待入库物品信息
+goodsController.adminSubmitGoods = (req, res) => {
+  req.body.goodStatus = "已入库";
+  req.body.isStorage = 1;
+  req.body.isPackage = 0;
+  UserInfo.find({ user_id: req.body.username }).then((user) => {
+    req.body.user_id = user.user_id;
+    req.body.email = user.email;
+    Goods.create(req.body)
+      .then((good) =>
+        res.json({
+          success: true,
+          code: 0,
+          data: good,
+        })
+      )
+      .catch((err) => res.status(400).json("Error: " + err));
+  });
+};
+
 // 客户更新待入库信息
 goodsController.userUpdateGoods = (req, res) => {
   Goods.updateOne({ _id: req.params.id }, { $set: req.body })

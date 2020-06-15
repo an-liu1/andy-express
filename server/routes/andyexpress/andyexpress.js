@@ -78,6 +78,7 @@ router.post("/searchUser/:page/:size", userInfoController.searchUser); // 后台
 router.get("/getUserNumber", userInfoController.getUserNumber); // 后台获取所有用户数量
 
 //good
+router.post("/adminSubmitGoods", goodsController.adminSubmitGoods); // 客服输入待入库物品信息）
 router.delete("/goodDelete/:id", goodsController.deleteGoods);
 router.put("/goodUpdate/:id", goodsController.updateGoods); // 入库商品信息填写
 router.get(
