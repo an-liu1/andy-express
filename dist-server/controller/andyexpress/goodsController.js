@@ -40,6 +40,30 @@ goodsController.submitGoods = function (req, res) {
   })["catch"](function (err) {
     return res.status(400).json("Error: " + err);
   });
+}; // 客服输入待入库物品信息
+
+
+goodsController.adminSubmitGoods = function (req, res) {
+  req.body.goodStatus = "已入库";
+  req.body.isStorage = 1;
+  req.body.isPackage = 0;
+
+  _userInfo["default"].find({
+    user_id: req.body.username
+  }).then(function (user) {
+    req.body.user_id = user.user_id;
+    req.body.email = user.email;
+
+    _goods["default"].create(req.body).then(function (good) {
+      return res.json({
+        success: true,
+        code: 0,
+        data: good
+      });
+    })["catch"](function (err) {
+      return res.status(400).json("Error: " + err);
+    });
+  });
 }; // 客户更新待入库信息
 
 

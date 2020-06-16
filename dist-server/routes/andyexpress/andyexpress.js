@@ -94,6 +94,8 @@ router.post("/searchUser/:page/:size", _userInfoController["default"].searchUser
 router.get("/getUserNumber", _userInfoController["default"].getUserNumber); // 后台获取所有用户数量
 //good
 
+router.post("/adminSubmitGoods", _goodsController["default"].adminSubmitGoods); // 客服输入待入库物品信息）
+
 router["delete"]("/goodDelete/:id", _goodsController["default"].deleteGoods);
 router.put("/goodUpdate/:id", _goodsController["default"].updateGoods); // 入库商品信息填写
 
