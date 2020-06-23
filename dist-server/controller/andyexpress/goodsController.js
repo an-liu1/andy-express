@@ -24,6 +24,8 @@ goodsController.submitGoods = function (req, res) {
     username: req.user.username,
     email: req.user.email,
     goodName: req.body.goodName,
+    goodNumber: req.body.goodNumber,
+    goodNotes: req.body.goodNotes,
     localExpressNumber: req.body.localExpressNumber,
     localExpressCompany: req.body.localExpressCompany,
     isStorage: 0,

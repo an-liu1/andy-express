@@ -28,7 +28,8 @@ var orderFormSchema = new Schema({
   orderGoodsList: [{
     goodId: String,
     goodName: String,
-    goodLocation: String
+    goodLocation: String,
+    goodNumber: String
   }],
   shippingCountry: {
     type: String

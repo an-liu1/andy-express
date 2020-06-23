@@ -15,6 +15,7 @@ const orderFormSchema = new Schema(
         goodId: String,
         goodName: String,
         goodLocation: String,
+        goodNumber:String,
       },
     ],
     shippingCountry: { type: String },
