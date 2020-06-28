@@ -51,20 +51,24 @@ goodsController.adminSubmitGoods = function (req, res) {
   req.body.isPackage = 0;
 
   _userInfo["default"].find({
-    user_id: req.body.username
+    username: req.body.username
   }).then(function (user) {
-    req.body.user_id = user.user_id;
-    req.body.email = user.email;
+    if (user.length === 0) {
+      return res.status(400).json("此会员名称不存在，请重新输入!");
+    } else {
+      req.body.user_id = user[0].user_id;
+      req.body.email = user[0].email;
 
-    _goods["default"].create(req.body).then(function (good) {
-      return res.json({
-        success: true,
-        code: 0,
-        data: good
+      _goods["default"].create(req.body).then(function (good) {
+        return res.json({
+          success: true,
+          code: 0,
+          data: good
+        });
+      })["catch"](function (err) {
+        return res.status(400).json("Error: " + err);
       });
-    })["catch"](function (err) {
-      return res.status(400).json("Error: " + err);
-    });
+    }
   });
 }; // 客户更新待入库信息
 

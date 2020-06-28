@@ -37,18 +37,22 @@ goodsController.adminSubmitGoods = (req, res) => {
   req.body.goodStatus = "已入库";
   req.body.isStorage = 1;
   req.body.isPackage = 0;
-  UserInfo.find({ user_id: req.body.username }).then((user) => {
-    req.body.user_id = user.user_id;
-    req.body.email = user.email;
-    Goods.create(req.body)
-      .then((good) =>
-        res.json({
-          success: true,
-          code: 0,
-          data: good,
-        })
-      )
-      .catch((err) => res.status(400).json("Error: " + err));
+  UserInfo.find({ username: req.body.username }).then((user) => {
+    if (user.length === 0) {
+      return res.status(400).json("此会员名称不存在，请重新输入!");
+    } else {
+      req.body.user_id = user[0].user_id;
+      req.body.email = user[0].email;
+      Goods.create(req.body)
+        .then((good) =>
+          res.json({
+            success: true,
+            code: 0,
+            data: good,
+          })
+        )
+        .catch((err) => res.status(400).json("Error: " + err));
+    }
   });
 };
 
