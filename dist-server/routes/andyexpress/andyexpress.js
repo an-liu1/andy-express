@@ -117,6 +117,8 @@ router.put("/orderDelivering/:id", _ordersController["default"].orderDelivering)
 router.post("/searchOrders/:status/:page/:size/:status1/:status2", _ordersController["default"].searchOrders); //搜索
 
 router.get("/getOrderListNumber", _ordersController["default"].getOrderListNumber); // 后台获取所有订单数量
+
+router.post("/createInvoice", _ordersController["default"].createInvoice); //后台发票生成
 //售后
 
 router.put("/solveAfterSale/:id", _aftersaleController["default"].solveAfterSale); // 客服反馈售后

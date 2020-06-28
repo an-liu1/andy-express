@@ -104,6 +104,7 @@ router.post(
   ordersController.searchOrders
 ); //搜索
 router.get("/getOrderListNumber", ordersController.getOrderListNumber); // 后台获取所有订单数量
+router.post("/createInvoice", ordersController.createInvoice); //后台发票生成
 
 //售后
 router.put("/solveAfterSale/:id", aftersaleController.solveAfterSale); // 客服反馈售后

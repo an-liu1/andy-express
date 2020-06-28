@@ -11,12 +11,27 @@ var _goods = _interopRequireDefault(require("../../model/andyexpress/goods.model
 
 var _announcement = _interopRequireDefault(require("../../model/andyexpress/announcement.model"));
 
+var _invoice = _interopRequireDefault(require("../../model/andyexpress/invoice.model"));
+
 var _sendEmail = _interopRequireDefault(require("../../config/sendEmail"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 // import fs from "fs";
-var ordersController = {}; // 后台获取所有订单信息
+var ordersController = {}; //后台发票生成
+
+ordersController.createInvoice = function (req, res) {
+  _invoice["default"].create(req.body).then(function (invoice) {
+    return res.json({
+      success: true,
+      code: 0,
+      data: invoice
+    });
+  })["catch"](function (err) {
+    return res.status(400).json("Error: " + err);
+  });
+}; // 后台获取所有订单信息
+
 
 ordersController.getOrderListNumber = function (req, res) {
   _orderForm["default"].find().then(function (order) {
@@ -59,7 +74,6 @@ ordersController.getOrderListNumber = function (req, res) {
 
 
 ordersController.createOrderForm = function (req, res) {
-  console.log(req.user.username);
   req.body.user_id = req.user.id;
   req.body.username = req.user.username;
   req.body.email = req.user.email;

@@ -1,10 +1,24 @@
 import OrderForm from "../../model/andyexpress/orderForm.model";
 import Goods from "../../model/andyexpress/goods.model";
 import Announcement from "../../model/andyexpress/announcement.model";
+import Invoice from "../../model/andyexpress/invoice.model";
 import mail from "../../config/sendEmail";
 // import fs from "fs";
 
 const ordersController = {};
+
+//后台发票生成
+ordersController.createInvoice = (req, res) => {
+  Invoice.create(req.body)
+    .then((invoice) => {
+      return res.json({
+        success: true,
+        code: 0,
+        data: invoice,
+      });
+    })
+    .catch((err) => res.status(400).json("Error: " + err));
+};
 
 // 后台获取所有订单信息
 ordersController.getOrderListNumber = (req, res) => {
@@ -48,7 +62,6 @@ ordersController.getOrderListNumber = (req, res) => {
 
 // 用户打包订单
 ordersController.createOrderForm = (req, res) => {
-  console.log(req.user.username);
   req.body.user_id = req.user.id;
   req.body.username = req.user.username;
   req.body.email = req.user.email;
