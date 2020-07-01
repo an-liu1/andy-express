@@ -355,4 +355,45 @@ ordersController.searchOrdersForUser = (req, res) => {
     .catch((err) => res.status(400).json("Error: " + err));
 };
 
+// 后台获取所有选择打印订单流水
+ordersController.getOrderTurnover = (req, res) => {
+  OrderForm.find({
+    $or: [{ orderStatus: "已签收" }, { orderStatus: "已发货" }],
+    createdAt: {
+      $gte: req.body.fromDate,
+      $lt: req.body.toDate,
+    },
+  })
+    .sort({ createdAt: "desc" })
+    .then((order) =>
+      res.json({
+        success: true,
+        code: 0,
+        data: order,
+      })
+    )
+    .catch((err) => res.status(400).json("Error: " + err));
+};
+
+// 后台获取所有选择打印取消订单流水
+ordersController.getCancelOrderTurnover = (req, res) => {
+  OrderForm.find({
+    orderStatus: "已取消",
+    cancleFee: { $gt: 0 },
+    createdAt: {
+      $gte: req.body.fromDate,
+      $lt: req.body.toDate,
+    },
+  })
+    .sort({ updatedAt: "desc" })
+    .then((order) =>
+      res.json({
+        success: true,
+        code: 0,
+        data: order,
+      })
+    )
+    .catch((err) => res.status(400).json("Error: " + err));
+};
+
 export default ordersController;

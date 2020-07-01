@@ -414,6 +414,55 @@ ordersController.searchOrdersForUser = function (req, res) {
   })["catch"](function (err) {
     return res.status(400).json("Error: " + err);
   });
+}; // 后台获取所有选择打印订单流水
+
+
+ordersController.getOrderTurnover = function (req, res) {
+  _orderForm["default"].find({
+    $or: [{
+      orderStatus: "已签收"
+    }, {
+      orderStatus: "已发货"
+    }],
+    createdAt: {
+      $gte: req.body.fromDate,
+      $lt: req.body.toDate
+    }
+  }).sort({
+    createdAt: "desc"
+  }).then(function (order) {
+    return res.json({
+      success: true,
+      code: 0,
+      data: order
+    });
+  })["catch"](function (err) {
+    return res.status(400).json("Error: " + err);
+  });
+}; // 后台获取所有选择打印取消订单流水
+
+
+ordersController.getCancelOrderTurnover = function (req, res) {
+  _orderForm["default"].find({
+    orderStatus: "已取消",
+    cancleFee: {
+      $gt: 0
+    },
+    createdAt: {
+      $gte: req.body.fromDate,
+      $lt: req.body.toDate
+    }
+  }).sort({
+    updatedAt: "desc"
+  }).then(function (order) {
+    return res.json({
+      success: true,
+      code: 0,
+      data: order
+    });
+  })["catch"](function (err) {
+    return res.status(400).json("Error: " + err);
+  });
 };
 
 var _default = ordersController;

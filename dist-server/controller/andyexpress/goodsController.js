@@ -458,6 +458,33 @@ goodsController.searchGoodsForUser = function (req, res) {
   })["catch"](function (err) {
     return res.status(400).json("Error: " + err);
   });
+}; // 后台获取所有选择打印退货流水
+
+
+goodsController.getReturnGoodsTurnover = function (req, res) {
+  _goods["default"].find({
+    $or: [{
+      returnBackPrice: {
+        $gt: 0
+      }
+    }, {
+      goodStatus: "已退货"
+    }],
+    createdAt: {
+      $gte: req.body.fromDate,
+      $lt: req.body.toDate
+    }
+  }).sort({
+    createdAt: "desc"
+  }).then(function (good) {
+    res.json({
+      success: true,
+      code: 0,
+      data: good
+    });
+  })["catch"](function (err) {
+    return res.status(400).json("Error: " + err);
+  });
 };
 
 var _default = goodsController;

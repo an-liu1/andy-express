@@ -141,4 +141,8 @@ router.delete(
   announcementController.deleteAnnouncement
 ); // 删除公告
 
+router.post("/getOrderTurnover", ordersController.getOrderTurnover); //后台获取所有选择打印订单流水
+router.post("/getReturnGoodsTurnover", goodsController.getReturnGoodsTurnover); //后台获取所有选择打印退货流水
+router.post("/getCancelOrderTurnover", ordersController.getCancelOrderTurnover); //后台获取所有选择打印取消订单流水
+
 export default router;

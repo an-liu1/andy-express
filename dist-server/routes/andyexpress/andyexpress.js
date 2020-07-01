@@ -145,5 +145,11 @@ router.put("/updateAnnouncement/:id", _announcementController["default"].updateA
 
 router["delete"]("/deleteAnnouncement/:id", _announcementController["default"].deleteAnnouncement); // 删除公告
 
+router.post("/getOrderTurnover", _ordersController["default"].getOrderTurnover); //后台获取所有选择打印订单流水
+
+router.post("/getReturnGoodsTurnover", _goodsController["default"].getReturnGoodsTurnover); //后台获取所有选择打印退货流水
+
+router.post("/getCancelOrderTurnover", _ordersController["default"].getCancelOrderTurnover); //后台获取所有选择打印取消订单流水
+
 var _default = router;
 exports["default"] = _default;

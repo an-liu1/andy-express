@@ -395,4 +395,24 @@ goodsController.searchGoodsForUser = (req, res) => {
     .catch((err) => res.status(400).json("Error: " + err));
 };
 
+// 后台获取所有选择打印退货流水
+goodsController.getReturnGoodsTurnover = (req, res) => {
+  Goods.find({
+    $or: [{ returnBackPrice: { $gt: 0 } }, { goodStatus: "已退货" }],
+    createdAt: {
+      $gte: req.body.fromDate,
+      $lt: req.body.toDate,
+    },
+  })
+    .sort({ createdAt: "desc" })
+    .then((good) => {
+      res.json({
+        success: true,
+        code: 0,
+        data: good,
+      });
+    })
+    .catch((err) => res.status(400).json("Error: " + err));
+};
+
 export default goodsController;
