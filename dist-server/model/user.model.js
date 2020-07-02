@@ -14,6 +14,7 @@ var userSchema = new Schema({
   username: {
     type: String,
     required: true,
+    unique: true,
     trim: true
   },
   password: {

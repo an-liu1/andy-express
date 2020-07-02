@@ -12,7 +12,7 @@ authController.userRegister = (req, res) => {
   User.find({
     $or: [{ email: req.body.email }, { username: req.body.username }],
   }).then((user) => {
-    if (user) {
+    if (user.length !== 0) {
       return res.status(400).json("用户名或用户邮箱已存在，请重新输入!");
     } else {
       bcrypt.genSalt(10, function (err, salt) {

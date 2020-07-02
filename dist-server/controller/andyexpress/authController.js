@@ -31,7 +31,7 @@ authController.userRegister = function (req, res) {
       username: req.body.username
     }]
   }).then(function (user) {
-    if (user) {
+    if (user.length !== 0) {
       return res.status(400).json("用户名或用户邮箱已存在，请重新输入!");
     } else {
       _bcryptjs["default"].genSalt(10, function (err, salt) {
