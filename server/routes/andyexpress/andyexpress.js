@@ -7,10 +7,13 @@ import ordersController from "../../controller/andyexpress/ordersController";
 import aftersaleController from "../../controller/andyexpress/aftersaleController";
 import announcementController from "../../controller/andyexpress/announcementController";
 import dataController from "../../controller/andyexpress/dataController";
+import authController from "../../controller/andyexpress/authController";
 
 // USER INTERFACE
 
 router.get("/getUpToken/:uploadTime", userInfoController.getUpToken);
+
+router.post("/userResetPassword", authController.userResetPassword); //用户修改密码
 
 //user
 router.get("/getUserInfo", userInfoController.getUserInfo); // 获取个人信息

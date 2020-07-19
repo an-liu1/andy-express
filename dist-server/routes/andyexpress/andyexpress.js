@@ -21,12 +21,16 @@ var _announcementController = _interopRequireDefault(require("../../controller/a
 
 var _dataController = _interopRequireDefault(require("../../controller/andyexpress/dataController"));
 
+var _authController = _interopRequireDefault(require("../../controller/andyexpress/authController"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 var router = _express["default"].Router();
 
 // USER INTERFACE
-router.get("/getUpToken/:uploadTime", _userInfoController["default"].getUpToken); //user
+router.get("/getUpToken/:uploadTime", _userInfoController["default"].getUpToken);
+router.post("/userResetPassword", _authController["default"].userResetPassword); //用户修改密码
+//user
 
 router.get("/getUserInfo", _userInfoController["default"].getUserInfo); // 获取个人信息
 

@@ -233,5 +233,36 @@ authController.resetPassword = function (req, res) {
   });
 };
 
+authController.userResetPassword = function (req, res) {
+  _bcryptjs["default"].compare(req.body.oldPassword, req.user.password).then(function (isMatch) {
+    if (isMatch) {
+      _bcryptjs["default"].genSalt(10, function (err, salt) {
+        _bcryptjs["default"].hash(req.body.newPassword, salt, function (err, hash) {
+          if (err) {
+            throw err;
+          }
+
+          var password = hash;
+
+          _user["default"].findOneAndUpdate({
+            email: req.user.email
+          }, {
+            password: password
+          }, {
+            "new": true
+          }).then(function () {
+            return res.json({
+              success: true,
+              code: 0
+            });
+          });
+        });
+      });
+    } else {
+      res.status(400).json("密码错误, 请输入正确的密码！");
+    }
+  });
+};
+
 var _default = authController;
 exports["default"] = _default;

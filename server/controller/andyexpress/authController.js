@@ -183,6 +183,7 @@ authController.requestReset = (req, res) => {
     })
     .catch((err) => res.status(400).json("Error: " + err));
 };
+
 authController.resetPassword = (req, res) => {
   bcrypt.genSalt(10, function (err, salt) {
     bcrypt.hash(req.body.password, salt, function (err, hash) {
@@ -201,6 +202,33 @@ authController.resetPassword = (req, res) => {
         })
       );
     });
+  });
+};
+
+authController.userResetPassword = (req, res) => {
+  bcrypt.compare(req.body.oldPassword, req.user.password).then((isMatch) => {
+    if (isMatch) {
+      bcrypt.genSalt(10, function (err, salt) {
+        bcrypt.hash(req.body.newPassword, salt, function (err, hash) {
+          if (err) {
+            throw err;
+          }
+          let password = hash;
+          User.findOneAndUpdate(
+            { email: req.user.email },
+            { password: password },
+            { new: true }
+          ).then(() =>
+            res.json({
+              success: true,
+              code: 0,
+            })
+          );
+        });
+      });
+    } else {
+      res.status(400).json("密码错误, 请输入正确的密码！");
+    }
   });
 };
 
