@@ -21,6 +21,10 @@ var _index2 = _interopRequireDefault(require("./routes/andyexpress/index"));
 
 var _andyexpress = _interopRequireDefault(require("./routes/andyexpress/andyexpress"));
 
+var _index3 = _interopRequireDefault(require("./routes/carpool/index"));
+
+var _carpool = _interopRequireDefault(require("./routes/carpool/carpool"));
+
 var _mongoose = _interopRequireDefault(require("mongoose"));
 
 var _passport = _interopRequireDefault(require("passport"));
@@ -56,8 +60,9 @@ app.use(_express["default"].urlencoded({
 app.use((0, _cookieParser["default"])());
 app.use(_express["default"]["static"](_path["default"].join(__dirname, "../public")));
 app.use(_passport["default"].initialize()); // 初始化passport
+// require("./config/passport")(passport); //导入配置文件
 
-require("./config/passport")(_passport["default"]); //导入配置文件
+require("./config/carpoolPassport")(_passport["default"]); //导入配置文件
 //freepmo router
 
 
@@ -69,7 +74,12 @@ app.use("/freepmo", _passport["default"].authenticate("jwt", {
 app.use("/express", _index2["default"]);
 app.use("/express", _passport["default"].authenticate("jwt", {
   session: false
-}), _andyexpress["default"]);
+}), _andyexpress["default"]); // carpool router
+
+app.use("/carpool", _index3["default"]);
+app.use("/carpool", _passport["default"].authenticate("jwt", {
+  session: false
+}), _carpool["default"]);
 var uri = "mongodb+srv://andyvviiar:8829122Aa@cluster0-dgngm.mongodb.net/test?retryWrites=true&w=majority";
 
 _mongoose["default"].connect(uri, {

@@ -6,6 +6,8 @@ import pmoIndexndexRouter from "./routes/freepmo/index";
 import pmoRouter from "./routes/freepmo/freepmo";
 import expressIndexndexRouter from "./routes/andyexpress/index";
 import expressRouter from "./routes/andyexpress/andyexpress";
+import carpoolIndexndexRouter from "./routes/carpool/index";
+import carpoolRouter from "./routes/carpool/carpool";
 import mongoose from "mongoose";
 import passport from "passport";
 
@@ -41,7 +43,8 @@ app.use(
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "../public")));
 app.use(passport.initialize()); // 初始化passport
-require("./config/passport")(passport); //导入配置文件
+// require("./config/passport")(passport); //导入配置文件
+require("./config/carpoolPassport")(passport); //导入配置文件
 
 //freepmo router
 app.use("/freepmo", pmoIndexndexRouter);
@@ -56,6 +59,13 @@ app.use(
   "/express",
   passport.authenticate("jwt", { session: false }),
   expressRouter
+);
+// carpool router
+app.use("/carpool", carpoolIndexndexRouter);
+app.use(
+  "/carpool",
+  passport.authenticate("jwt", { session: false }),
+  carpoolRouter
 );
 
 const uri =
