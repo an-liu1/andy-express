@@ -43,8 +43,8 @@ app.use(
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "../public")));
 app.use(passport.initialize()); // 初始化passport
-// require("./config/passport")(passport); //导入配置文件
-require("./config/carpoolPassport")(passport); //导入配置文件
+require("./config/passport")(passport); //导入配置文件
+// require("./config/carpoolPassport")(passport); //导入配置文件
 
 //freepmo router
 app.use("/freepmo", pmoIndexndexRouter);
