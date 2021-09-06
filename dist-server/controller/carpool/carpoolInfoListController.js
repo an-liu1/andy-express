@@ -38,7 +38,29 @@ carpoolInfoListController.searchCarpoolInfoList = function (req, res) {
   req.body.minPrice = req.body.minPrice ? parseInt(req.body.minPrice) : null;
   req.body.maxPrice = req.body.maxPrice ? parseInt(req.body.maxPrice) : null;
 
-  _carpoolInfoList["default"].find({
+  _carpoolInfoList["default"].find(req.body.keyword ? {
+    $or: [{
+      user_id: eval("/".concat(req.body.keyword, "/i"))
+    }, {
+      username: eval("/".concat(req.body.keyword, "/i"))
+    }, {
+      fromCity: eval("/".concat(req.body.keyword, "/i"))
+    }, {
+      toCity: eval("/".concat(req.body.keyword, "/i"))
+    }, {
+      price: eval("/".concat(req.body.keyword, "/i"))
+    }, {
+      wholePrice: eval("/".concat(req.body.keyword, "/i"))
+    }, {
+      description: eval("/".concat(req.body.keyword, "/i"))
+    }, {
+      contact: eval("/".concat(req.body.keyword, "/i"))
+    }, {
+      phoneNumber: eval("/".concat(req.body.keyword, "/i"))
+    }, {
+      weixin: eval("/".concat(req.body.keyword, "/i"))
+    }]
+  } : {
     $and: [req.body.fromCity ? {
       fromCity: eval("/".concat(req.body.fromCity, "/i"))
     } : {}, req.body.toCity ? {
@@ -165,51 +187,6 @@ carpoolInfoListController.editMyCarpoolList = function (req, res) {
   }, {
     $set: req.body
   }).then(function (carpoolInfo) {
-    return res.json({
-      success: true,
-      code: 0,
-      data: carpoolInfo
-    });
-  })["catch"](function (err) {
-    return res.status(400).json("Error: " + err);
-  });
-};
-
-carpoolInfoListController.wholeSearch = function (req, res) {
-  var pageOptions = {
-    page: parseInt(req.params.page) || 0,
-    size: parseInt(req.params.size) || 10
-  };
-
-  _carpoolInfoList["default"].find({
-    $or: [{
-      user_id: eval("/".concat(req.body.keyword, "/i"))
-    }, {
-      username: eval("/".concat(req.body.keyword, "/i"))
-    }, {
-      fromCity: eval("/".concat(req.body.keyword, "/i"))
-    }, {
-      toCity: eval("/".concat(req.body.keyword, "/i"))
-    }, {
-      carpoolTime: eval("/".concat(req.body.keyword, "/i"))
-    }, {
-      price: eval("/".concat(req.body.keyword, "/i"))
-    }, {
-      wholePrice: eval("/".concat(req.body.keyword, "/i"))
-    }, {
-      seatNumb: eval("/".concat(req.body.keyword, "/i"))
-    }, {
-      description: eval("/".concat(req.body.keyword, "/i"))
-    }, {
-      contact: eval("/".concat(req.body.keyword, "/i"))
-    }, {
-      phoneNumber: eval("/".concat(req.body.keyword, "/i"))
-    }, {
-      weixin: eval("/".concat(req.body.keyword, "/i"))
-    }]
-  }).sort({
-    updatedAt: "desc"
-  }).skip(pageOptions.page * pageOptions.size).limit(pageOptions.size).then(function (carpoolInfo) {
     return res.json({
       success: true,
       code: 0,

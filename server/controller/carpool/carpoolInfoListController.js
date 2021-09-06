@@ -36,36 +36,55 @@ carpoolInfoListController.searchCarpoolInfoList = (req, res) => {
   req.body.minPrice = req.body.minPrice ? parseInt(req.body.minPrice) : null;
   req.body.maxPrice = req.body.maxPrice ? parseInt(req.body.maxPrice) : null;
   carpoolInfoList
-    .find({
-      $and: [
-        req.body.fromCity ? { fromCity: eval(`/${req.body.fromCity}/i`) } : {},
-        req.body.toCity ? { toCity: eval(`/${req.body.toCity}/i`) } : {},
-        {
-          $and: [
-            carpoolTime
-              ? {
-                  $and: [
-                    {
-                      carpoolTime: {
-                        $lt: carpoolDate,
-                      },
-                    },
-                    {
-                      carpoolTime: {
-                        $gt: carpoolTime,
-                      },
-                    },
-                  ],
-                }
-              : {},
-            { carpoolTime: { $gt: new Date() } },
-          ],
-        },
-        req.body.minPrice ? { price: { $gt: req.body.minPrice } } : {},
-        req.body.maxPrice ? { price: { $lt: req.body.maxPrice } } : {},
-        req.body.seatNumb ? { seatNumb: { $gt: req.body.seatNumb } } : {},
-      ],
-    })
+    .find(
+      req.body.keyword
+        ? {
+            $or: [
+              { user_id: eval(`/${req.body.keyword}/i`) },
+              { username: eval(`/${req.body.keyword}/i`) },
+              { fromCity: eval(`/${req.body.keyword}/i`) },
+              { toCity: eval(`/${req.body.keyword}/i`) },
+              { price: eval(`/${req.body.keyword}/i`) },
+              { wholePrice: eval(`/${req.body.keyword}/i`) },
+              { description: eval(`/${req.body.keyword}/i`) },
+              { contact: eval(`/${req.body.keyword}/i`) },
+              { phoneNumber: eval(`/${req.body.keyword}/i`) },
+              { weixin: eval(`/${req.body.keyword}/i`) },
+            ],
+          }
+        : {
+            $and: [
+              req.body.fromCity
+                ? { fromCity: eval(`/${req.body.fromCity}/i`) }
+                : {},
+              req.body.toCity ? { toCity: eval(`/${req.body.toCity}/i`) } : {},
+              {
+                $and: [
+                  carpoolTime
+                    ? {
+                        $and: [
+                          {
+                            carpoolTime: {
+                              $lt: carpoolDate,
+                            },
+                          },
+                          {
+                            carpoolTime: {
+                              $gt: carpoolTime,
+                            },
+                          },
+                        ],
+                      }
+                    : {},
+                  { carpoolTime: { $gt: new Date() } },
+                ],
+              },
+              req.body.minPrice ? { price: { $gt: req.body.minPrice } } : {},
+              req.body.maxPrice ? { price: { $lt: req.body.maxPrice } } : {},
+              req.body.seatNumb ? { seatNumb: { $gt: req.body.seatNumb } } : {},
+            ],
+          }
+    )
     .sort({ updatedAt: "desc" })
     .skip(pageOptions.page * pageOptions.size)
     .limit(pageOptions.size)
@@ -149,41 +168,6 @@ carpoolInfoListController.getMyCarpoolList = (req, res) => {
 carpoolInfoListController.editMyCarpoolList = (req, res) => {
   carpoolInfoList
     .updateOne({ _id: req.body._id }, { $set: req.body })
-    .then((carpoolInfo) => {
-      return res.json({
-        success: true,
-        code: 0,
-        data: carpoolInfo,
-      });
-    })
-    .catch((err) => res.status(400).json("Error: " + err));
-};
-
-carpoolInfoListController.wholeSearch = (req, res) => {
-  const pageOptions = {
-    page: parseInt(req.params.page) || 0,
-    size: parseInt(req.params.size) || 10,
-  };
-  carpoolInfoList
-    .find({
-      $or: [
-        { user_id: eval(`/${req.body.keyword}/i`) },
-        { username: eval(`/${req.body.keyword}/i`) },
-        { fromCity: eval(`/${req.body.keyword}/i`) },
-        { toCity: eval(`/${req.body.keyword}/i`) },
-        { carpoolTime: eval(`/${req.body.keyword}/i`) },
-        { price: eval(`/${req.body.keyword}/i`) },
-        { wholePrice: eval(`/${req.body.keyword}/i`) },
-        { seatNumb: eval(`/${req.body.keyword}/i`) },
-        { description: eval(`/${req.body.keyword}/i`) },
-        { contact: eval(`/${req.body.keyword}/i`) },
-        { phoneNumber: eval(`/${req.body.keyword}/i`) },
-        { weixin: eval(`/${req.body.keyword}/i`) },
-      ],
-    })
-    .sort({ updatedAt: "desc" })
-    .skip(pageOptions.page * pageOptions.size)
-    .limit(pageOptions.size)
     .then((carpoolInfo) => {
       return res.json({
         success: true,
