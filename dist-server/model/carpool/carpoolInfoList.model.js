@@ -19,6 +19,9 @@ var carpoolInfoListSchema = new Schema({
     type: String,
     trim: true
   },
+  avatarUrl: {
+    type: String
+  },
   fromCity: {
     type: String,
     required: true,

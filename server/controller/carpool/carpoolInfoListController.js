@@ -6,6 +6,7 @@ const carpoolInfoListController = {};
 carpoolInfoListController.createCarpoolAds = (req, res) => {
   req.body.username = req.user.username;
   req.body.user_id = req.user.id;
+  req.body.avatarUrl = req.user.avatarUrl;
   carpoolInfoList
     .create(req.body)
     .then((carpoolInfoList) => {

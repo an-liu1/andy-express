@@ -6,6 +6,9 @@ const carpoolInfoListSchema = new Schema(
   {
     username: { type: String, trim: true },
     user_id: { type: String, trim: true },
+    avatarUrl: {
+      type: String,
+    },
     fromCity: {
       type: String,
       required: true,

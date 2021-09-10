@@ -16,6 +16,7 @@ var carpoolInfoListController = {};
 carpoolInfoListController.createCarpoolAds = function (req, res) {
   req.body.username = req.user.username;
   req.body.user_id = req.user.id;
+  req.body.avatarUrl = req.user.avatarUrl;
 
   _carpoolInfoList["default"].create(req.body).then(function (carpoolInfoList) {
     return res.json({
