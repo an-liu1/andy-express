@@ -38,12 +38,12 @@ var carpoolInfoListSchema = new Schema({
     trim: true
   },
   price: {
-    type: String,
+    type: Number,
     required: true,
     trim: true
   },
   wholePrice: {
-    type: String,
+    type: Number,
     trim: true
   },
   seatNumb: {

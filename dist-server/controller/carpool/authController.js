@@ -61,33 +61,39 @@ authController.getOpenId = function (req, res) {
       _user["default"].findOne({
         openid: openid
       }).then(function (user) {
-        if (!user) {
-          req.body.last_login_time = new Date();
-          req.body.openid = openid;
-          req.body.sessionKey = sessionKey;
-          req.body.username = req.body.nickName;
+        req.body.last_login_time = new Date();
+        req.body.openid = openid;
+        req.body.sessionKey = sessionKey;
+        req.body.username = req.body.nickName;
 
+        if (!user) {
           _user["default"].create(req.body);
         } else {
-          var rule = {
-            id: user._id,
-            openid: openid,
-            sessionKey: sessionKey
-          };
+          _user["default"].updateOne({
+            _id: user._id
+          }, {
+            $set: req.body
+          }).then(function () {
+            var rule = {
+              id: user._id,
+              openid: openid,
+              sessionKey: sessionKey
+            };
 
-          _jsonwebtoken["default"].sign(rule, _keys["default"].secretOrkey, {
-            expiresIn: 36000
-          }, function (err, token) {
-            if (err) {
-              throw err;
-            }
-
-            return res.json({
-              success: true,
-              code: 0,
-              data: {
-                token: "Bearer " + token
+            _jsonwebtoken["default"].sign(rule, _keys["default"].secretOrkey, {
+              expiresIn: 36000
+            }, function (err, token) {
+              if (err) {
+                throw err;
               }
+
+              return res.json({
+                success: true,
+                code: 0,
+                data: {
+                  token: "Bearer " + token
+                }
+              });
             });
           });
         }

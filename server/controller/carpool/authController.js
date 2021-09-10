@@ -43,33 +43,35 @@ authController.getOpenId = (req, res) => {
         openid = JSON.parse(d).openid; //得到openid
         sessionKey = JSON.parse(d).session_key; //得到session_key
         User.findOne({ openid: openid }).then((user) => {
+          req.body.last_login_time = new Date();
+          req.body.openid = openid;
+          req.body.sessionKey = sessionKey;
+          req.body.username = req.body.nickName;
           if (!user) {
-            req.body.last_login_time = new Date();
-            req.body.openid = openid;
-            req.body.sessionKey = sessionKey;
-            req.body.username = req.body.nickName;
             User.create(req.body);
           } else {
-            let rule = {
-              id: user._id,
-              openid: openid,
-              sessionKey: sessionKey,
-            };
-            jwt.sign(
-              rule,
-              keys.secretOrkey,
-              { expiresIn: 36000 },
-              (err, token) => {
-                if (err) {
-                  throw err;
+            User.updateOne({ _id: user._id }, { $set: req.body }).then(() => {
+              let rule = {
+                id: user._id,
+                openid: openid,
+                sessionKey: sessionKey,
+              };
+              jwt.sign(
+                rule,
+                keys.secretOrkey,
+                { expiresIn: 36000 },
+                (err, token) => {
+                  if (err) {
+                    throw err;
+                  }
+                  return res.json({
+                    success: true,
+                    code: 0,
+                    data: { token: "Bearer " + token },
+                  });
                 }
-                return res.json({
-                  success: true,
-                  code: 0,
-                  data: { token: "Bearer " + token },
-                });
-              }
-            );
+              );
+            });
           }
         });
       })
