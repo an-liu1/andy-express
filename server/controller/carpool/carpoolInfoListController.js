@@ -76,7 +76,11 @@ carpoolInfoListController.searchCarpoolInfoList = (req, res) => {
                         ],
                       }
                     : {},
-                  { carpoolTime: { $gt: new Date() } },
+                  {
+                    carpoolTime: {
+                      $gt: new Date(new Date().getTime() - 1 * 60 * 60 * 1000),
+                    },
+                  },
                 ],
               },
               req.body.minPrice ? { price: { $gt: req.body.minPrice } } : {},
@@ -85,7 +89,7 @@ carpoolInfoListController.searchCarpoolInfoList = (req, res) => {
             ],
           }
     )
-    .sort({ updatedAt: "desc" })
+    .sort({ stickTop: -1, updatedAt: "desc" })
     .skip(pageOptions.page * pageOptions.size)
     .limit(pageOptions.size)
     .then((carpoolInfoList) => {
@@ -142,6 +146,7 @@ carpoolInfoListController.saveCarpoolInfo = (req, res) => {
 carpoolInfoListController.getSavedCarpoolList = (req, res) => {
   carpoolInfoList
     .find({ _id: { $in: req.user.saved_carpool } })
+    .sort({ updatedAt: "desc" })
     .then((carpoolInfo) => {
       return res.json({
         success: true,
@@ -155,6 +160,7 @@ carpoolInfoListController.getSavedCarpoolList = (req, res) => {
 carpoolInfoListController.getMyCarpoolList = (req, res) => {
   carpoolInfoList
     .find({ user_id: req.user.id })
+    .sort({ stickTop: -1, updatedAt: "desc" })
     .then((carpoolInfo) => {
       return res.json({
         success: true,
@@ -168,6 +174,19 @@ carpoolInfoListController.getMyCarpoolList = (req, res) => {
 carpoolInfoListController.editMyCarpoolList = (req, res) => {
   carpoolInfoList
     .updateOne({ _id: req.body._id }, { $set: req.body })
+    .then((carpoolInfo) => {
+      return res.json({
+        success: true,
+        code: 0,
+        data: carpoolInfo,
+      });
+    })
+    .catch((err) => res.status(400).json("Error: " + err));
+};
+
+carpoolInfoListController.stickMyCarpoolList = (req, res) => {
+  carpoolInfoList
+    .updateOne({ _id: req.body._id }, { stickTop: req.body.stickTop })
     .then((carpoolInfo) => {
       return res.json({
         success: true,

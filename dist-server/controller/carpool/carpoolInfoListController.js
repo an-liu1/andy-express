@@ -78,7 +78,7 @@ carpoolInfoListController.searchCarpoolInfoList = function (req, res) {
         }]
       } : {}, {
         carpoolTime: {
-          $gt: new Date()
+          $gt: new Date(new Date().getTime() - 1 * 60 * 60 * 1000)
         }
       }]
     }, req.body.minPrice ? {
@@ -95,6 +95,7 @@ carpoolInfoListController.searchCarpoolInfoList = function (req, res) {
       }
     } : {}]
   }).sort({
+    stickTop: -1,
     updatedAt: "desc"
   }).skip(pageOptions.page * pageOptions.size).limit(pageOptions.size).then(function (carpoolInfoList) {
     return res.json({
@@ -156,6 +157,8 @@ carpoolInfoListController.getSavedCarpoolList = function (req, res) {
     _id: {
       $in: req.user.saved_carpool
     }
+  }).sort({
+    updatedAt: "desc"
   }).then(function (carpoolInfo) {
     return res.json({
       success: true,
@@ -170,6 +173,9 @@ carpoolInfoListController.getSavedCarpoolList = function (req, res) {
 carpoolInfoListController.getMyCarpoolList = function (req, res) {
   _carpoolInfoList["default"].find({
     user_id: req.user.id
+  }).sort({
+    stickTop: -1,
+    updatedAt: "desc"
   }).then(function (carpoolInfo) {
     return res.json({
       success: true,
@@ -186,6 +192,22 @@ carpoolInfoListController.editMyCarpoolList = function (req, res) {
     _id: req.body._id
   }, {
     $set: req.body
+  }).then(function (carpoolInfo) {
+    return res.json({
+      success: true,
+      code: 0,
+      data: carpoolInfo
+    });
+  })["catch"](function (err) {
+    return res.status(400).json("Error: " + err);
+  });
+};
+
+carpoolInfoListController.stickMyCarpoolList = function (req, res) {
+  _carpoolInfoList["default"].updateOne({
+    _id: req.body._id
+  }, {
+    stickTop: req.body.stickTop
   }).then(function (carpoolInfo) {
     return res.json({
       success: true,

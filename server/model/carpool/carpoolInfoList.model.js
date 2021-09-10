@@ -52,6 +52,10 @@ const carpoolInfoListSchema = new Schema(
       type: String,
       trim: true,
     },
+    stickTop: {
+      type: Boolean,
+      default: false,
+    },
     last_update_time: {
       type: Date,
     },

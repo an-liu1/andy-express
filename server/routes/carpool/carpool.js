@@ -11,6 +11,7 @@ router.post("/saveCarpoolInfo", carpoolListController.saveCarpoolInfo);
 router.get("/getSavedCarpoolList", carpoolListController.getSavedCarpoolList);
 router.get("/getMyCarpoolList", carpoolListController.getMyCarpoolList);
 router.post("/editMyCarpoolList", carpoolListController.editMyCarpoolList);
+router.post("/stickMyCarpoolList", carpoolListController.stickMyCarpoolList);
 
 router.post("/createNewAdvice", adviceController.createNewAdvice);
 router.get("/getMyAdvice", adviceController.getMyAdvice);
