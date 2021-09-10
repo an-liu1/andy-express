@@ -16,7 +16,7 @@ var userSchema = new Schema({
     required: true,
     trim: true
   },
-  avatar: {
+  avatarUrl: {
     type: String
   },
   gender: {
