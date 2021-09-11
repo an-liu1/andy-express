@@ -48,7 +48,28 @@ authController.getOpenId = (req, res) => {
           req.body.sessionKey = sessionKey;
           req.body.username = req.body.nickName;
           if (!user) {
-            User.create(req.body);
+            User.create(req.body).then((user)=>{
+              let rule = {
+                id: user._id,
+                openid: openid,
+                sessionKey: sessionKey,
+              };
+              jwt.sign(
+                rule,
+                keys.secretOrkey,
+                { expiresIn: 36000 },
+                (err, token) => {
+                  if (err) {
+                    throw err;
+                  }
+                  return res.json({
+                    success: true,
+                    code: 0,
+                    data: { token: "Bearer " + token },
+                  });
+                }
+              );
+            });
           } else {
             User.updateOne({ _id: user._id }, { $set: req.body }).then(() => {
               let rule = {

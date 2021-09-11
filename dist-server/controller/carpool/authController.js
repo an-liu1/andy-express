@@ -67,7 +67,29 @@ authController.getOpenId = function (req, res) {
         req.body.username = req.body.nickName;
 
         if (!user) {
-          _user["default"].create(req.body);
+          _user["default"].create(req.body).then(function (user) {
+            var rule = {
+              id: user._id,
+              openid: openid,
+              sessionKey: sessionKey
+            };
+
+            _jsonwebtoken["default"].sign(rule, _keys["default"].secretOrkey, {
+              expiresIn: 36000
+            }, function (err, token) {
+              if (err) {
+                throw err;
+              }
+
+              return res.json({
+                success: true,
+                code: 0,
+                data: {
+                  token: "Bearer " + token
+                }
+              });
+            });
+          });
         } else {
           _user["default"].updateOne({
             _id: user._id
