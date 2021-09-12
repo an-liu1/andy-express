@@ -17,6 +17,8 @@ carpoolInfoListController.createCarpoolAds = function (req, res) {
   req.body.username = req.user.username;
   req.body.user_id = req.user.id;
   req.body.avatarUrl = req.user.avatarUrl;
+  req.body.stickTop = false;
+  req.body.endTrip = false;
 
   _carpoolInfoList["default"].create(req.body).then(function (carpoolInfoList) {
     return res.json({
@@ -94,7 +96,13 @@ carpoolInfoListController.searchCarpoolInfoList = function (req, res) {
       seatNumb: {
         $gt: req.body.seatNumb
       }
-    } : {}]
+    } : {}, {
+      $or: [{
+        endTrip: false
+      }, {
+        endTrip: null
+      }]
+    }]
   }).sort({
     stickTop: -1,
     updatedAt: "desc"
@@ -209,6 +217,22 @@ carpoolInfoListController.stickMyCarpoolList = function (req, res) {
     _id: req.body._id
   }, {
     stickTop: req.body.stickTop
+  }).then(function (carpoolInfo) {
+    return res.json({
+      success: true,
+      code: 0,
+      data: carpoolInfo
+    });
+  })["catch"](function (err) {
+    return res.status(400).json("Error: " + err);
+  });
+};
+
+carpoolInfoListController.endCarpoolTrip = function (req, res) {
+  _carpoolInfoList["default"].updateOne({
+    _id: req.body._id
+  }, {
+    endTrip: req.body.endTrip
   }).then(function (carpoolInfo) {
     return res.json({
       success: true,

@@ -72,6 +72,10 @@ var carpoolInfoListSchema = new Schema({
     type: Boolean,
     "default": false
   },
+  endTrip: {
+    type: Boolean,
+    "default": false
+  },
   last_update_time: {
     type: Date
   }

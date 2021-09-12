@@ -7,6 +7,8 @@ carpoolInfoListController.createCarpoolAds = (req, res) => {
   req.body.username = req.user.username;
   req.body.user_id = req.user.id;
   req.body.avatarUrl = req.user.avatarUrl;
+  req.body.stickTop = false;
+  req.body.endTrip = false;
   carpoolInfoList
     .create(req.body)
     .then((carpoolInfoList) => {
@@ -87,6 +89,7 @@ carpoolInfoListController.searchCarpoolInfoList = (req, res) => {
               req.body.minPrice ? { price: { $gt: req.body.minPrice } } : {},
               req.body.maxPrice ? { price: { $lt: req.body.maxPrice } } : {},
               req.body.seatNumb ? { seatNumb: { $gt: req.body.seatNumb } } : {},
+              {$or: [{endTrip : false},{endTrip : null}]}
             ],
           }
     )
@@ -191,7 +194,20 @@ carpoolInfoListController.stickMyCarpoolList = (req, res) => {
     .then((carpoolInfo) => {
       return res.json({
         success: true,
-        code: 0,
+        code: 0, 
+        data: carpoolInfo,
+      });
+    })
+    .catch((err) => res.status(400).json("Error: " + err));
+};
+
+carpoolInfoListController.endCarpoolTrip = (req, res) => {
+  carpoolInfoList
+    .updateOne({ _id: req.body._id }, { endTrip: req.body.endTrip })
+    .then((carpoolInfo) => {
+      return res.json({
+        success: true,
+        code: 0, 
         data: carpoolInfo,
       });
     })

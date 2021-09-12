@@ -24,6 +24,7 @@ router.get("/getSavedCarpoolList", _carpoolInfoListController["default"].getSave
 router.get("/getMyCarpoolList", _carpoolInfoListController["default"].getMyCarpoolList);
 router.post("/editMyCarpoolList", _carpoolInfoListController["default"].editMyCarpoolList);
 router.post("/stickMyCarpoolList", _carpoolInfoListController["default"].stickMyCarpoolList);
+router.post("/endCarpoolTrip", _carpoolInfoListController["default"].endCarpoolTrip);
 router.post("/createNewAdvice", _adviceController["default"].createNewAdvice);
 router.get("/getMyAdvice", _adviceController["default"].getMyAdvice);
 var _default = router;
