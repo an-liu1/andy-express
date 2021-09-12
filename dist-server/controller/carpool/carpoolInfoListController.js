@@ -50,11 +50,9 @@ carpoolInfoListController.searchCarpoolInfoList = function (req, res) {
       fromCity: eval("/".concat(req.body.keyword, "/i"))
     }, {
       toCity: eval("/".concat(req.body.keyword, "/i"))
-    }, {
-      price: eval("/".concat(req.body.keyword, "/i"))
-    }, {
-      wholePrice: eval("/".concat(req.body.keyword, "/i"))
-    }, {
+    }, // { price: eval(`/${req.body.keyword}/i`) },
+    // { wholePrice: eval(`/${req.body.keyword}/i`) },
+    {
       description: eval("/".concat(req.body.keyword, "/i"))
     }, {
       contact: eval("/".concat(req.body.keyword, "/i"))
