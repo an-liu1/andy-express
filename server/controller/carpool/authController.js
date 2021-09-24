@@ -48,7 +48,7 @@ authController.getOpenId = (req, res) => {
           req.body.sessionKey = sessionKey;
           req.body.username = req.body.nickName;
           if (!user) {
-            User.create(req.body).then((user)=>{
+            User.create(req.body).then((user) => {
               let rule = {
                 id: user._id,
                 openid: openid,

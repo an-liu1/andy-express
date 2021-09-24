@@ -43,6 +43,8 @@ carpoolInfoListController.searchCarpoolInfoList = function (req, res) {
 
   _carpoolInfoList["default"].find(req.body.keyword ? {
     $or: [{
+      _id: req.body.keyword
+    }, {
       user_id: eval("/".concat(req.body.keyword, "/i"))
     }, {
       username: eval("/".concat(req.body.keyword, "/i"))

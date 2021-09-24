@@ -43,6 +43,7 @@ carpoolInfoListController.searchCarpoolInfoList = (req, res) => {
       req.body.keyword
         ? {
             $or: [
+              { _id: req.body.keyword },
               { user_id: eval(`/${req.body.keyword}/i`) },
               { username: eval(`/${req.body.keyword}/i`) },
               { fromCity: eval(`/${req.body.keyword}/i`) },
@@ -89,7 +90,7 @@ carpoolInfoListController.searchCarpoolInfoList = (req, res) => {
               req.body.minPrice ? { price: { $gt: req.body.minPrice } } : {},
               req.body.maxPrice ? { price: { $lt: req.body.maxPrice } } : {},
               req.body.seatNumb ? { seatNumb: { $gt: req.body.seatNumb } } : {},
-              {$or: [{endTrip : false},{endTrip : null}]}
+              { $or: [{ endTrip: false }, { endTrip: null }] },
             ],
           }
     )
@@ -194,7 +195,7 @@ carpoolInfoListController.stickMyCarpoolList = (req, res) => {
     .then((carpoolInfo) => {
       return res.json({
         success: true,
-        code: 0, 
+        code: 0,
         data: carpoolInfo,
       });
     })
@@ -207,7 +208,7 @@ carpoolInfoListController.endCarpoolTrip = (req, res) => {
     .then((carpoolInfo) => {
       return res.json({
         success: true,
-        code: 0, 
+        code: 0,
         data: carpoolInfo,
       });
     })
