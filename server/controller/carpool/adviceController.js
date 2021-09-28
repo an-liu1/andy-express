@@ -20,6 +20,37 @@ adviceController.createNewAdvice = (req, res) => {
 adviceController.getMyAdvice = (req, res) => {
   advice
     .find({ user_id: req.user.id })
+    .sort({ updatedAt: "desc" })
+    .then((advice) => {
+      return res.json({
+        success: true,
+        code: 0,
+        data: advice,
+      });
+    })
+    .catch((err) => res.status(400).json("Error: " + err));
+};
+
+adviceController.getAllAdvice = (req, res) => {
+  advice
+    .find()
+    .sort({ updatedAt: "desc" })
+    .then((advice) => {
+      return res.json({
+        success: true,
+        code: 0,
+        data: advice,
+      });
+    })
+    .catch((err) => res.status(400).json("Error: " + err));
+};
+
+adviceController.adminReplyAdvice = (req, res) => {
+  advice
+    .findupdateOne(
+      { _id: req.body.id },
+      { $set: { adminReply: req.body.adminReply } }
+    )
     .then((advice) => {
       return res.json({
         success: true,

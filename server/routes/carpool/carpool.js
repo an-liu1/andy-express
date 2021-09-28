@@ -16,5 +16,7 @@ router.post("/endCarpoolTrip", carpoolListController.endCarpoolTrip);
 
 router.post("/createNewAdvice", adviceController.createNewAdvice);
 router.get("/getMyAdvice", adviceController.getMyAdvice);
+router.get("/getAllAdvice", adviceController.getAllAdvice);
+router.post("/adminReplyAdvice", adviceController.adminReplyAdvice);
 
 export default router;

@@ -6,6 +6,7 @@ const adviceSchema = new Schema(
   {
     username: { type: String, trim: true },
     user_id: { type: String, trim: true },
+    avatarUrl: { type: String },
     type: {
       type: String,
       required: true,
@@ -19,6 +20,10 @@ const adviceSchema = new Schema(
     description: {
       type: String,
       required: true,
+      trim: true,
+    },
+    adminReply: {
+      type: String,
       trim: true,
     },
   },
