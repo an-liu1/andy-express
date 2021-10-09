@@ -165,7 +165,7 @@ carpoolInfoListController.getSavedCarpoolList = (req, res) => {
 carpoolInfoListController.getMyCarpoolList = (req, res) => {
   carpoolInfoList
     .find({ user_id: req.user.id })
-    .sort({ stickTop: -1, updatedAt: "desc" })
+    .sort({ stickTop: -1, endTrip: "asc", updatedAt: "desc" })
     .then((carpoolInfo) => {
       return res.json({
         success: true,
