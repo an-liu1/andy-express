@@ -10,42 +10,52 @@ var _mongoose = _interopRequireDefault(require("mongoose"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 var Schema = _mongoose["default"].Schema;
-var adviceSchema = new Schema({
-  username: {
+var productSchema = new Schema({
+  productImg: {
     type: String,
     trim: true
   },
-  user_id: {
+  name: {
     type: String,
     trim: true
   },
-  avatarUrl: {
-    type: String
-  },
-  type: {
+  displayName: {
     type: String,
-    required: true,
     trim: true
   },
-  title: {
+  brand: {
     type: String,
-    required: true,
     trim: true
   },
-  description: {
+  size: {
     type: String,
-    required: true,
     trim: true
   },
-  adminReply: {
+  category: {
     type: String,
+    trim: true
+  },
+  pet: {
+    type: String,
+    trim: true
+  },
+  flavour: {
+    type: String,
+    trim: true
+  },
+  "package": {
+    type: String,
+    trim: true
+  },
+  price: {
+    type: Number,
     trim: true
   }
 }, {
   timestamps: true
 });
 
-var advice = _mongoose["default"].model("Carpool-advice", adviceSchema);
+var Product = _mongoose["default"].model("Pet-product", productSchema);
 
-var _default = advice;
+var _default = Product;
 exports["default"] = _default;

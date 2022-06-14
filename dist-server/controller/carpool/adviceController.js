@@ -29,6 +29,40 @@ adviceController.createNewAdvice = function (req, res) {
 adviceController.getMyAdvice = function (req, res) {
   _advice["default"].find({
     user_id: req.user.id
+  }).sort({
+    updatedAt: "desc"
+  }).then(function (advice) {
+    return res.json({
+      success: true,
+      code: 0,
+      data: advice
+    });
+  })["catch"](function (err) {
+    return res.status(400).json("Error: " + err);
+  });
+};
+
+adviceController.getAllAdvice = function (req, res) {
+  _advice["default"].find().sort({
+    updatedAt: "desc"
+  }).then(function (advice) {
+    return res.json({
+      success: true,
+      code: 0,
+      data: advice
+    });
+  })["catch"](function (err) {
+    return res.status(400).json("Error: " + err);
+  });
+};
+
+adviceController.adminReplyAdvice = function (req, res) {
+  _advice["default"].findupdateOne({
+    _id: req.body.id
+  }, {
+    $set: {
+      adminReply: req.body.adminReply
+    }
   }).then(function (advice) {
     return res.json({
       success: true,

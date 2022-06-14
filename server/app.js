@@ -8,6 +8,7 @@ import expressIndexndexRouter from "./routes/andyexpress/index";
 import expressRouter from "./routes/andyexpress/andyexpress";
 import carpoolIndexndexRouter from "./routes/carpool/index";
 import carpoolRouter from "./routes/carpool/carpool";
+import petIndexndexRouter from "./routes/pet/index";
 import mongoose from "mongoose";
 import passport from "passport";
 
@@ -67,6 +68,8 @@ app.use(
   passport.authenticate("jwt", { session: false }),
   carpoolRouter
 );
+//pet router
+app.use("/pet", petIndexndexRouter);
 
 const uri =
   "mongodb+srv://andyvviiar:8829122Aa@cluster0-dgngm.mongodb.net/test?retryWrites=true&w=majority";

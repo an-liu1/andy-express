@@ -25,6 +25,8 @@ var _index3 = _interopRequireDefault(require("./routes/carpool/index"));
 
 var _carpool = _interopRequireDefault(require("./routes/carpool/carpool"));
 
+var _index4 = _interopRequireDefault(require("./routes/pet/index"));
+
 var _mongoose = _interopRequireDefault(require("mongoose"));
 
 var _passport = _interopRequireDefault(require("passport"));
@@ -79,7 +81,9 @@ app.use("/express", _passport["default"].authenticate("jwt", {
 app.use("/carpool", _index3["default"]);
 app.use("/carpool", _passport["default"].authenticate("jwt", {
   session: false
-}), _carpool["default"]);
+}), _carpool["default"]); //pet router
+
+app.use("/pet", _index4["default"]);
 var uri = "mongodb+srv://andyvviiar:8829122Aa@cluster0-dgngm.mongodb.net/test?retryWrites=true&w=majority";
 
 _mongoose["default"].connect(uri, {

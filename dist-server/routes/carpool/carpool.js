@@ -27,5 +27,7 @@ router.post("/stickMyCarpoolList", _carpoolInfoListController["default"].stickMy
 router.post("/endCarpoolTrip", _carpoolInfoListController["default"].endCarpoolTrip);
 router.post("/createNewAdvice", _adviceController["default"].createNewAdvice);
 router.get("/getMyAdvice", _adviceController["default"].getMyAdvice);
+router.get("/getAllAdvice", _adviceController["default"].getAllAdvice);
+router.post("/adminReplyAdvice", _adviceController["default"].adminReplyAdvice);
 var _default = router;
 exports["default"] = _default;

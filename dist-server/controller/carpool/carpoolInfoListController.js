@@ -184,6 +184,7 @@ carpoolInfoListController.getMyCarpoolList = function (req, res) {
     user_id: req.user.id
   }).sort({
     stickTop: -1,
+    endTrip: "asc",
     updatedAt: "desc"
   }).then(function (carpoolInfo) {
     return res.json({
