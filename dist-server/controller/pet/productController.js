@@ -55,6 +55,8 @@ productController.searchProductList = function (req, res) {
       category: eval("/".concat(req.body.category, "/i"))
     } : {}, req.body.size ? {
       size: eval("/".concat(req.body.size, "/i"))
+    } : {}, req.body.pet ? {
+      pet: eval("/".concat(req.body.pet, "/i"))
     } : {}]
   };
 

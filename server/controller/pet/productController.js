@@ -41,6 +41,7 @@ productController.searchProductList = (req, res) => {
             ? { category: eval(`/${req.body.category}/i`) }
             : {},
           req.body.size ? { size: eval(`/${req.body.size}/i`) } : {},
+          req.body.pet ? { pet: eval(`/${req.body.pet}/i`) } : {},
         ],
       };
   Product.find(criteria)
