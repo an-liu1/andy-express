@@ -33,6 +33,7 @@ productController.searchProductList = (req, res) => {
           { package: eval(`/${req.body.keyword}/i`) },
           // { price: eval(`/${req.body.keyword}/i`) },
           { brand: eval(`/${req.body.keyword}/i`) },
+          { description: eval(`/${req.body.keyword}/i`) },
         ],
       }
     : {

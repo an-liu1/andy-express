@@ -14,6 +14,8 @@ const productSchema = new Schema(
     flavour: { type: String, trim: true },
     package: { type: String, trim: true },
     price: { type: Number, trim: true },
+    originPrice: { type: Number, trim: true },
+    description: { type: String, trim: true },
   },
   {
     timestamps: true,
