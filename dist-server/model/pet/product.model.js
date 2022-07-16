@@ -50,7 +50,27 @@ var productSchema = new Schema({
   price: {
     type: Number,
     trim: true
-  }
+  },
+  originPrice: {
+    type: Number,
+    trim: true
+  },
+  description: {
+    type: String,
+    trim: true
+  },
+  productSizeAndPrice: [{
+    size: {
+      type: String,
+      trim: true,
+      "default": 0
+    },
+    price: {
+      type: Number,
+      trim: true,
+      "default": 0
+    }
+  }]
 }, {
   timestamps: true
 });

@@ -49,6 +49,8 @@ productController.searchProductList = function (req, res) {
     }, // { price: eval(`/${req.body.keyword}/i`) },
     {
       brand: eval("/".concat(req.body.keyword, "/i"))
+    }, {
+      description: eval("/".concat(req.body.keyword, "/i"))
     }]
   } : {
     $and: [req.body.category ? {
