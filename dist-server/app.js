@@ -25,11 +25,17 @@ var _index3 = _interopRequireDefault(require("./routes/carpool/index"));
 
 var _carpool = _interopRequireDefault(require("./routes/carpool/carpool"));
 
-var _index4 = _interopRequireDefault(require("./routes/pet/index"));
+var _index4 = _interopRequireDefault(require("./routes/gebis/index"));
+
+var _bid = _interopRequireDefault(require("./routes/gebis/bid"));
+
+var _news = _interopRequireDefault(require("./routes/gebis/news"));
 
 var _mongoose = _interopRequireDefault(require("mongoose"));
 
 var _passport = _interopRequireDefault(require("passport"));
+
+var _gebisPassport = require("./config/gebisPassport.js");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
@@ -65,9 +71,10 @@ app.use(_passport["default"].initialize()); // 初始化passport
 // require("./config/passport")(passport); //导入配置文件
 
 require("./config/carpoolPassport")(_passport["default"]); //导入配置文件
+
+
+//导入配置文件
 //freepmo router
-
-
 app.use("/freepmo", _index["default"]);
 app.use("/freepmo", _passport["default"].authenticate("jwt", {
   session: false
@@ -79,11 +86,18 @@ app.use("/express", _passport["default"].authenticate("jwt", {
 }), _andyexpress["default"]); // carpool router
 
 app.use("/carpool", _index3["default"]);
+(0, _gebisPassport.gebisPassport)(_passport["default"]);
 app.use("/carpool", _passport["default"].authenticate("jwt", {
   session: false
-}), _carpool["default"]); //pet router
+}), _carpool["default"]); //gebis router
 
-app.use("/pet", _index4["default"]);
+app.use("/gebis", _index4["default"]);
+app.use("/gebis", _passport["default"].authenticate("jwt", {
+  session: false
+}), _bid["default"]);
+app.use("/gebis", _passport["default"].authenticate("jwt", {
+  session: false
+}), _news["default"]);
 var uri = "mongodb+srv://andyvviiar:8829122Aa@cluster0-dgngm.mongodb.net/test?retryWrites=true&w=majority";
 
 _mongoose["default"].connect(uri, {

@@ -147,6 +147,8 @@ authController.getAPPStatistics = function (req, res) {
 };
 
 authController.getUserInfo = function (req, res) {
+  console.log(req);
+
   _user["default"].find({
     _id: req.user.id
   }).then(function (userInfo) {

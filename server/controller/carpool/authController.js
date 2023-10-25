@@ -123,6 +123,7 @@ authController.getAPPStatistics = (req, res) => {
 };
 
 authController.getUserInfo = (req, res) => {
+  console.log(req);
   User.find({ _id: req.user.id })
     .then((userInfo) => {
       return res.json({

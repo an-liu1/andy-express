@@ -8,7 +8,9 @@ import expressIndexndexRouter from "./routes/andyexpress/index";
 import expressRouter from "./routes/andyexpress/andyexpress";
 import carpoolIndexndexRouter from "./routes/carpool/index";
 import carpoolRouter from "./routes/carpool/carpool";
-import petIndexndexRouter from "./routes/pet/index";
+import gebisIndexRouter from "./routes/gebis/index";
+import gebisBidRouter from "./routes/gebis/bid";
+import gebisNewsRouter from "./routes/gebis/news";
 import mongoose from "mongoose";
 import passport from "passport";
 
@@ -46,6 +48,7 @@ app.use(express.static(path.join(__dirname, "../public")));
 app.use(passport.initialize()); // 初始化passport
 // require("./config/passport")(passport); //导入配置文件
 require("./config/carpoolPassport")(passport); //导入配置文件
+import { gebisPassport } from "./config/gebisPassport.js"; //导入配置文件
 
 //freepmo router
 app.use("/freepmo", pmoIndexndexRouter);
@@ -63,13 +66,24 @@ app.use(
 );
 // carpool router
 app.use("/carpool", carpoolIndexndexRouter);
+gebisPassport(passport);
 app.use(
   "/carpool",
   passport.authenticate("jwt", { session: false }),
   carpoolRouter
 );
-//pet router
-app.use("/pet", petIndexndexRouter);
+//gebis router
+app.use("/gebis", gebisIndexRouter);
+app.use(
+  "/gebis",
+  passport.authenticate("jwt", { session: false }),
+  gebisBidRouter
+);
+app.use(
+  "/gebis",
+  passport.authenticate("jwt", { session: false }),
+  gebisNewsRouter
+);
 
 const uri =
   "mongodb+srv://andyvviiar:8829122Aa@cluster0-dgngm.mongodb.net/test?retryWrites=true&w=majority";
