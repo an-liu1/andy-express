@@ -6,8 +6,8 @@ const userController = {};
 
 userController.getOpenId = (req, res) => {
   let code = req.body.code; //获取小程序传来的code
-  let appid = "wxa438f6a5e945514b"; //自己小程序后台管理的appid，可登录小程序后台查看
-  let secret = "21c50b79b63d02f1702d0d4c009d6673"; //小程序后台管理的secret，可登录小程序后台查看
+  let appid = "wx2379b7a9cc8f038c"; //自己小程序后台管理的appid，可登录小程序后台查看
+  let secret = "9c6f1b98c538dd4303c7c30110fea462"; //小程序后台管理的secret，可登录小程序后台查看
   let grant_type = "authorization_code"; // 授权（必填）默认值
   let url =
     "https://api.weixin.qq.com/sns/jscode2session?grant_type=" +
