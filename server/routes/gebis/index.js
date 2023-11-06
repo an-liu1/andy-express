@@ -14,6 +14,7 @@ router.get("/getBidClass/:id", bidClassController.getBidClass);
 
 //bidItem
 router.get("/getBidItemByClass/:id", bidItemController.getBidItemByClass);
+router.get("/getBidItem/:id", bidItemController.getBidItem);
 
 //news
 router.get("/getNewsList", newsController.getNewsList);
