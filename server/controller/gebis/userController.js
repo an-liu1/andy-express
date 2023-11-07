@@ -30,9 +30,9 @@ userController.getOpenId = (req, res) => {
           req.body.openid = openid;
           req.body.sessionKey = sessionKey;
           if (!user) {
-            User.create(req.body).then((user) => {
+            User.create(req.body).then((user1) => {
               let rule = {
-                id: user._id,
+                id: user1._id,
                 openid: openid,
                 sessionKey: sessionKey,
               };
@@ -47,7 +47,8 @@ userController.getOpenId = (req, res) => {
                   return res.json({
                     success: true,
                     code: 0,
-                    data: { token: "Bearer " + token },
+                    token: "Bearer " + token,
+                    data: user1,
                   });
                 }
               );

@@ -43,9 +43,9 @@ userController.getOpenId = function (req, res) {
         req.body.sessionKey = sessionKey;
 
         if (!user) {
-          _user["default"].create(req.body).then(function (user) {
+          _user["default"].create(req.body).then(function (user1) {
             var rule = {
-              id: user._id,
+              id: user1._id,
               openid: openid,
               sessionKey: sessionKey
             };
@@ -60,9 +60,8 @@ userController.getOpenId = function (req, res) {
               return res.json({
                 success: true,
                 code: 0,
-                data: {
-                  token: "Bearer " + token
-                }
+                token: "Bearer " + token,
+                data: user1
               });
             });
           });
