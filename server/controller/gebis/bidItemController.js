@@ -151,7 +151,7 @@ bidItemController.getExportList = (req, res) => {
 
       //2
       let history = [];
-      let historyRow = ["拍品", "成交人", "成交价", "电话", "邮箱"];
+      let historyRow = ["拍品", "成交人", "成交价", "电话", "邮箱", "加价时间"];
       history.push(historyRow);
 
       exportData.map((i) => {
@@ -162,6 +162,7 @@ bidItemController.getExportList = (req, res) => {
           arr1.push(j.price);
           arr1.push(j.phone);
           arr1.push(j.email);
+          arr1.push(j.comfirmTime);
           history.push(arr1);
         });
       });

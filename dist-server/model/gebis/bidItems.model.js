@@ -75,8 +75,12 @@ var bidItemSchema = new Schema({
       type: String,
       trim: true
     },
-    buyerOpenId: {
+    buyerId: {
       type: String,
+      trim: true
+    },
+    comfirmTime: {
+      type: Date,
       trim: true
     }
   }],
