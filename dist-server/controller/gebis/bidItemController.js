@@ -32,6 +32,23 @@ bidItemController.createBidItem = function (req, res) {
 
 bidItemController.getBidItemByClass = function (req, res) {
   _bidItems["default"].find({
+    class_id: req.params.id,
+    isDeleted: false
+  }).sort({
+    updatedAt: "desc"
+  }).then(function (bidItem) {
+    return res.json({
+      success: true,
+      code: 0,
+      data: bidItem
+    });
+  })["catch"](function (err) {
+    return res.status(400).json("Error: " + err);
+  });
+};
+
+bidItemController.getAllBidItemByClass = function (req, res) {
+  _bidItems["default"].find({
     class_id: req.params.id
   }).sort({
     isDeleted: "asc"
@@ -73,6 +90,20 @@ bidItemController.getBidItem = function (req, res) {
       success: true,
       code: 0,
       data: bidItem[0]
+    });
+  })["catch"](function (err) {
+    return res.status(400).json("Error: " + err);
+  });
+};
+
+bidItemController.getBidItemFinalPrice = function (req, res) {
+  _bidItems["default"].find({
+    _id: req.params.id
+  }).then(function (bidItem) {
+    return res.json({
+      success: true,
+      code: 0,
+      data: bidItem[0].finalPrice
     });
   })["catch"](function (err) {
     return res.status(400).json("Error: " + err);

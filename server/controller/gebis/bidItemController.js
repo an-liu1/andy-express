@@ -21,6 +21,20 @@ bidItemController.createBidItem = (req, res) => {
 
 bidItemController.getBidItemByClass = (req, res) => {
   bidItems
+    .find({ class_id: req.params.id, isDeleted: false })
+    .sort({ updatedAt: "desc" })
+    .then((bidItem) => {
+      return res.json({
+        success: true,
+        code: 0,
+        data: bidItem,
+      });
+    })
+    .catch((err) => res.status(400).json("Error: " + err));
+};
+
+bidItemController.getAllBidItemByClass = (req, res) => {
+  bidItems
     .find({ class_id: req.params.id })
     .sort({ isDeleted: "asc" })
     .sort({ updatedAt: "desc" })
@@ -57,6 +71,19 @@ bidItemController.getBidItem = (req, res) => {
         success: true,
         code: 0,
         data: bidItem[0],
+      });
+    })
+    .catch((err) => res.status(400).json("Error: " + err));
+};
+
+bidItemController.getBidItemFinalPrice = (req, res) => {
+  bidItems
+    .find({ _id: req.params.id })
+    .then((bidItem) => {
+      return res.json({
+        success: true,
+        code: 0,
+        data: bidItem[0].finalPrice,
       });
     })
     .catch((err) => res.status(400).json("Error: " + err));

@@ -66,25 +66,35 @@ userController.getOpenId = function (req, res) {
             });
           });
         } else {
-          var rule = {
-            id: user._id,
-            openid: openid,
-            sessionKey: sessionKey
-          };
-
-          _jsonwebtoken["default"].sign(rule, _keys["default"].secretOrkey, {
-            expiresIn: 36000
-          }, function (err, token) {
-            if (err) {
-              throw err;
+          _user["default"].findOneAndUpdate({
+            _id: user._id
+          }, {
+            $set: {
+              last_login_time: new Date()
             }
+          }).then(function () {
+            var rule = {
+              id: user._id,
+              openid: openid,
+              sessionKey: sessionKey
+            };
 
-            return res.json({
-              success: true,
-              code: 0,
-              token: "Bearer " + token,
-              data: user
+            _jsonwebtoken["default"].sign(rule, _keys["default"].secretOrkey, {
+              expiresIn: 36000
+            }, function (err, token) {
+              if (err) {
+                throw err;
+              }
+
+              return res.json({
+                success: true,
+                code: 0,
+                token: "Bearer " + token,
+                data: user
+              });
             });
+          })["catch"](function (err) {
+            return res.status(400).json("Error: " + err);
           });
         }
       });

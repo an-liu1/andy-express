@@ -54,27 +54,34 @@ userController.getOpenId = (req, res) => {
               );
             });
           } else {
-            let rule = {
-              id: user._id,
-              openid: openid,
-              sessionKey: sessionKey,
-            };
-            jwt.sign(
-              rule,
-              keys.secretOrkey,
-              { expiresIn: 36000 },
-              (err, token) => {
-                if (err) {
-                  throw err;
-                }
-                return res.json({
-                  success: true,
-                  code: 0,
-                  token: "Bearer " + token,
-                  data: user,
-                });
-              }
-            );
+            User.findOneAndUpdate(
+              { _id: user._id },
+              { $set: { last_login_time: new Date() } }
+            )
+              .then(() => {
+                let rule = {
+                  id: user._id,
+                  openid: openid,
+                  sessionKey: sessionKey,
+                };
+                jwt.sign(
+                  rule,
+                  keys.secretOrkey,
+                  { expiresIn: 36000 },
+                  (err, token) => {
+                    if (err) {
+                      throw err;
+                    }
+                    return res.json({
+                      success: true,
+                      code: 0,
+                      token: "Bearer " + token,
+                      data: user,
+                    });
+                  }
+                );
+              })
+              .catch((err) => res.status(400).json("Error: " + err));
           }
         });
       })

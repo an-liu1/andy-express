@@ -26,7 +26,9 @@ router.get("/getBidClassList", _bidClassController["default"].getBidClassList);
 router.get("/getBidClass/:id", _bidClassController["default"].getBidClass); //bidItem
 
 router.get("/getBidItemByClass/:id", _bidItemController["default"].getBidItemByClass);
-router.get("/getBidItem/:id", _bidItemController["default"].getBidItem); //news
+router.get("/getAllBidItemByClass/:id", _bidItemController["default"].getAllBidItemByClass);
+router.get("/getBidItem/:id", _bidItemController["default"].getBidItem);
+router.get("/getBidItemFinalPrice/:id", _bidItemController["default"].getBidItemFinalPrice); //news
 
 router.get("/getNewsList", _newsController["default"].getNewsList);
 router.get("/getNews/:id", _newsController["default"].getNews); //home
