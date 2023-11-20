@@ -22,6 +22,10 @@ var homeSchema = new Schema({
   isDeleted: {
     type: Boolean,
     "default": false
+  },
+  displayContactService: {
+    type: Boolean,
+    "default": false
   }
 }, {
   timestamps: true

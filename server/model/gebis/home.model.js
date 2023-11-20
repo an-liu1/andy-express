@@ -7,6 +7,7 @@ const homeSchema = new Schema(
     noticeBarText: { type: String, trim: true },
     banner: { type: String, trim: true },
     isDeleted: { type: Boolean, default: false },
+    displayContactService: { type: Boolean, default: false },
   },
   {
     timestamps: true,
